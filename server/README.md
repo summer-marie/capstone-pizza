@@ -1,13 +1,32 @@
 ## Installed packages 
+- argon2
+- cors
+- dotenv
+- express
+- jsonwebtoken
+- mongoose
 
-   "argon2": "^0.41.1",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.13.1"
 
 # JSON
 - type module
 - npm run dev to run server
+
+
+## .env 
+
+- Not all these fields are necesarry, not sure what kind of backend authentication to impliment
+
+`````
+PORT=8000
+MONGODB_URL=mongodb://localhost:27017/capstone
+COOKIE_SECRET=bubbles
+SESSION_SECRET=bubbles
+JWT_SECRET=bubbles
+# // 30 days
+TOKEN_EXPIRATION=2592000
+WHITELISTED_DOMAINS=http://localhost:3005
+
+````````
+TODO : Update secret codes to more complex variables
+
 
