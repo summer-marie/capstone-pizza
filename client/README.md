@@ -5,6 +5,9 @@
 - npm install tailwindcss @tailwindcss/vite 
     - installed tailwind following intructions from tailwind website with framework Vite.
 
+## Colors Template 
+
+
 # TODO
 - Find unique favicon
 - Try to impliment switching between dark mode and light mode 
@@ -17,4 +20,5 @@
     VITE_PORT=3005
 
 ```````
+
 
