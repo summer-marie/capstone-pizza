@@ -1,0 +1,13 @@
+## Installed packages 
+
+   "argon2": "^0.41.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.1"
+
+# JSON
+- type module
+- npm run dev to run server
+
