@@ -41,3 +41,28 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #D4F7D4;
 }
+
+.header-image-container {
+  background-image: url("./assets/backyard.jpg"); /* The image used - important! */
+  background-size: cover;
+  position: relative; /* Needed to position the cutout text in the middle of the image */
+  height: 400px; /* Some height */
+}
+
+.header-text {
+  /* Todo: make bg color gradient 3 colors to look like italian flag */
+  background-color: white;
+  /* background: linear-gradient(to bottom, red, white 45%, green 100%); */
+  color: black;
+  font-size: 10vw; /* Responsive font size */
+  font-weight: bold;
+  margin: 0 auto; /* Center the text container */
+  padding: 10px;
+  width: 70%;
+  text-align: center; /* Center text */
+  position: absolute; /* Position text */
+  top: 40%; /* Position text in the middle */
+  left: 50%; /* Position text in the middle */
+  transform: translate(-50%, -50%); /* Position text in the middle */
+  mix-blend-mode: screen; /* This makes the cutout text possible */
+}

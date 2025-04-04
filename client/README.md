@@ -4,6 +4,7 @@
 - npm i dotenv
 - npm install tailwindcss @tailwindcss/vite 
     - installed tailwind following intructions from tailwind website with framework Vite.
+- npm i react-router
 
 ## Colors Template 
 

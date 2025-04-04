@@ -1,16 +1,18 @@
 import { useState } from 'react'
 import './App.css'
 import Colors from './Colors'
+import Home from './pages/Home'
+import Navbar from './comonents/Navbar'
 
 function App() {
 
   return (
     <>
-    <h1>
 
-Hello Pizza
-    </h1>
-    <Colors />
+    <Navbar />
+    {/* <Colors /> */}
+
+    <Home />
     </>
   )
 }
