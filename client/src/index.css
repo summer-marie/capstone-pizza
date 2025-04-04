@@ -1,15 +1,11 @@
 @import "tailwindcss";
 
-/* @theme {
-  --color-tealBlue: #347B98
-} */
-
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  /* color-scheme: light dark; */
   color: #091034;
   background-color: #e0ebe0;
 
@@ -41,11 +37,13 @@
   background: #d4f7d4;
 }
 
+/* Cutout text for header */
 .header-image-container {
-  background-image: url("./assets/backyard.jpg"); /* The image used - important! */
+  background-image: url("./assets/backyardSM.jpg"); /* The image used - important! */
   background-size: cover;
+  background-position: center;
   position: relative; /* Needed to position the cutout text in the middle of the image */
-  height: 400px; /* Some height */
+  height: 500px; /* Some height */
 }
 
 .header-text {
@@ -53,11 +51,11 @@
   background-color: white;
   /* background: linear-gradient(to bottom, red, white 45%, green 100%); */
   color: black;
-  font-size: 10vw; /* Responsive font size */
+  font-size: 8vw; /* Responsive font size */
   font-weight: bold;
   margin: 0 auto; /* Center the text container */
   padding: 10px;
-  width: 70%;
+  width: 55%;
   text-align: center; /* Center text */
   position: absolute; /* Position text */
   top: 40%; /* Position text in the middle */
@@ -66,13 +64,13 @@
   mix-blend-mode: screen; /* This makes the cutout text possible */
 }
 
+/* 404 page */
 .tomato {
   background-image: url("./assets/tomato.jpg");
   background-size: cover;
   /* position: relative;  */
   height: 800px;
   /* filter: brightness(0.6) contrast(1); */
-
 }
 
 .myText {
