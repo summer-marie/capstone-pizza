@@ -1,8 +1,8 @@
 const Header = () => {
   return (
     <>
-      <div class='header-image-container'>
-        <div class='header-text'>OverTheWall</div>
+      <div className='header-image-container'>
+        <div className='header-text'>OverTheWall</div>
       </div>
     </>
   )
