@@ -34,37 +34,37 @@ const Navbar = () => {
                       ? "text-teal-300 underline"
                       : "text-gray-900 "
                   }  md:p-0  md:hover:bg-transparent  lessSpace`} */}
-                <span
-                  // to='/'
+                <Link
+                  to='/'
                   className='block py-2 px-3 md:p-0 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-100 text-xl '
              
                 >
                   Home
-                </span>
+                </Link>
               </li>
               <li>
-                <span
-                  // to='/'
+                <Link
+                  to='/menu'
                   className='block py-2 px-3 md:p-0 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-100 text-xl '
                 >
                  Menu
-                </span>
+                </Link>
               </li>
               <li>
-                <span
-                  // to='/'
+                <Link
+                  to='/contact'
                   className='block py-2 px-3 md:p-0 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-100 text-xl'
                 >
                   Contact
-                </span>
+                </Link>
               </li>
               <li>
-                <span
-                  // to='/'
+                <Link
+                  to='/order-create'
                   className='block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-100 text-xl'
                 >
                  Order
-                </span>
+                </Link>
               </li>
             </ul>
           </div>
