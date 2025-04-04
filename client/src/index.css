@@ -4,7 +4,6 @@
   --color-tealBlue: #347B98
 } */
 
-
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -12,7 +11,7 @@
 
   color-scheme: light dark;
   color: #091034;
-  background-color:#E0EBE0;
+  background-color: #e0ebe0;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -32,14 +31,14 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #236AB9;
-  box-shadow: 2px 0px 5px 0px rgb(236, 247, 244)inset;
+  background: #236ab9;
+  box-shadow: 2px 0px 5px 0px rgb(236, 247, 244) inset;
   border-radius: 4px;
   /* height: 50px; */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #D4F7D4;
+  background: #d4f7d4;
 }
 
 .header-image-container {
@@ -65,4 +64,19 @@
   left: 50%; /* Position text in the middle */
   transform: translate(-50%, -50%); /* Position text in the middle */
   mix-blend-mode: screen; /* This makes the cutout text possible */
+}
+
+.tomato {
+  background-image: url("./assets/tomato.jpg");
+  background-size: cover;
+  /* position: relative;  */
+  height: 800px;
+  /* filter: brightness(0.6) contrast(1); */
+
+}
+
+.myText {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
