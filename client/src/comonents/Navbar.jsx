@@ -1,14 +1,15 @@
 import { Link, useNavigate, useLocation } from "react-router"
+import CartSVG from "../assets/CartSVG"
 
 const Navbar = () => {
-  // let location = useLocation()
-  // console.log("location", location)
+  let location = useLocation()
+  console.log("location", location)
 
   // const navigate = useNavigate()
 
   return (
     <div>
-      <nav className='bg-white border-gray-200 dark:bg-red-900 '>
+      <nav className='bg-white border-gray-200 dark:bg-red-900 smokeShadow'>
         <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
           <div className='flex items-center space-x-3 rtl:space-x-reverse'>
             <img
@@ -16,28 +17,23 @@ const Navbar = () => {
               className='h-12'
               alt='Flowbite Logo'
             />
-            <span className='self-center text-slate-100 text-2xl font-semibold whitespace-nowrap '>
+            <span className='self-center text-slate-100 text-2xl font-semibold whitespace-nowrap barriecitoFont'>
               OverTheWall
             </span>
           </div>
-          <div className='flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse'>
-      
-          </div>
+          <div className='flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse'></div>
           <div
             className='items-center justify-between hidden w-full md:flex md:w-auto md:order-1'
             id='navbar-cta'
           >
             <ul className='flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-transparent '>
               <li>
-                {/* className={`block py-2 px-3 md:hover:bg-transparent md:border-0 ${
-                    location.pathname === "/rooms"
-                      ? "text-teal-300 underline"
-                      : "text-gray-900 "
-                  }  md:p-0  md:hover:bg-transparent  lessSpace`} */}
                 <Link
                   to='/'
-                  className='block py-2 px-3 md:p-0 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-100 text-xl '
-             
+                  className={`berkshireSwashFont block py-2 px-3 md:p-0 text-2xl md:hover:bg-transparent md:hover:text-stone-300 hover:bg-stone-300 ${
+                    location.pathname === "/" ? "text-green-700" : "text-black"
+                  }
+                       `}
                 >
                   Home
                 </Link>
@@ -45,15 +41,25 @@ const Navbar = () => {
               <li>
                 <Link
                   to='/menu'
-                  className='block py-2 px-3 md:p-0 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-100 text-xl '
+                  className={`berkshireSwashFont block py-2 px-3 md:p-0 text-2xl md:hover:bg-transparent md:hover:text-stone-300 hover:bg-stone-300 ${
+                    location.pathname === "/menu"
+                      ? "text-green-700"
+                      : "text-black"
+                  }
+                      `}
                 >
-                 Menu
+                  Menu
                 </Link>
               </li>
               <li>
                 <Link
                   to='/contact'
-                  className='block py-2 px-3 md:p-0 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-100 text-xl'
+                  className={` berkshireSwashFont block py-2 px-3 md:p-0 text-2xl md:hover:bg-transparent md:hover:text-stone-300 hover:bg-stone-300 ${
+                    location.pathname === "/contact"
+                      ? "text-green-700"
+                      : " text-black"
+                  } 
+                      `}
                 >
                   Contact
                 </Link>
@@ -61,20 +67,21 @@ const Navbar = () => {
               <li>
                 <Link
                   to='/order-create'
-                  className='block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-slate-100 text-xl'
+                  className={`berkshireSwashFont block py-2 px-3 md:p-0 text-2xl md:hover:bg-transparent md:hover:text-stone-300 hover:bg-stone-300 ${
+                    location.pathname === "/order-create"
+                      ? "text-green-700"
+                      : " text-black"
+                  }
+                      `}
                 >
-                 Order
+                  Order
                 </Link>
               </li>
             </ul>
-          </div>
-        </div>
-      </nav>
-
-      <nav className='navColorBottom bg-gray-50'>
-        <div className='max-w-screen-xl px-4 py-3 mx-auto'>
-          <div className='flex items-center'>
-            <p>Company slogan</p>
+            {/* <p className='text-stone-300 end-0 absolute p-2'>Check Out</p> */}
+            <div className='absolute end-20 p-4'>
+              <CartSVG />
+            </div>
           </div>
         </div>
       </nav>
