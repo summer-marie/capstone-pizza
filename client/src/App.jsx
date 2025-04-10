@@ -8,6 +8,7 @@ import Order from "./pages/Order"
 import Contact from "./pages/Contact"
 import NoMatch from "./pages/NoMatch"
 import "./App.css"
+import Checkout from "./pages/Checkout"
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path='/menu' element={<Menu />} />
         <Route path='/order-create' element={<Order />} />
         <Route path='/contact' element={<Contact />} />
+        <Route path='/checkout' element={<Checkout />} />
         <Route path='*' element={<NoMatch />} />
       </Routes>
 

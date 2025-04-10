@@ -1,5 +1,5 @@
 import { Link, useNavigate, useLocation } from "react-router"
-import CartSVG from "../assets/CartSVG"
+import CartSVG from "../assets/svg/CartSVG"
 
 const Navbar = () => {
   let location = useLocation()
@@ -80,7 +80,9 @@ const Navbar = () => {
             </ul>
             {/* <p className='text-stone-300 end-0 absolute p-2'>Check Out</p> */}
             <div className='absolute end-20 p-4'>
+            <Link to="/checkout">
               <CartSVG />
+            </Link>
             </div>
           </div>
         </div>
