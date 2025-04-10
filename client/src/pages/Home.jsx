@@ -1,9 +1,9 @@
-import Header from "../comonents/Header"
+import Jumbotron from "../comonents/Jumbotron"
 
 const Home = () => {
   return (
     <div>
-      <Header />
+      <Jumbotron />
     </div>
   )
 }
