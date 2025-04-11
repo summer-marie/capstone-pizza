@@ -5,27 +5,20 @@ const Schema = mongoose.Schema
 const builderSchema = new Schema({
   pizzaName: {
     type: String,
-    default: "",
     required: true,
   },
-  // Crust I guess..... lol
-  base: { type: String, default: "", required: true },
-  sauce: { type: String, default: "", required: true },
+  // Crust && Cheese
+  base: { name: String, description: String, required: true },
+  sauce: { name: String, description: String, required: true },
   toppings: [
     // Fixed ingredients for each pizza
     {
-      type: String,
-      default: "",
+      name: String,
+      description: String,
       required: true,
     },
-    // Optional extras if needed
-    {
-      type: String,
-      default: "",
-      required: false,
-    },
   ],
-  price: { type: Number, default: 0, required: true },
+  price: { type: Number, required: true },
 })
 
 export default builderSchema

@@ -9,6 +9,8 @@ import Contact from "./pages/Contact"
 import NoMatch from "./pages/NoMatch"
 import "./App.css"
 import Checkout from "./pages/Checkout"
+import AdminBuilderCreate from "./admin/adminBuilderCreate"
+
 
 function App() {
   return (
@@ -20,6 +22,10 @@ function App() {
         <Route path='/order-create' element={<Order />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/checkout' element={<Checkout />} />
+{/* Admin routes TODO: Private Routes */}
+        <Route path='/pizza-builder' element={<AdminBuilderCreate />} />
+
+
         <Route path='*' element={<NoMatch />} />
       </Routes>
 

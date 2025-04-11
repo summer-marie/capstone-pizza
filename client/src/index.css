@@ -95,6 +95,22 @@ mix-blend-mode: multiply;
 .smokeShadow {
   box-shadow: 0px 0px 30px 20px rgb(59, 4, 0) inset;
 }
+/* Nested flexbox on builder create page */
+.nested-flex-veggie, .nested-flex-meat {
+  display: flex;
+  justify-content: space-between; 
+  /* gap: 10px; */
+}
+.nested-flex-veggie div {
+  /* This sets each child to take up half the width of the container and maintain its original
+  size, if it has one set */
+  flex: 1 0 50%; 
+}
+
+.nested-flex-meat div {
+  flex: 1 0 33%; 
+}
+
 
 /* Cutout text for header */
 /* .header-image-container {

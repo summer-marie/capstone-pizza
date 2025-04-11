@@ -16,15 +16,15 @@ orderIndex.post("/", orderCreate)
 //   });
 
 // Get orders by validated email
-orderIndex.get("/:email", orderGetMany)
+// orderIndex.get("/:email", orderGetMany)
 
 // Get all, no validation
 // TODO: add validation so only the owner can see all orders
-orderIndex.get("/", orderGetAll)
+// orderIndex.get("/", orderGetAll)
 
 // Get one order by id
-orderIndex.put("/order-detail/:id", orderUpdateOne)
-orderIndex.get("/order-detail/:id", orderGetOne)
+// orderIndex.put("/order-detail/:id", orderUpdateOne)
+// orderIndex.get("/order-detail/:id", orderGetOne)
 
 
 

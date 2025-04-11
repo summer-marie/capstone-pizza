@@ -3,7 +3,7 @@ import express from "express";
 import cors from 'cors'
 import mongoose from "mongoose";
 // import userIndex from "./routes/users/userIndex.js";
-import orderIndex from "./orders/orderIndex.js";
+// import orderIndex from "./orders/orderIndex.js";
 import builderIndex from "./builders/builderIndex.js";
 // console.log(process.env.MONGODB_URL);
 
@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 // app.use("/users", userIndex)
-app.use("/orders", orderIndex)
+// app.use("/orders", orderIndex)
 app.use("/builders", builderIndex)
 
 // 404

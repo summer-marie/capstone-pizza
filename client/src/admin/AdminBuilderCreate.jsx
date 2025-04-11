@@ -1,0 +1,482 @@
+import { useState, useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { useNavigate } from "react-router"
+// import { createOrder } from "./redux/orderSlice"
+// import { builderGetMany } from "../redux/builderSlice"
+// import { userGetMany } from "../redux/userSlice"
+
+const Modal = () => {
+  // const navigate = useNavigate()
+
+  return (
+    <>
+      <div
+        id='updateModal'
+        tabIndex='-1'
+        className='overflow-y-auto overflow-x-hidden fixed z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full'
+      >
+        <div
+          id='center-modal'
+          className='relative p-4 w-full max-w-md max-h-full border dark:border-slate-300'
+        >
+          <div className='relative bg-white rounded-lg shadow dark:bg-cyan-800 border-2 opacity-95'>
+            <div className='p-4 md:p-5 text-center'>
+              <svg
+                className='mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200'
+                aria-hidden='true'
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+              >
+                <path
+                  stroke='currentColor'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth='2'
+                  d='M12 21a9 9 0 1 1 0-18c1.052 0 2.062.18 3 .512M7 9.577l3.923 3.923 8.5-8.5M17 14v6m-3-3h6'
+                />
+              </svg>
+
+              <h3 className='mb-5 text-lg font-normal text-gray-500 dark:text-gray-400'>
+                Order was created successfully.
+              </h3>
+              <button
+                // onClick={() => navigate("/dashboard")}
+                type='button'
+                className='text-white bg-green-800 hover:bg-slate-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-slate-700 
+                dark:hover:text-green-500
+                dark:focus:ring-slate-700 dark:border-slate-600'
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
+
+const AdminBuilderCreate = () => {
+  // const [pizza, setPizza] = useState({
+  //   pizzaName: "",
+  //   crust: "brick-oven-crust",
+  //   cheese: "italian-blend",
+  //   sauce: "",
+  //   meat1: "",
+  //   meat2: "",
+  //   meat3: "",
+  //   veggies1: "",
+  //   veggies2: "",
+  //   veggies3: "",
+  //   veggies4: "",
+  // })
+  // const [showModal, setShowModal] = useState(false)
+  const [submitDisabled, setSubmitDisabled] = useState(false)
+  // const { loading } = useSelector((state) => state.order);
+  // const { builders } = useSelector((state) => state.builder)
+  // const { users } = useSelector((state) => state.user)
+  // const dispatch = useDispatch()
+
+  useEffect(() => {
+    // dispatch(builderGetMany())
+    // dispatch(userGetMany())
+  }, [])
+
+  // useEffect(() => {
+  //   console.log("users", users);
+  // }, [users]);
+
+  // useEffect(() => {
+  //   console.log("builders", builders);
+  // }, [builders]);
+
+  // useEffect(() => {
+  //   console.log("order", order);
+  // }, [order]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log("handleSubmit")
+    // dispatch(createOrder(order))
+    // setShowModal(true)
+    // setSubmitDisabled(true)
+  }
+
+  return (
+    <>
+      {/* <SideNav /> */}
+      <div className='flex flex-wrap flex-row-reverse justify-center bg-gray-400'>
+        {/* <div className="border-4 border-white"> */}
+        <form onSubmit={handleSubmit} className='w-1/3 p-6 mt-10 '>
+        <div className="border-4 border-green-700">
+        <div className="border-4 border-white">
+        <div className="border-4 border-red-700 p-5">
+
+
+
+
+          <h1 className='block mb-2 text-lg font-medium text-gray-900  text-center'>
+            Pizza Builder
+          </h1>
+          <hr className='mb-5' />
+          <div className='mb-5'>
+            <label
+              htmlFor='pizza-name'
+              className='block mb-2 text-sm font-medium text-gray-900'
+            >
+              Create Pizza Name
+            </label>
+            <input
+              // value={order.orderNumber}
+              // onChange={(e) =>
+              //   setOrder({ ...order, orderNumber: e.target.value })
+              // }
+              type='text'
+              id='pizza-name'
+              className='shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
+                 text-black 
+                  placeholder-gray-500 
+                  border-slate-500
+                  bg-gray-200 
+                  focus:bg-sky-200 focus:border-sky-700
+              '
+              placeholder='Meat Lovers'
+              required
+            />
+          </div>
+          <h1 className='block mb-2 text-lg font-medium text-gray-900 text-center'>
+            Pizza Base
+          </h1>
+          <hr className='mb-5' />
+          <div className='mb-5'>
+            <label
+              htmlFor='pizza-name'
+              className='block mb-2 text-sm font-medium text-gray-900'
+            >
+              Crust and Cheese
+            </label>
+            <div
+              // value={order.orderNumber}
+              // onChange={(e) =>
+              //   setOrder({ ...order, orderNumber: e.target.value })
+              // }
+              type='text'
+              id='crust'
+              className='shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
+                 text-black 
+                  placeholder-gray-500 
+                  border-slate-500
+                  bg-gray-200 
+                  focus:bg-sky-200 focus:border-sky-700
+              '
+              required
+            >
+              Brick Oven Crust
+            </div>
+            <div
+              // value={cheese}
+              // onChange={(e) =>
+              //   setOrder({ ...order, orderNumber: e.target.value })
+              // }
+              type='text'
+              id='cheese'
+              className='shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
+                 text-black 
+                  placeholder-gray-500 
+                  border-slate-500
+                  bg-gray-200 
+                  focus:bg-sky-200 focus:border-sky-700
+              '
+              required
+            >
+              Italian Blend Cheese
+            </div>
+          </div>
+
+          <div className='mb-5'>
+            <label
+              htmlFor='veggie-topping'
+              className='block mb-2 text-sm font-medium text-gray-900'
+            >
+              Select Sauce Type
+            </label>
+            <select
+              // value={order.orderStatus}
+              // onChange={(e) =>
+              //   setOrder({ ...order, orderStatus: e.target.value })
+              // }
+              id='suace'
+              className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
+                 text-black 
+                  placeholder-gray-500 
+                  border-slate-500
+                  bg-gray-200 
+                  focus:bg-gray-300 
+                  focus:ring-white
+                  focus:border-sky-500'
+              required
+            >
+              <option value='Red'>Signature Red Sauce</option>
+              <option value='White'>White Sauce</option>
+            </select>
+          </div>
+
+          <h1 className='block mb-2 text-lg font-medium text-gray-900 text-center'>
+            Meat Options
+          </h1>
+          <hr className='mb-5' />
+          <div id='nested-flex-container' className='nested-flex-meat'>
+            <div id='nested-col-1' className='px-2'>
+              <div className='mb-5'>
+                <label
+                  htmlFor='meat-topping'
+                  className='block mb-2 text-sm font-medium text-gray-900'
+                >
+                  Select Meat #1
+                </label>
+                <select
+                  // value={order.orderStatus}
+                  // onChange={(e) =>
+                  //   setOrder({ ...order, orderStatus: e.target.value })
+                  // }
+                  id='meat-type'
+                  className='text-sm rounded-lg block w-full p-2.5 shadow-sm-light border-2
+                  text-white 
+                  placeholder-gray-400 
+                  border-red-950
+                  bg-red-800 
+                  focus:bg-red-950 
+                  focus:ring-red-500
+                  focus:border-red-500'
+                >
+                  <option defaultValue>- - None - - </option>
+                  <option value='Pepperoni'>Pepperoni</option>
+                  <option value='Sausage'>Sausage</option>
+                  <option value='Chicken'>Chicken</option>
+                  <option value='Bacon'>Bacon</option>
+                </select>
+              </div>
+            </div>
+
+            <div id='nested-col-2' className='px-2'>
+              <div className='mb-5'>
+                <label
+                  htmlFor='meat-topping'
+                  className='block mb-2 text-sm font-medium text-gray-900'
+                >
+                  Select Meat #2
+                </label>
+                <select
+                  // value={order.orderStatus}
+                  // onChange={(e) =>
+                  //   setOrder({ ...order, orderStatus: e.target.value })
+                  // }
+                  id='meat-type'
+                  className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
+                  text-white 
+                  placeholder-gray-400 
+                  border-red-950
+                  bg-red-800 
+                  focus:bg-red-950 
+                  focus:ring-red-500
+                  focus:border-red-500'
+                >
+                  <option defaultValue>- - None - - </option>
+                  <option value='Pepperoni'>Pepperoni</option>
+                  <option value='Sausage'>Sausage</option>
+                  <option value='Chicken'>Chicken</option>
+                  <option value='Bacon'>Bacon</option>
+                </select>
+              </div>
+            </div>
+
+            <div id='nested-col-3' className='px-2'>
+              <div className='mb-5'>
+                <label
+                  htmlFor='meat-topping'
+                  className='block mb-2 text-sm font-medium text-gray-900'
+                >
+                  Select Meat #3
+                </label>
+                <select
+                  // value={order.orderStatus}
+                  // onChange={(e) =>
+                  //   setOrder({ ...order, orderStatus: e.target.value })
+                  // }
+                  id='meat-type'
+                  className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
+                text-white 
+                placeholder-gray-400 
+                border-red-950
+                bg-red-800 
+                focus:bg-red-950 
+                focus:ring-red-500
+                focus:border-red-500 '
+                >
+                  <option defaultValue>- - None - - </option>
+                  <option value='Pepperoni'>Pepperoni</option>
+                  <option value='Sausage'>Sausage</option>
+                  <option value='Chicken'>Chicken</option>
+                  <option value='Bacon'>Bacon</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* Nested flex with 2 cols */}
+          <h1 className='block mb-2 text-lg font-medium text-gray-900 text-center'>
+            Veggie Options
+          </h1>
+          <hr className='mb-5' />
+          <div id='nested-flex-container' className='nested-flex-veggie'>
+            {/* Nested col 1 */}
+            <div id='nested-col-1' className='px-2'>
+              <div className='mb-5 '>
+                <label
+                  htmlFor='veggie-topping'
+                  className='block mb-2 text-sm font-medium text-gray-900'
+                >
+                  Select Veggies #1
+                </label>
+                <select
+                  // value={order.orderStatus}
+                  // onChange={(e) =>
+                  //   setOrder({ ...order, orderStatus: e.target.value })
+                  // }
+                  id='veggie-type'
+                  className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
+                text-white 
+                placeholder-gray-400 
+                border-green-800
+                bg-emerald-500
+                focus:bg-emerald-800
+                focus:ring-emerald-100
+                focus:border-emerald-200 '
+                >
+                  <option defaultValue>- - None - - </option>
+                  <option value='Mushrooms'>Mushrooms</option>
+                  <option value='Peppers'>Bell Peppers</option>
+                  <option value='Onions'>Onions</option>
+                  <option value='Pineapple'>Pineapple</option>
+                </select>
+              </div>
+
+              <div className='mb-5'>
+                <label
+                  htmlFor='veggie-topping'
+                  className='block mb-2 text-sm font-medium text-gray-900'
+                >
+                  Select Veggies #2
+                </label>
+                <select
+                  // value={order.orderStatus}
+                  // onChange={(e) =>
+                  //   setOrder({ ...order, orderStatus: e.target.value })
+                  // }
+                  id='veggie-type'
+                  className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
+                text-white 
+                placeholder-gray-400 
+                border-green-800
+                bg-emerald-500
+                focus:bg-emerald-800
+                focus:ring-emerald-100
+                focus:border-emerald-200 '
+                >
+                  <option defaultValue>- - None - - </option>
+                  <option value='Mushrooms'>Mushrooms</option>
+                  <option value='Peppers'>Bell Peppers</option>
+                  <option value='Onions'>Onions</option>
+                  <option value='Pineapple'>Pineapple</option>
+                </select>
+              </div>
+            </div>
+            {/* Nested col 2 */}
+            <div id='nested-col-2' className='px-2'>
+              <div className='mb-5'>
+                <label
+                  htmlFor='veggie-topping'
+                  className='block mb-2 text-sm font-medium text-gray-900'
+                >
+                  Select Veggies #3
+                </label>
+                <select
+                  // value={order.orderStatus}
+                  // onChange={(e) =>
+                  //   setOrder({ ...order, orderStatus: e.target.value })
+                  // }
+                  id='veggie-type'
+                  className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
+                text-white 
+                placeholder-gray-400 
+                border-green-800
+                bg-emerald-500
+                focus:bg-emerald-800
+                focus:ring-emerald-100
+                focus:border-emerald-200 '
+                >
+                  <option defaultValue>- - None - - </option>
+                  <option value='Mushrooms'>Mushrooms</option>
+                  <option value='Peppers'>Bell Peppers</option>
+                  <option value='Onions'>Onions</option>
+                  <option value='Pineapple'>Pineapple</option>
+                </select>
+              </div>
+
+              <div className='mb-5'>
+                <label
+                  htmlFor='veggie-topping'
+                  className='block mb-2 text-sm font-medium text-gray-900'
+                >
+                  Select Veggies #4
+                </label>
+                <select
+                  // value={order.orderStatus}
+                  // onChange={(e) =>
+                  //   setOrder({ ...order, orderStatus: e.target.value })
+                  // }
+                  id='veggie-type'
+                  className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2 
+                text-white 
+                placeholder-gray-400 
+                border-green-800
+                bg-emerald-500
+                focus:bg-emerald-800
+                focus:ring-emerald-100
+                focus:border-emerald-200 '
+                >
+                  <option defaultValue>- - None - - </option>
+                  <option value='Mushrooms'>Mushrooms</option>
+                  <option value='Peppers'>Bell Peppers</option>
+                  <option value='Onions'>Onions</option>
+                  <option value='Pineapple'>Pineapple</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <button
+            disabled={submitDisabled}
+            type='submit'
+            className='
+            flex justify-center disabled:cursor-not-allowed  font-medium rounded-lg text-sm px-5 py-2.5 text-center focus:ring-4 focus:outline-none
+            bg-sky-700
+            hover:bg-sky-800 
+            text-white 
+            focus:ring-sky-800'
+          >
+            Submit New Pizza
+          </button>
+          </div>
+          </div>
+          </div>
+        </form>
+      </div>
+      
+      {/* {showModal && <Modal />} */}
+    </>
+  )
+}
+
+export default AdminBuilderCreate
