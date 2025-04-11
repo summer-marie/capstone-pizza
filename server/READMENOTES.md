@@ -124,3 +124,98 @@ create complex relationships between tables without having to manually enforce
 constraints at the application level.
 
 
+2. Create a `pizza.model.js` file with the following content:
+
+```javascript
+const mongoose = require('mongoose');
+
+const pizzaSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  base: { type: String, required: true },
+  sauce: { type: String, required: true },
+  toppings: [{ type: String }],
+  price: { type: Number, required: true },
+});
+
+module.exports = mongoose.model('Pizza', pizzaSchema);
+```
+
+3. Create an `order.model.js` file with the following content:
+
+```javascript
+const mongoose = require('mongoose');
+const pizzaModel = require('./pizza.model');
+
+const orderSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  pizzas: [{ type: { $ref: 'Pizza' }, quantity: Number }],
+  totalPrice: { type: Number, required: true },
+  createdAt: { type: Date, default: Date.now },
+});
+
+module.exports = mongoose.model('Order', orderSchema);
+```
+
+4. Create a `user.model.js` file with the following content:
+
+```javascript
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+});
+
+module.exports = mongoose.model('User', userSchema);
+```
+
+5. Create an `index.js` file to set up the Express app and connect to MongoDB:
+
+```javascript
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const ejsLayouts = require('express-ejs-layouts');
+const mongoose = require('mongoose');
+const pizzaModel = require('./pizza.model');
+const orderModel = require('./order.model');
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((error) => console.error(error));
+
+// Create Express app and set up middleware
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+app.use(ejsLayouts);
+
+// Define routes for each entity (users, orders, pizzas)
+app.get('/', (req, res) => {
+  // Render home page or main layout with navigation and footer
+});
+
+app.get('/pizzas', async (req, res) => {
+  try {
+    const pizzas = await pizzaModel.find({});
+    res.render('pizzas', { pizzas });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching pizzas');
+  }
+});
+
+app.get('/orders/:id', async (req, res) => {
+  try {
+    const order = await orderModel.findById(req.params.id);
+    res.render('order', { order });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching order');
+  }
+});
+
+app.listen(3000, () => console.log('App listening on port 3000'));
+```
