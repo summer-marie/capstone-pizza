@@ -105,21 +105,16 @@ const AdminBuilderCreate = () => {
 
   return (
     <>
-      {/* <SideNav /> */}
-      <div className='flex flex-wrap flex-row-reverse justify-center bg-gray-400'>
-        {/* <div className="border-4 border-white"> */}
-        <form onSubmit={handleSubmit} className='w-1/3 p-6 mt-10 '>
+    <div className="h-screen z-20">
+      <div className='flex flex-wrap flex-row-reverse justify-center'>
+        <form onSubmit={handleSubmit} className='w-1/3 p-6 mt-8 mb-2 min-h-screen'>
+        <h2 className='berkshireSwashFont text-center mb-2 text-2xl font-bold text-slate-800 '>
+          Pizza Builder
+        </h2>
+        <hr className='my-2 mx-auto lg:my-8 border-gray-700 ' />
         <div className="border-4 border-green-700">
         <div className="border-4 border-white">
         <div className="border-4 border-red-700 p-5">
-
-
-
-
-          <h1 className='block mb-2 text-lg font-medium text-gray-900  text-center'>
-            Pizza Builder
-          </h1>
-          <hr className='mb-5' />
           <div className='mb-5'>
             <label
               htmlFor='pizza-name'
@@ -139,7 +134,7 @@ const AdminBuilderCreate = () => {
                   placeholder-gray-500 
                   border-slate-500
                   bg-gray-200 
-                  focus:bg-sky-200 focus:border-sky-700
+                  focus:bg-gray-100 focus:border-sky-700
               '
               placeholder='Meat Lovers'
               required
@@ -152,7 +147,7 @@ const AdminBuilderCreate = () => {
           <div className='mb-5'>
             <label
               htmlFor='pizza-name'
-              className='block mb-2 text-sm font-medium text-gray-900'
+              className='block mb-2 text-sm font-medium text-gray-900 '
             >
               Crust and Cheese
             </label>
@@ -163,11 +158,11 @@ const AdminBuilderCreate = () => {
               // }
               type='text'
               id='crust'
-              className='shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
+              className='shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light cursor-not-allowed
                  text-black 
                   placeholder-gray-500 
                   border-slate-500
-                  bg-gray-200 
+                  bg-gray-400 
                   focus:bg-sky-200 focus:border-sky-700
               '
               required
@@ -181,11 +176,11 @@ const AdminBuilderCreate = () => {
               // }
               type='text'
               id='cheese'
-              className='shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
+              className='shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light cursor-not-allowed
                  text-black 
                   placeholder-gray-500 
                   border-slate-500
-                  bg-gray-200 
+                  bg-gray-400 
                   focus:bg-sky-200 focus:border-sky-700
               '
               required
@@ -460,7 +455,7 @@ const AdminBuilderCreate = () => {
             disabled={submitDisabled}
             type='submit'
             className='
-            flex justify-center disabled:cursor-not-allowed  font-medium rounded-lg text-sm px-5 py-2.5 text-center focus:ring-4 focus:outline-none
+            flex justify-center mx-auto disabled:cursor-not-allowed  font-medium rounded-lg text-sm px-5 py-2.5 text-center focus:ring-4 focus:outline-none
             bg-sky-700
             hover:bg-sky-800 
             text-white 
@@ -472,6 +467,7 @@ const AdminBuilderCreate = () => {
           </div>
           </div>
         </form>
+      </div>
       </div>
       
       {/* {showModal && <Modal />} */}

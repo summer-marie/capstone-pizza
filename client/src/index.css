@@ -110,7 +110,12 @@ mix-blend-mode: multiply;
   flex: 1 0 33%; 
 }
 
-
+.footerCustom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 2rem 0;
+}
 
 
 

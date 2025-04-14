@@ -23,7 +23,6 @@ function App() {
     <>
       {/* TODO: Add sidnav to private routes */}
         <AdminSidenav /> 
-        <Footer />
       <Routes>
       {/* <Navbar /> */}
         <Route path='/' element={<Home />} />
@@ -45,6 +44,7 @@ function App() {
 
         <Route path='*' element={<NoMatch />} />
       </Routes>
+        <Footer />
 
       {/* <Colors /> */}
     </>
