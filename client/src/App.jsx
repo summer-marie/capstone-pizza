@@ -16,15 +16,16 @@ import AdminCompletedOrders from "./admin/AdminCompletedOrders"
 import AdminMenu from "./admin/AdminMenu"
 import Footer from "./comonents/Footer"
 import AdminLogin from "./admin/AdminLogin"
+import PrivateRoute from "./PrivateRoute"
 
 function App() {
   return (
     <>
-      {/* <Navbar /> */}
       {/* TODO: Add sidnav to private routes */}
-        {/* <AdminSidenav />  */}
+        <AdminSidenav /> 
         <Footer />
       <Routes>
+      {/* <Navbar /> */}
         <Route path='/' element={<Home />} />
         <Route path='/menu' element={<Menu />} />
         <Route path='/order-create' element={<Order />} />
@@ -36,6 +37,10 @@ function App() {
         <Route path='/open-orders' element={<AdminOpenOrders />} />
         <Route path='/completed-orders' element={<AdminCompletedOrders />} />
         <Route path='/admin-menu' element={<AdminMenu />} />
+
+        <Route element={<PrivateRoute />}>
+        
+        </Route>
 
 
         <Route path='*' element={<NoMatch />} />
