@@ -18,7 +18,6 @@
 /* Google Fonts */
 .amitaFont {
   font-family: "Amita";
-
   font-style: italic;
 }
 .barriecitoFont {
@@ -110,6 +109,12 @@ mix-blend-mode: multiply;
 .nested-flex-meat div {
   flex: 1 0 33%; 
 }
+
+
+
+
+
+
 
 
 /* Cutout text for header */

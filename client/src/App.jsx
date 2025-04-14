@@ -14,18 +14,23 @@ import AdminSidenav from "./admin/AdminSidenav"
 import AdminOpenOrders from "./admin/AdminOpenOrders"
 import AdminCompletedOrders from "./admin/AdminCompletedOrders"
 import AdminMenu from "./admin/AdminMenu"
+import Footer from "./comonents/Footer"
+import AdminLogin from "./admin/AdminLogin"
 
 function App() {
   return (
     <>
       {/* <Navbar /> */}
-        <AdminSidenav />
+      {/* TODO: Add sidnav to private routes */}
+        {/* <AdminSidenav />  */}
+        <Footer />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/menu' element={<Menu />} />
         <Route path='/order-create' element={<Order />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/checkout' element={<Checkout />} />
+        <Route path='/admin-login' element={<AdminLogin />} />
         {/* Admin routes TODO: Private Routes */}
         <Route path='/pizza-builder' element={<AdminBuilderCreate />} />
         <Route path='/open-orders' element={<AdminOpenOrders />} />
