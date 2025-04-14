@@ -19,6 +19,8 @@ const builderSchema = new Schema({
     },
   ],
   price: { type: Number, required: true },
+  //  image: { data: Buffer, contentType: String }, // for binary images
+  image: [],
 })
 
 export default builderSchema
