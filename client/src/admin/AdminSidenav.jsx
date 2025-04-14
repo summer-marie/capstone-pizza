@@ -1,0 +1,210 @@
+import { Link, useLocation } from "react-router"
+
+const AdminSidenav = () => {
+  let location = useLocation()
+  console.log("location", location)
+
+  return (
+    <>
+      <aside
+        id='default-sidebar'
+        className='fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0'
+        aria-label='Sidebar'
+      >
+        <div
+          className='h-full px-3 py-4 overflow-y-auto 
+        bg-emerald-950'
+        >
+          <ul className='space-y-2 font-medium'>
+            <li>
+              <Link
+                to='/open-orders'
+                className={`flex items-center p-2 rounded-lg group 
+                 ${
+                   location.pathname === "/open-orders"
+                     ? "bg-lime-300/70"
+                     : "hover:bg-gray-800 text-stone-200"
+                 }
+                `}
+              >
+                <svg
+                  className={`w-6 h-6 transition duration-75 group-hover:text-white ${
+                    location.pathname === "/open-orders"
+                      ? "text-gray-700"
+                      : "text-gray-400 "
+                  }
+                      `}
+                  aria-hidden='true'
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke='currentColor'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='2'
+                    d='M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7h-1M8 7h-.688M13 5v4m-2-2h4'
+                  />
+                </svg>
+
+                <span className='ms-3'>Open Orders</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to='/completed-orders'
+                className={`flex items-center p-2 rounded-lg group 
+                  ${
+                    location.pathname === "/completed-orders"
+                      ? "bg-lime-300/70"
+                      : "hover:bg-gray-800 text-stone-200"
+                  }
+                 `}
+              >
+                <svg
+                  className={`w-6 h-6 transition duration-75 group-hover:text-white ${
+                    location.pathname === "/completed-orders"
+                      ? "text-gray-700"
+                      : "text-gray-400 "
+                  }
+                 `}
+                  aria-hidden='true'
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke='currentColor'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='2'
+                    d='M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z'
+                  />
+                </svg>
+
+                <span className='ms-3'>Completed Orders</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to='/pizza-builder'
+                className={`flex items-center p-2 rounded-lg group 
+                  ${
+                    location.pathname === "/pizza-builder"
+                      ? "bg-lime-300/70"
+                      : "hover:bg-gray-800 text-stone-200"
+                  }
+                 `}
+              >
+                <svg
+                  className={`w-6 h-6 transition duration-75 group-hover:text-white ${
+                    location.pathname === "/pizza-builder"
+                      ? "text-gray-700"
+                      : "text-gray-400 "
+                  }
+             `}
+                  aria-hidden='true'
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke='currentColor'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='2'
+                    d='M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z'
+                  />
+                </svg>
+
+                <span className='flex-1 ms-3 whitespace-nowrap'>
+                  Add New Pizza
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to='/admin-menu'
+                className={`flex items-center p-2 rounded-lg group 
+                  ${
+                    location.pathname === "/admin-menu"
+                      ? "bg-lime-300/70"
+                      : "hover:bg-gray-800 text-stone-200"
+                  }
+                 `}
+              >
+                <svg
+                  className={`w-6 h-6 transition duration-75 group-hover:text-white ${
+                    location.pathname === "/admin-menu"
+                      ? "text-gray-700"
+                      : "text-gray-400 "
+                  }
+             `}
+                  aria-hidden='true'
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                >
+                  <g clip-path='url(#a)'>
+                    <path
+                      stroke='currentColor'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='2'
+                      d='m10.4149 10.7623.0005.0109m3.0868 3.0764.0005.0108M8.91554 15.349l.00046.0108m-.8276-8.44549L4.39857 19.9133l12.95163-3.7371m-.8271-8.43475c2.0971 2.09707 3.269 4.77055 3.5172 7.51635.067.7413-.4619 1.3752-1.1869 1.5293-1.0146.2158-1.9613-.5811-2.0926-1.615-.2412-1.9-.9437-3.5721-2.52-5.1484-1.5779-1.57793-3.3173-2.3457-5.25302-2.61955-1.02139-.1445-1.79555-1.1099-1.5387-2.10314.17236-.66653.76818-1.14208 1.45754-1.08543 2.78088.22851 5.49388 1.40332 7.61648 3.52587Z'
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id='a'>
+                      <path fill='#fff' d='M0 0h24v24H0z' />
+                    </clipPath>
+                  </defs>
+                </svg>
+
+                <span className='flex-1 ms-3 whitespace-nowrap'>
+                  Current Menu
+                </span>
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to='/inbox'
+                className={`flex items-center p-2 rounded-lg group 
+                  ${
+                    location.pathname === "/inbox"
+                      ? "bg-lime-300/70"
+                      : "hover:bg-gray-800 text-stone-200"
+                  }
+                 `}
+              >
+                <svg
+                  className={`w-6 h-6 transition duration-75 group-hover:text-white ${
+                    location.pathname === "/inbox"
+                      ? "text-gray-700"
+                      : "text-gray-400 "
+                  }
+         `}
+                  aria-hidden='true'
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path d='M17 6h-2V5h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2h-.541A5.965 5.965 0 0 1 14 10v4a1 1 0 1 1-2 0v-4c0-2.206-1.794-4-4-4-.075 0-.148.012-.22.028C7.686 6.022 7.596 6 7.5 6A4.505 4.505 0 0 0 3 10.5V16a1 1 0 0 0 1 1h7v3a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-3h5a1 1 0 0 0 1-1v-6c0-2.206-1.794-4-4-4Zm-9 8.5H7a1 1 0 1 1 0-2h1a1 1 0 1 1 0 2Z' />
+                </svg>
+
+                <span className='flex-1 ms-3 whitespace-nowrap'>Inbox</span>
+                <span className='inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300'>
+                  3
+                </span>
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </>
+  )
+}
+
+export default AdminSidenav
