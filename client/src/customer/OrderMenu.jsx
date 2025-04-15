@@ -50,7 +50,7 @@ const Order = () => {
 
                 <button
                   type='button'
-                  className='font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 top-0 right-0 shadow-lg   me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none
+                  className='font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 top-0 right-0 shadow-lg   me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
                 shadow-green-800/80 hover:text-black
                 text-white 
                 from-green-950
@@ -59,6 +59,52 @@ const Order = () => {
                 focus:ring-green-800'
                 >
                   Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+          {/* End of CARD  */}
+
+          {/* Build your own pizza card  **LEAVE OUTSIDE OF MAP*/}
+          <div
+            className='max-w-sm rounded-lg shadow-2xl w-1/4 m-4 sm:w-full
+          bg-white border 
+          border-gray-200'
+          >
+            <div className='relative h-0 aspect-ratio'>
+              <img
+                className='object-cover absolute inset-0 w-full h-full rounded-t-lg rounded-s-lg p-2'
+                src={new URL("../assets/greenplus.png", import.meta.url).href}
+                alt='yummy pizza picture'
+              />
+            </div>
+
+            <div className='px-5 pb-5'>
+              <h5 className='text-xl font-semibold tracking-tight text-gray-900 '>
+                Build Your Pizza
+              </h5>
+              <p className="mt-2 mb-2">
+                Every pizza starts with a base of Brick Oven Crust and Special Blend Italian cheese. Toppings are.50 ea with a limit of 5 toppings per pie.
+              </p>
+
+              {/* <div className='flex items-center mt-2.5 mb-5'></div> */}
+
+              <div className='flex items-center justify-between'>
+                <span className='text-3xl font-bold text-gray-900'>
+                  $6.00+
+                </span>
+
+                <button
+                  type='button'
+                  className='font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 top-0 right-0 shadow-lg   me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
+                shadow-cyan-800/80 hover:text-black
+                text-white 
+                from-cyan-950
+                via-cyan-500 
+                to-cyan-600
+                focus:ring-cyan-800'
+                >
+                  Build Your Own
                 </button>
               </div>
             </div>

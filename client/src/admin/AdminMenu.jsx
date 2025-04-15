@@ -23,7 +23,7 @@ const AdminMenu = () => {
               />
               <button
                 type='button'
-                className='absolute mt-2 top-0 right-0 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none
+                className='absolute mt-2 top-0 right-0 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
                 shadow-green-800/80 
                 text-white 
                 from-green-950
@@ -35,7 +35,7 @@ const AdminMenu = () => {
               </button>
               <button
                 type='button'
-                className='absolute mt-2 top-0 left-2 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none
+                className='absolute mt-2 top-0 left-2 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
                 shadow-red-800/80 
                 text-white 
                 from-black
@@ -61,6 +61,8 @@ const AdminMenu = () => {
             </div>
           </div>
           {/* End of card */}
+
+          
         </div>
       </div>
     </>

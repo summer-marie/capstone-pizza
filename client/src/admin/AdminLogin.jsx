@@ -64,7 +64,7 @@ const AdminLogin = () => {
           </div>
           <button
             type='submit'
-            className='font-medium focus:ring-4 focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-80  
+            className='font-medium focus:ring-4 focus:outline-none rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-80  cursor-pointer
                 text-white 
                 bg-gradient-to-r 
                 from-red-400 

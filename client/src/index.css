@@ -116,6 +116,12 @@
   padding: 2rem 0;
 }
 
+/* Custom img aspect ratio for cards */
+.aspect-ratio {
+  --aspect-ratio: 3/4; /* Adjust the aspect ratio by changing the values */
+  padding-bottom: calc(var(--aspect-ratio) * 100%);
+}
+
 
 /* Cutout text for header */
 /* .header-image-container {
