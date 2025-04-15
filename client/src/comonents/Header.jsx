@@ -38,6 +38,3 @@ className='flex flex-col items-center rounded-lg shadow-sm md:flex-row
 </div>
 </div> */}
 
-display: flex;
-flex-grow: 1; 
-align-self: auto; 

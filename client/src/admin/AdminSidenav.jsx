@@ -167,7 +167,41 @@ const AdminSidenav = () => {
                 </span>
               </Link>
             </li>
+            <li>
+              <Link
+                to='/logout'
+                className={`flex items-center p-2 rounded-lg group 
+                        ${
+                          location.pathname === "/logout"
+                            ? "bg-lime-300/70"
+                            : "hover:bg-gray-800 text-stone-200"
+                        }
+                       `}
+              >
+                <svg
+                  className={`w-6 h-6 transition duration-75 group-hover:text-white ${
+                    location.pathname === "/logout"
+                      ? "text-gray-700"
+                      : "text-gray-400 "
+                  }
+                 `}
+                  aria-hidden='true'
+                  xmlns='http://www.w3.org/2000/svg'
+                  // width='24'
+                  // height='24'
+                  fill='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    fill-rule='evenodd'
+                    d='M5 8a4 4 0 1 1 8 0 4 4 0 0 1-8 0Zm-2 9a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1Zm13-6a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-4Z'
+                    clip-rule='evenodd'
+                  />
+                </svg>
 
+                <span className='flex-1 ms-3 whitespace-nowrap'>Sign Out</span>
+              </Link>
+            </li>
             <li>
               <Link
                 to='/inbox'
@@ -185,7 +219,7 @@ const AdminSidenav = () => {
                       ? "text-gray-700"
                       : "text-gray-400 "
                   }
-         `}
+                  `}
                   aria-hidden='true'
                   xmlns='http://www.w3.org/2000/svg'
                   fill='currentColor'
