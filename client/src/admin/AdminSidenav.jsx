@@ -16,6 +16,10 @@ const AdminSidenav = () => {
         bg-emerald-950'
         >
           <ul className='space-y-2 font-medium'>
+            <h2 className='mt-5 text-md font-bold text-stone-200 py-2'>
+              Orders
+            </h2>
+            <hr className='border-gray-500 ' />
             <li>
               <Link
                 to='/open-orders'
@@ -86,6 +90,8 @@ const AdminSidenav = () => {
                 <span className='ms-3'>Completed Orders</span>
               </Link>
             </li>
+            <h2 className='mt-5 text-md font-bold text-stone-200 py-2'>Menu</h2>
+            <hr className='border-gray-500 ' />
             <li>
               <Link
                 to='/pizza-builder'
@@ -167,41 +173,11 @@ const AdminSidenav = () => {
                 </span>
               </Link>
             </li>
-            <li>
-              <Link
-                to='/logout'
-                className={`flex items-center p-2 rounded-lg group 
-                        ${
-                          location.pathname === "/logout"
-                            ? "bg-lime-300/70"
-                            : "hover:bg-gray-800 text-stone-200"
-                        }
-                       `}
-              >
-                <svg
-                  className={`w-6 h-6 transition duration-75 group-hover:text-white ${
-                    location.pathname === "/logout"
-                      ? "text-gray-700"
-                      : "text-gray-400 "
-                  }
-                 `}
-                  aria-hidden='true'
-                  xmlns='http://www.w3.org/2000/svg'
-                  // width='24'
-                  // height='24'
-                  fill='currentColor'
-                  viewBox='0 0 24 24'
-                >
-                  <path
-                    fill-rule='evenodd'
-                    d='M5 8a4 4 0 1 1 8 0 4 4 0 0 1-8 0Zm-2 9a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1Zm13-6a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-4Z'
-                    clip-rule='evenodd'
-                  />
-                </svg>
 
-                <span className='flex-1 ms-3 whitespace-nowrap'>Sign Out</span>
-              </Link>
-            </li>
+            <h2 className='mt-5 text-md font-bold text-stone-200 py-2'>
+              Customer Feedback
+            </h2>
+            <hr className='border-gray-500 ' />
             <li>
               <Link
                 to='/inbox'
@@ -229,9 +205,81 @@ const AdminSidenav = () => {
                 </svg>
 
                 <span className='flex-1 ms-3 whitespace-nowrap'>Inbox</span>
-                <span className='inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300'>
+                <span className='inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium rounded-full text-slate-800 bg-cyan-300 '>
                   3
                 </span>
+              </Link>
+            </li>
+            <h2 className='mt-5 text-md font-bold text-stone-200 py-2'>
+              Your Account
+            </h2>
+            <hr className='border-gray-500 ' />
+            <li>
+              <Link
+                to='/logout'
+                className={`flex items-center p-2 rounded-lg group 
+                        ${
+                          location.pathname === "/logout"
+                            ? "bg-lime-300/70"
+                            : "hover:bg-gray-800 text-stone-200"
+                        }
+                       `}
+              >
+                <svg
+                  className={`w-6 h-6 transition duration-75 group-hover:text-white ${
+                    location.pathname === "/logout"
+                      ? "text-gray-700"
+                      : "text-gray-400 "
+                  }
+                 `}
+                  aria-hidden='true'
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    fill-rule='evenodd'
+                    d='M5 8a4 4 0 1 1 8 0 4 4 0 0 1-8 0Zm-2 9a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1Zm13-6a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-4Z'
+                    clip-rule='evenodd'
+                  />
+                </svg>
+
+                <span className='flex-1 ms-3 whitespace-nowrap'>Sign Out</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to='/settings'
+                className={`flex items-center p-2 rounded-lg group 
+                        ${
+                          location.pathname === "/settings"
+                            ? "bg-lime-300/70"
+                            : "hover:bg-gray-800 text-stone-200"
+                        }
+                       `}
+              >
+                <svg
+                  className={`w-6 h-6 transition duration-75 group-hover:text-white ${
+                    location.pathname === "/settings"
+                      ? "text-gray-700"
+                      : "text-gray-400 "
+                  }
+                   `}
+                  aria-hidden='true'
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke='currentColor'
+                    strokeLinecap='square'
+                    strokeLinejoin='round'
+                    strokeWidth='2'
+                    d='M10 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h2m10 1a3 3 0 0 1-3 3m3-3a3 3 0 0 0-3-3m3 3h1m-4 3a3 3 0 0 1-3-3m3 3v1m-3-4a3 3 0 0 1 3-3m-3 3h-1m4-3v-1m-2.121 1.879-.707-.707m5.656 5.656-.707-.707m-4.242 0-.707.707m5.656-5.656-.707.707M12 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z'
+                  />
+                </svg>
+
+                <span className='flex-1 ms-3 whitespace-nowrap'>Settings</span>
               </Link>
             </li>
           </ul>
