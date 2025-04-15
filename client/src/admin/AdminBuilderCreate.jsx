@@ -105,16 +105,13 @@ const AdminBuilderCreate = () => {
 
   return (
     <>
+      <h2 className='berkshireSwashFont mt-5 text-center text-2xl font-bold text-slate-800'>
+        Pizza Builder for Menu
+      </h2>
+      <hr className='my-6 sm:mx-auto lg:my-8 border-gray-700 ' />
       <div className='h-screen'>
         <div className='flex flex-wrap flex-row-reverse justify-center'>
-          <form
-            onSubmit={handleSubmit}
-            className='w-1/3 p-6 mt-2 mb-10 min-h-screen'
-          >
-            <h2 className='berkshireSwashFont text-center mb-2 text-2xl font-bold text-slate-800 '>
-              Pizza Builder
-            </h2>
-            <hr className='my-2 mx-auto lg:my-8 border-gray-700 ' />
+          <form onSubmit={handleSubmit} className='w-1/3 mb-10 min-h-screen'>
             <div className='border-4 border-green-700'>
               <div className='border-4 border-white'>
                 <div className='border-4 border-red-700 p-5'>

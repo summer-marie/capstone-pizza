@@ -72,11 +72,11 @@ const AdminOpenOrders = () => {
 
   return (
     <>
-      <h2 className='berkshireSwashFont mt-5 text-center text-2xl font-bold text-slate-800 '>
+      <h2 className='berkshireSwashFont mt-5 text-center text-2xl font-bold text-slate-800'>
         Open Orders
       </h2>
-      <hr className='my-6 sm:mx-auto lg:my-8 border-gray-700 ' />
-      <div id='openOrdersTAble' className='w-3/4 ml-[20rem]  shadow-md '>
+      <hr className='my-6 sm:mx-auto lg:my-8 border-gray-700' />
+      <div id='openOrdersTAble' className='w-3/4 ml-[20rem] shadow-2xl'>
         <table
           className='w-full mt-6 text-sm text-left rtl:text-right rounded-2xl
         text-gray-500'

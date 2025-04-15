@@ -8,7 +8,7 @@ const AdminCompletedOrders = () => {
       </h2>
       <hr className='my-6 sm:mx-auto lg:my-8 border-gray-700 ' />
 
-      <div id='openOrdersTAble' className='w-3/4 ml-[20rem]  shadow-md rounded-xl'>
+      <div id='openOrdersTAble' className='w-3/4 ml-[20rem] shadow-2xl'>
         <table
           className='w-full mt-6 text-sm text-left rtl:text-right rounded-2xl
         text-gray-500'
@@ -56,7 +56,7 @@ const AdminCompletedOrders = () => {
               className=' border-b px-4 py-4
               odd:bg-stone-200
               even:bg-gray-300 
-              border-gray-700'
+              border-gray-500'
             >
               <th
                 scope='row'
@@ -67,12 +67,12 @@ const AdminCompletedOrders = () => {
                 <p className=''>0001</p>
               </th>
               <td className='px-4 py-4'>
-                <p className='line-clamp-3'>3/24/2025</p>
+                <p className='line-clamp-3 text-gray-900'>3/24/2025</p>
               </td>
               <td className='px-4 py-4'>
-                <p className='line-clamp-3'>Pizza 1 x1 Pizza 2 x4</p>
+                <p className='line-clamp-3 text-gray-900'>Pizza 1 x1 Pizza 2 x4</p>
               </td>
-              <td className='px-4 py-4'>
+              <td className='px-4 py-4 text-gray-900'>
                 {/* {" "}
                   {task.users.length > 0 && (
                     <>
@@ -81,9 +81,9 @@ const AdminCompletedOrders = () => {
                   )} */}{" "}
                 1234 Smith Drive
               </td>
-              <td className='px-4 py-4'> Sally Weston</td>
-              <td className='px-4 py-4'>25.00</td>
-              <td className='px-4 py-4 '>Completed</td>
+              <td className='px-4 py-4 text-gray-900'> Sally Weston</td>
+              <td className='px-4 py-4 text-gray-900'>25.00</td>
+              <td className='px-4 py-4 text-gray-900'>Completed</td>
             </tr>
             {/* ))} */}
           </tbody>
