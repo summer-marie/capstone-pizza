@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Routes, Route } from "react-router"
 // import Colors from './Colors'
-import Home from "./customer/Home"
+import About from "./customer/About"
 import Navbar from "./comonents/Navbar"
 import Menu from "./customer/Menu"
 import Order from "./customer/Order"
@@ -25,7 +25,7 @@ function App() {
         {/* <AdminSidenav />  */}
       <Navbar />
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<About />} />
         <Route path='/menu' element={<Menu />} />
         <Route path='/order-create' element={<Order />} />
         <Route path='/contact' element={<Contact />} />

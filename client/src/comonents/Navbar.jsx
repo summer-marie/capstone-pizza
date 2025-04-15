@@ -35,20 +35,21 @@ const Navbar = () => {
                   }
                        `}
                 >
-                  Home
+                  About
                 </Link>
               </li>
+
               <li>
                 <Link
-                  to='/menu'
+                  to='/order-create'
                   className={`berkshireSwashFont block py-2 px-3 md:p-0 text-2xl md:hover:bg-transparent md:hover:text-stone-300 hover:bg-stone-300 ${
-                    location.pathname === "/menu"
+                    location.pathname === "/order-create"
                       ? "text-green-700"
-                      : "text-black"
+                      : " text-black"
                   }
                       `}
                 >
-                  Menu
+                  Order
                 </Link>
               </li>
               <li>
@@ -64,25 +65,12 @@ const Navbar = () => {
                   Contact
                 </Link>
               </li>
-              <li>
-                <Link
-                  to='/order-create'
-                  className={`berkshireSwashFont block py-2 px-3 md:p-0 text-2xl md:hover:bg-transparent md:hover:text-stone-300 hover:bg-stone-300 ${
-                    location.pathname === "/order-create"
-                      ? "text-green-700"
-                      : " text-black"
-                  }
-                      `}
-                >
-                  Order
-                </Link>
-              </li>
             </ul>
             {/* <p className='text-stone-300 end-0 absolute p-2'>Check Out</p> */}
             <div className='absolute end-20 p-4'>
-            <Link to="/checkout">
-              <CartSVG />
-            </Link>
+              <Link to='/checkout'>
+                <CartSVG />
+              </Link>
             </div>
           </div>
         </div>
