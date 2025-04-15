@@ -1,33 +1,32 @@
 import { useState } from "react"
 import { Routes, Route } from "react-router"
 // import Colors from './Colors'
+import PrivateRoute from "./PrivateRoute"
+import Navbar from "./components/Navbar"
+import AdminSidenav from "./admin/AdminSidenav"
+import NoMatch from "./components/NoMatch"
 import About from "./customer/About"
-import Navbar from "./comonents/Navbar"
-import Menu from "./customer/Menu"
-import Order from "./customer/Order"
+
+import OrderMenu from "./customer/OrderMenu"
 import Contact from "./customer/Contact"
-import NoMatch from "./comonents/NoMatch"
-import "./App.css"
 import Checkout from "./customer/Checkout"
 import AdminBuilderCreate from "./admin/adminBuilderCreate"
-import AdminSidenav from "./admin/AdminSidenav"
 import AdminOpenOrders from "./admin/AdminOpenOrders"
 import AdminCompletedOrders from "./admin/AdminCompletedOrders"
 import AdminMenu from "./admin/AdminMenu"
-import Footer from "./comonents/Footer"
+import Footer from "./components/Footer"
 import AdminLogin from "./admin/AdminLogin"
-import PrivateRoute from "./PrivateRoute"
+import "./App.css"
 
 function App() {
   return (
     <>
       {/* TODO: Add sidnav to private routes */}
-        {/* <AdminSidenav />  */}
+      {/* <AdminSidenav />  */}
       <Navbar />
       <Routes>
         <Route path='/' element={<About />} />
-        <Route path='/menu' element={<Menu />} />
-        <Route path='/order-create' element={<Order />} />
+        <Route path='/order-create' element={<OrderMenu />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/checkout' element={<Checkout />} />
         <Route path='/admin-login' element={<AdminLogin />} />
@@ -37,14 +36,11 @@ function App() {
         <Route path='/completed-orders' element={<AdminCompletedOrders />} />
         <Route path='/admin-menu' element={<AdminMenu />} />
 
-        <Route element={<PrivateRoute />}>
-        
-        </Route>
-
+        <Route element={<PrivateRoute />}></Route>
 
         <Route path='*' element={<NoMatch />} />
       </Routes>
-        <Footer />
+      <Footer />
 
       {/* <Colors /> */}
     </>

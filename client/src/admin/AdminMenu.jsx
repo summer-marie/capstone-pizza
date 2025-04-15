@@ -4,13 +4,16 @@
 const AdminMenu = () => {
   return (
     <>
+      {/* Header  */}
       <h2 className='berkshireSwashFont mt-5 text-center text-2xl font-bold text-slate-800'>
         Current Customer Menu
       </h2>
       <hr className='my-6 sm:mx-auto lg:my-8 border-gray-700 ' />
+      {/* Grid container Responsive */}
       <div className='mb-10 mx-auto ml-[20rem] w-full px-6 py-2 sm:px-6 lg:max-w-7xl lg:px-8'>
         <div className='drop-shadow-lg grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-4 mb-10'>
           {/* This is where the map would start to run through pizzas to display dynamically */}
+          {/* Card */}
           <div className='max-w-2xl col-1-4 rounded-lg shadow-2xl bg-zinc-300 border border-gray-200'>
             <div className='relative'>
               <img
@@ -33,7 +36,7 @@ const AdminMenu = () => {
               <button
                 type='button'
                 className='absolute mt-2 top-0 left-2 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none
-                shadow-green-800/80 
+                shadow-red-800/80 
                 text-white 
                 from-black
                 via-red-500 
@@ -57,6 +60,7 @@ const AdminMenu = () => {
               </h2>
             </div>
           </div>
+          {/* End of card */}
         </div>
       </div>
     </>

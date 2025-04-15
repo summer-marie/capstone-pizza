@@ -1,10 +1,13 @@
-import Jumbotron from "../comonents/Jumbotron"
+import Jumbotron from "../components/Jumbotron"
 
 const Home = () => {
   return (
+    <>
     <div>
       <Jumbotron />
     </div>
+    
+    </>
   )
 }
 
