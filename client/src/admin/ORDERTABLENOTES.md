@@ -1,3 +1,11 @@
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  When displaying a table with all orders, it is essential to provide users with relevant information about each
 order so that they can quickly understand its status and details. Here's a list of key data points you may want to
 consider for your "Orders" table:

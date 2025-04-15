@@ -53,10 +53,8 @@
 .tomato {
   background-image: url("./assets/tomato.jpg");
   background-size: cover;
-mix-blend-mode: multiply;
-
-  /* position: relative;  */
-  height: 800px;
+  mix-blend-mode: multiply;
+  height: 100vh;
   /* filter: brightness(0.6) contrast(1); */
 }
 
@@ -95,19 +93,20 @@ mix-blend-mode: multiply;
   box-shadow: 0px 0px 30px 20px rgb(59, 4, 0) inset;
 }
 /* Nested flexbox on builder create page */
-.nested-flex-veggie, .nested-flex-meat {
+.nested-flex-veggie,
+.nested-flex-meat {
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   /* gap: 10px; */
 }
 .nested-flex-veggie div {
   /* This sets each child to take up half the width of the container and maintain its original
   size, if it has one set */
-  flex: 1 0 50%; 
+  flex: 1 0 50%;
 }
 
 .nested-flex-meat div {
-  flex: 1 0 33%; 
+  flex: 1 0 33%;
 }
 
 .footerCustom {
@@ -116,12 +115,6 @@ mix-blend-mode: multiply;
   width: 100%;
   padding: 2rem 0;
 }
-
-/* body {
-  display: static;
-} */
-
-
 
 
 /* Cutout text for header */

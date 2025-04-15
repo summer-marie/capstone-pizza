@@ -1,14 +1,14 @@
 import { useState } from "react"
 import { Routes, Route } from "react-router"
 // import Colors from './Colors'
-import Home from "./pages/Home"
+import Home from "./customer/Home"
 import Navbar from "./comonents/Navbar"
-import Menu from "./pages/Menu"
-import Order from "./pages/Order"
-import Contact from "./pages/Contact"
-import NoMatch from "./pages/NoMatch"
+import Menu from "./customer/Menu"
+import Order from "./customer/Order"
+import Contact from "./customer/Contact"
+import NoMatch from "./comonents/NoMatch"
 import "./App.css"
-import Checkout from "./pages/Checkout"
+import Checkout from "./customer/Checkout"
 import AdminBuilderCreate from "./admin/adminBuilderCreate"
 import AdminSidenav from "./admin/AdminSidenav"
 import AdminOpenOrders from "./admin/AdminOpenOrders"
@@ -22,9 +22,9 @@ function App() {
   return (
     <>
       {/* TODO: Add sidnav to private routes */}
-        <AdminSidenav /> 
+        {/* <AdminSidenav />  */}
+      <Navbar />
       <Routes>
-      {/* <Navbar /> */}
         <Route path='/' element={<Home />} />
         <Route path='/menu' element={<Menu />} />
         <Route path='/order-create' element={<Order />} />
