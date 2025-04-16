@@ -1,6 +1,8 @@
-import React from "react"
+import { useNavigate } from "react-router"
 
 const BuildYourOwn = () => {
+  const navigate = useNavigate()
+
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("handleSubmit")
@@ -396,10 +398,11 @@ const BuildYourOwn = () => {
                     placeholder='Light sauce'
                   />
                 </div>
-                <button
-                  // disabled={submitDisabled}
-                  type='submit'
-                  className='flex justify-center mx-auto cursor-pointer disabled:cursor-not-allowed font-medium rounded-lg text-sm 
+                <div className='flex justify-center space-x-4'>
+                  <button
+                    // disabled={submitDisabled}
+                    type='submit'
+                    className='cursor-pointer disabled:cursor-not-allowed font-medium rounded-lg text-sm w-[200px]
                     px-5 py-2.5 text-center bg-gradient-to-r  focus:ring-4 focus:outline-nonefocus:outline-nonehover:bg-gradient-to-br 
                       shadow-green-800/80 
                       hover:text-black
@@ -408,15 +411,28 @@ const BuildYourOwn = () => {
                       via-blue-700 
                       to-cyan-600
                       focus:ring-blue-800'
-                >
-                  Add to Cart
-                </button>
+                  >
+                    Add to Cart
+                  </button>
+                  <button
+                    onClick={() => navigate("/order-menu")}
+                    type='button'
+                    className='w-[200px] font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
+                    shadow-red-800/80 
+                    text-white 
+                    from-red-600
+                    via-red-500 
+                    to-red-800
+                    focus:ring-red-800'
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </form>
       </div>
-
     </>
   )
 }

@@ -41,9 +41,9 @@ const Navbar = () => {
 
               <li>
                 <Link
-                  to='/order-create'
+                  to='/order-menu'
                   className={`berkshireSwashFont block py-2 px-3 md:p-0 text-2xl md:hover:bg-transparent md:hover:text-stone-300 hover:bg-stone-300 ${
-                    location.pathname === "/order-create"
+                    location.pathname === "/order-menu"
                       ? "text-green-700"
                       : " text-black"
                   }
