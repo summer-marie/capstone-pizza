@@ -17,6 +17,7 @@ import AdminMenu from "./admin/AdminMenu"
 import Footer from "./components/Footer"
 import AdminLogin from "./admin/AdminLogin"
 import "./App.css"
+import BuildYourOwn from "./customer/BuildYourOwn"
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={<About />} />
-        <Route path='/order-create' element={<OrderMenu />} />
+        <Route path='/order-menu' element={<OrderMenu />} />
+        <Route path='/order-create' element={<BuildYourOwn />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/checkout' element={<Checkout />} />
         <Route path='/admin-login' element={<AdminLogin />} />

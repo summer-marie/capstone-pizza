@@ -26,6 +26,9 @@
 .berkshireSwashFont {
   font-family: "Berkshire Swash";
 }
+.benthamFont {
+  font-family: "Bentham";
+}
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
@@ -92,7 +95,7 @@
 .smokeShadow {
   box-shadow: 0px 0px 30px 20px rgb(59, 4, 0) inset;
 }
-/* Nested flexbox on builder create page */
+/* Nested flexbox on Admin builder */
 .nested-flex-veggie,
 .nested-flex-meat {
   display: flex;
@@ -109,6 +112,7 @@
   flex: 1 0 33%;
 }
 
+/* Custom footer position */
 .footerCustom {
   position: absolute;
   bottom: 0;
@@ -122,12 +126,3 @@
   padding-bottom: calc(var(--aspect-ratio) * 100%);
 }
 
-
-/* Cutout text for header */
-/* .header-image-container {
-  background-image: url("./assets/backyardSM.jpg"); 
-  background-size: cover;
-  background-position: center;
-  position: relative; 
-  height: 500px;
-} */

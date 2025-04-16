@@ -6,7 +6,10 @@
 // Special intructions text area for users
 // total $$
 
+import { useNavigate } from "react-router"
+
 const Order = () => {
+  const navigate = useNavigate()
   return (
     <>
       {/* Header */}
@@ -83,18 +86,19 @@ const Order = () => {
               <h5 className='text-xl font-semibold tracking-tight text-gray-900 '>
                 Build Your Pizza
               </h5>
-              <p className="mt-2 mb-2">
-                Every pizza starts with a base of Brick Oven Crust and Special Blend Italian cheese. Toppings are.50 ea with a limit of 5 toppings per pie.
+              <p className='mt-2 mb-2'>
+                Every pizza starts with a base of Brick Oven Crust and Special
+                Blend Italian cheese. Toppings are.50 ea with a limit of 5
+                toppings per pie.
               </p>
 
               {/* <div className='flex items-center mt-2.5 mb-5'></div> */}
 
               <div className='flex items-center justify-between'>
-                <span className='text-3xl font-bold text-gray-900'>
-                  $6.00+
-                </span>
+                <span className='text-3xl font-bold text-gray-900'>$6.00+</span>
 
                 <button
+                  onClick={() => navigate("/order-create")}
                   type='button'
                   className='font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 top-0 right-0 shadow-lg   me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
                 shadow-cyan-800/80 hover:text-black
