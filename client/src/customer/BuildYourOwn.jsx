@@ -17,7 +17,7 @@ const BuildYourOwn = () => {
       <hr className='mb-6 sm:mx-auto lg:my-8 border-gray-700 ' />
       {/* Flex container */}
       <div className='flex flex-wrap flex-row-reverse justify-center min-h-screen mb-20'>
-        <form onSubmit={handleSubmit} className='w-1/3'>
+        <form onSubmit={handleSubmit} className='w-1/3 bg-gray-100'>
           {/* Custom border */}
           <div className='border-4 border-green-700'>
             <div className='border-4 border-white'>
@@ -26,7 +26,7 @@ const BuildYourOwn = () => {
                 <p className='benthamFont mb-2 text-center text-2xl font-bold text-slate-800'>
                   Pick up to 5 toppings
                 </p>
-                <h1 className='block mb-2 text-lg font-medium text-gray-900 text-center'>
+                <h1 className='block mb-2 text-lg font-medium text-gray-900 text-left'>
                   Pizza Base
                 </h1>
                 <hr className='mb-5' />
