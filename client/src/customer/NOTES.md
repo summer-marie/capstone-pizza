@@ -22,4 +22,11 @@ border-gray-200 rounded-lg shadow-md "
 
 ```
 
+Terms Defined (Checkout Page)
 
+```
+`<dd>` (Definition Description) and `<dt>` (Definition Term) are used within the `<dl>` (Definition
+ List) element to create a term-description list. The `<dt>` element represents the term or key, while the `<dd>`
+ element is for the description or value associated with that term.
+
+`````

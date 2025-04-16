@@ -36,20 +36,20 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #091034;
+  background: #f3f4f7;
   /* background: none; */
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #236ab9;
-  box-shadow: 2px 0px 5px 0px rgb(236, 247, 244) inset;
+  background: #04a341;
+  box-shadow: 2px 0px 5px 0px rgb(18, 78, 6) inset;
   border-radius: 4px;
   /* height: 50px; */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #d4f7d4;
+  background: #bbf0bb;
 }
 
 /* 404 page */
