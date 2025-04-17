@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useParams, useNavigate } from "react-router"
 import AlertBlack from "../components/AlertBlack"
+import SpinnerBubbles from "../components/SpinnerBubbles"
 // import {
 //   orderGetOne,
 //   orderTaskUpdate,
@@ -47,10 +48,16 @@ const AdminOpenOrders = () => {
   //   // setTaskForm(taskForm.filter((t) => t._id !== task._id))
   // };
 
-  // const handleAlert = () => {
-  //   console.log("achrive button working!!")
-  //   setShowAlert(true)
-  // }
+  const handleStatusUpdate = () => {
+    console.log("SAVE STATUS")
+    setLoading(true)
+    setSaveBubbles(true)
+    // dispatch update of status
+    setTimeout(() => {
+      setSaveBubbles(false)
+    }, 2000)
+  }
+
   const handleCancel = () => {
     setShowAlert(false)
   }
@@ -186,23 +193,24 @@ const AdminOpenOrders = () => {
                 </select>
               </td>
               <td className='px-4 py-4'>
-                <div className='group relative'>
-                  {/* Spinner  */}
-                  <div className='me-2 p-2 w-full absolute top-0 right-2 '>
-                    {/* {saveBubbles && <Spinner loading={loading} />} */}
-                  </div>
+                <div className='relative'>
                   <button
+                    onClick={() => handleStatusUpdate()}
                     // onClick={() => handleSave(task)}
                     //   onClick={handleSave}
                     // disabled={!task.submitEnabled}
                     //   disabled={false}
                     type='button'
-                    className='font-medium hover:underline disabled:cursor-not-allowed  w-full h-full
+                    className='font-medium hover:underline disabled:cursor-not-allowed  w-full h-full cursor-pointer
                     text-blue-600 
-                          disabled:hover:text-slate-400 '
+                    disabled:hover:text-slate-400 '
                   >
                     Save Status
                   </button>
+                  {/* Spinner  */}
+                  <div className='w-full top-0 right-0 ml-5'>
+                    {saveBubbles && <SpinnerBubbles loading={loading} />}
+                  </div>
                 </div>
               </td>
               <td className='px-4 py-4'>
