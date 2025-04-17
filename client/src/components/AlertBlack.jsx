@@ -1,6 +1,11 @@
 import React from "react"
 
-const AlertBlack = () => {
+const AlertBlack = ({
+  alertMsg,
+  alertDesription,
+  handleCancel,
+  handleConfirm,
+}) => {
   return (
     <div className='rounded-lg w-[600px] h-32  bg-[#000402] text-[#ffffff] mx-auto sticky z-20'>
       <div className='flex flex-row gap-5 justify-center items-center px-5 w-full h-full'>
@@ -18,10 +23,34 @@ const AlertBlack = () => {
         </div>
 
         <div>
-          <div className='font-bold text-lg'>Check your Inbox!</div>
-          <div className='text-base'>
-            You have one new unread message in your inbox.
-          </div>
+          <div className='font-bold text-lg'>{alertMsg}</div>
+          <div className='text-base'>{alertDesription}</div>
+        </div>
+
+        <div class='flex justify-end bottom-0 right-0 absolute p-2'>
+          <button
+            onClick={handleConfirm}
+            type='button'
+            class='text-white bg-green-600 hover:bg-green-900 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center'
+          >
+            <svg
+              class='me-2 h-3 w-3'
+              aria-hidden='true'
+              xmlns='http://www.w3.org/2000/svg'
+              fill='currentColor'
+              viewBox='0 0 20 14'
+            >
+              <path d='M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z' />
+            </svg>
+            Yes
+          </button>
+          <button
+            onClick={handleCancel}
+            type='button'
+            class='text-stone-300 bg-transparent border border-stone-800 hover:bg-red-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-700 font-medium rounded-lg text-xs px-3 py-1.5 text-center'
+          >
+            No, Cancel
+          </button>
         </div>
       </div>
     </div>

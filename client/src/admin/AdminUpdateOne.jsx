@@ -3,7 +3,7 @@ import { useState } from "react"
 import AlertSuccess from "../components/AlertSuccess"
 
 const successMsg = "Pizza was updated successfully"
-const successDescription = "navigating you back to the admin menu"
+const successDescription = "navigating you back to the admin menu...."
 
 const AdminUpdateOne = () => {
   const navigate = useNavigate()
@@ -20,7 +20,7 @@ const AdminUpdateOne = () => {
     setShowSuccessAlert(true)
     setTimeout(() => {
       navigate("/admin-menu")
-    }, 3000)
+    }, 2000)
 
     // dispatch(createOrder(order))
     // setShowModal(true)

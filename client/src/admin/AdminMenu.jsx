@@ -1,9 +1,25 @@
 // TODO: Confirmation modal for Delete
 // Update button = go to details page of pizza where you can edit the ingredients
 import { useNavigate } from "react-router"
+import { useState } from "react"
+import AlertBlack from "../components/AlertBlack"
+
+const alertMsg = "Are you sure you want to delete?"
+const alertDesription = "Click to confirm"
 
 const AdminMenu = () => {
   const navigate = useNavigate()
+  const [showAlert, setShowAlert] = useState(false)
+
+  const handleCancel = () => {
+    setShowAlert(false)
+  }
+  const handleConfirm = () => {
+    // setShowAlert(false)
+    // handle delete of pizza
+    console.log("delete pizza")
+  }
+
   return (
     <>
       {/* Header  */}
@@ -37,6 +53,7 @@ const AdminMenu = () => {
                 Update Pizza
               </button>
               <button
+              onClick={() => setShowAlert(true)}
                 type='button'
                 className='absolute mt-2 top-0 left-2 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
                 shadow-red-800/80 
@@ -66,6 +83,17 @@ const AdminMenu = () => {
           {/* End of card */}
         </div>
       </div>
+
+      {showAlert && (
+        <div className='absolute top-[40%] left-[40%] z-30'>
+          <AlertBlack
+            alertMsg={alertMsg}
+            alertDesription={alertDesription}
+            handleCancel={handleCancel}
+            handleConfirm={handleConfirm}
+          />
+        </div>
+      )}
     </>
   )
 }
