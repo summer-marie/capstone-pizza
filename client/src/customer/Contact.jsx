@@ -1,8 +1,12 @@
+import AlertBlack from "../components/AlertBlack"
+import AlertRed from "../components/AlertRed"
+import AlertSuccess from "../components/AlertSuccess"
+
 const Contact = () => {
   return (
     <div>
       Contact page
-      <form id='imgUploader' className='max-w-lg mx-auto'>
+      {/* <form id='imgUploader' className='max-w-lg mx-auto'>
         <label
           className='block mb-2 text-sm font-medium pl-2 text-gray-900'
           htmlFor='user_avatar'
@@ -18,7 +22,10 @@ const Contact = () => {
         <div className='mt-1 text-sm text-gray-500' id='user_avatar_help'>
           Add picture off desired pizza
         </div>
-      </form>
+      </form> */}
+      <AlertRed />
+      <AlertSuccess />
+      <AlertBlack />
     </div>
   )
 }
