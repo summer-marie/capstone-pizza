@@ -7,9 +7,9 @@ const AlertBlack = ({
   handleConfirm,
 }) => {
   return (
-    <div className='rounded-lg w-[600px] h-32  bg-[#000402] text-[#ffffff] mx-auto sticky z-20'>
-      <div className='flex flex-row gap-5 justify-center items-center px-5 w-full h-full'>
-        <div className='my-auto text-lg'>
+    <div className='rounded-lg w-[600px] h-35  bg-[#000402] text-[#ffffff] sticky z-20'>
+      <div className='flex flex-row gap-2 justify-center items-center px-2 w-full h-full'>
+        <div className='text-lg'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='currentColor'
@@ -27,7 +27,7 @@ const AlertBlack = ({
           <div className='text-base'>{alertDesription}</div>
         </div>
 
-        <div className='flex justify-end bottom-0 right-0 absolute p-2'>
+        <div className='flex justify-end bottom-0 right-0 absolute p-2 mt-2'>
           <button
             onClick={handleConfirm}
             type='button'

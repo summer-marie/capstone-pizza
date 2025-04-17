@@ -1,5 +1,7 @@
 import { useState } from "react"
+import { useNavigate } from "react-router"
 import AlertSuccess from "../components/AlertSuccess"
+import AlertBlack from "../components/AlertBlack"
 
 const bitCoinSvg = (
   <svg
@@ -58,8 +60,14 @@ const applePaySvg = (
 const successMsg = "Item deleted successfully"
 const successDescription = ""
 
+const alertMsg = "Are you sure you want to delete this order?"
+const alertDesription = "Click to confirm and redirect back to menu"
+
 const Checkout = () => {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
+
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -75,6 +83,19 @@ const Checkout = () => {
     // Delete item from order
     setTimeout(() => {
       setShowSuccessAlert(false)
+    }, 2000)
+  }
+
+  const handleCancel = () => {
+    setShowAlert(false)
+  }
+
+  const handleConfirm = () => {
+    // handle delete of order
+    console.log("Order deleted")
+    setTimeout(() => {
+      setShowAlert(false)
+      navigate("/order-menu")
     }, 2000)
   }
 
@@ -114,7 +135,7 @@ const Checkout = () => {
                     {/* {order.items.map((item, index) => ( */}
                     <div
                       // key={item.id}
-                      className='flex items-center space-x-4 mt-1 border-cyan-300 border-3 relative'
+                      className='flex items-center space-x-4 mt-1 relative'
                     >
                       <div className='w-1/5'>
                         <button
@@ -131,7 +152,7 @@ const Checkout = () => {
                         </button>
                       </div>
 
-                      <dt className='text-lg font-medium text-gray-900 capitalize'>
+                      <dt className='text-lg font-medium text-gray-900 capitalize -ml-10'>
                         {/* {index + 1}. {item.name} */}
                         pizza name or type
                       </dt>
@@ -149,7 +170,7 @@ const Checkout = () => {
                         <dt className='text-xl font-medium text-gray-900'>
                           Total
                         </dt>
-                        <dd className='text-lg text-gray-500'>
+                        <dd className='text-lg text-gray-500 mr-1'>
                           {/* ${order.total} */}
                           $100.00
                         </dd>
@@ -168,8 +189,6 @@ const Checkout = () => {
                       type='text'
                       id='deliveryAddress'
                       className='shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1
-                      focus:ring-indigo-500
-                      focus:border-indigo-500 
                       border-red-700  '
                       placeholder='Sally'
                     />
@@ -183,8 +202,6 @@ const Checkout = () => {
                       type='text'
                       id='deliveryAddress'
                       className='shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1
-                      focus:ring-indigo-500
-                      focus:border-indigo-500 
                       border-red-700 '
                       placeholder='Smith'
                     />
@@ -198,8 +215,6 @@ const Checkout = () => {
                       type='text'
                       id='deliveryAddress'
                       className='shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1 
-                      focus:ring-indigo-500
-                      focus:border-indigo-500 
                       border-red-700 '
                       placeholder='Enter delivery address'
                     />
@@ -209,8 +224,21 @@ const Checkout = () => {
               {/* ))} */}
               <div className='flex justify-center mt-5'>
                 <button
+                  onClick={() => setShowAlert(true)}
+                  type='button'
+                  className='bg-gradient-to-r hover:bg-gradient-to-br focus:ring-4 focus:outline-none shadow-lg shadow-red-500/50  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 cursor-pointer
+                  text-white 
+                  from-red-400 
+                  via-red-500 
+                  to-red-600  
+                  focus:ring-red-800 '
+                >
+                  Cancel Order
+                </button>
+
+                <button
                   type='submit'
-                  className='focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2
+                  className='focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 shadow-lg shadow-cyan-300
                   bg-[#16b4f3] 
                   hover:bg-[#16b4f3]/90  
                   focus:ring-sky-800/50 
@@ -222,7 +250,7 @@ const Checkout = () => {
 
                 <button
                   type='submmit'
-                  className='focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2
+                  className='focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 shadow-lg shadow-black
                   text-white 
                   bg-[#050708] 
                   hover:bg-[#050708]/80  
@@ -234,7 +262,7 @@ const Checkout = () => {
 
                 <button
                   type='submit'
-                  className=' focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2
+                  className=' focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 shadow-lg shadow-amber-600
                   text-white 
                   bg-[#FF9119] 
                   hover:bg-[#FF9119]/80 
@@ -248,12 +276,24 @@ const Checkout = () => {
           </div>
         </div>
       </form>
-
+      {/* Success alert  */}
       {showSuccessAlert && (
         <div className='absolute top-[50%] left-[40%] z-30 border-6 rounded-2xl border-green-400'>
           <AlertSuccess
             successMsg={successMsg}
             successDescription={successDescription}
+          />
+        </div>
+      )}
+
+      {/* Delete confirmation alert  */}
+      {showAlert && (
+        <div className='absolute top-[40%] left-[40%] z-30 rounded-2xl border-6 border-slate-800'>
+          <AlertBlack
+            alertMsg={alertMsg}
+            alertDesription={alertDesription}
+            handleCancel={handleCancel}
+            handleConfirm={handleConfirm}
           />
         </div>
       )}
