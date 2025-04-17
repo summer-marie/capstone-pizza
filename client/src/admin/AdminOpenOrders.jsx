@@ -1,19 +1,21 @@
 import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useParams, useNavigate } from "react-router"
+import AlertBlack from "../components/AlertBlack"
 // import {
 //   orderGetOne,
 //   orderTaskUpdate,
 //   orderTaskDelete,
 // } from "../redux/orderSlice";
-// import DeleteModal from "../components/DeleteModal";
 // import Spinner from "../components/Spinner";
 
+const alertMsg = "Are you sure you want to archive this order?"
+const alertDesription = "Click to confirm"
+
 const AdminOpenOrders = () => {
-  // const [showDeleteModal, setShowDeleteModal] = useState(false);
   // const { order } = useSelector((state) => state.order);
   // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate()
   // const { id } = useParams();
 
   // const initialTask = {
@@ -24,32 +26,15 @@ const AdminOpenOrders = () => {
   //   users: [{ firstName: "", lastName: "" }],
   // };
 
-  // const [taskForm, setTaskForm] = useState([initialTask]);
-
-  // const [taskToDelete, setTaskToDelete] = useState(initialTask);
-
   const [saveBubbles, setSaveBubbles] = useState(false)
   const [loading, setLoading] = useState(false)
-
+  const [showAlert, setShowAlert] = useState(false)
   // Grab order
   // useEffect(() => {
   //   console.log("TASKS: useEffect id", id);
   //   dispatch(orderGetOne(id));
   //   console.log("TASKS: order", order);
   // }, []);
-
-  // useEffect(() => {
-  //   console.log("OrderTasks useEffect order", order);
-  //   console.log("OrderTasks useEffect order.tasks", order.tasks);
-  //   // // console.log("order.tasks.find", order.tasks.find(task => task.users[0].firstName === ""))
-  //   if (order.orderNumber !== "") {
-  //     setTaskForm(order.tasks);
-  //   }
-  // }, [order]);
-
-  // useEffect(() => {
-  //   console.log("useEffect taskForm", taskForm);
-  // }, [taskForm]);
 
   // const handleSave = (task) => {
   //   console.log("orderId:", id, "task:", task);
@@ -62,13 +47,18 @@ const AdminOpenOrders = () => {
   //   // setTaskForm(taskForm.filter((t) => t._id !== task._id))
   // };
 
-  // const handleDelete = (task) => {
-  //   console.log("handle delete", task);
-  //   dispatch(orderTaskDelete({ id, taskId: task._id }));
-  //   setTaskForm(taskForm.filter((t) => t._id !== task._id));
-  //   // dispatch(orderTaskUpdate({id, task}));
-  //   setShowDeleteModal(false);
-  // };
+  // const handleAlert = () => {
+  //   console.log("achrive button working!!")
+  //   setShowAlert(true)
+  // }
+  const handleCancel = () => {
+    setShowAlert(false)
+  }
+  const handleConfirm = () => {
+    // setShowAlert(false)
+    // handle delete of pizza
+    console.log("ARCHIVE pizza")
+  }
 
   return (
     <>
@@ -213,40 +203,39 @@ const AdminOpenOrders = () => {
                   >
                     Save Status
                   </button>
-                </div>{" "}
+                </div>
               </td>
               <td className='px-4 py-4'>
-                <div className='group relative'>
-                  {/* Spinner  */}
-                  <div className='me-2 p-2 w-full absolute top-0 right-2 '>
-                    {/* {saveBubbles && <Spinner loading={loading} />} */}
-                  </div>
+                <div className='relative'>
+                  <div className='w-full top-0 right-2 '></div>
                   <button
-                    // onClick={() => {
-                    //   setTaskToDelete(task);
-                    //   setShowDeleteModal(true);
-                    //   // setSaveBubbles(true)
-                    // }}
-                    type='button'
-                    className='font-medium text-red-700 hover:underline w-full h-full'
+                    // onClick={handleAlert}
+                    onClick={() => {
+                      //   setTaskToDelete(task);
+                      setShowAlert(true)
+                      //   // setSaveBubbles(true)
+                    }}
+                    type='submit'
+                    className='font-medium text-red-700 w-full h-full border-3 rounded-xl hover:bg-red-700 hover:text-white hover:border-black cursor-pointer'
                   >
                     Archive Order
                   </button>
-                </div>{" "}
+                </div>
               </td>
             </tr>
-            {/* ))} */}
           </tbody>
         </table>
-        {/* <DeleteModal /> */}
       </div>
-      {/* {showDeleteModal && (
-        <DeleteModal
-          setShowDeleteModal={setShowDeleteModal}
-          handleDelete={handleDelete}
-          taskToDelete={taskToDelete}
-        />
-      )} */}
+      {showAlert && (
+        <div className='absolute top-[40%] left-[40%] z-30'>
+          <AlertBlack
+            alertMsg={alertMsg}
+            alertDesription={alertDesription}
+            handleCancel={handleCancel}
+            handleConfirm={handleConfirm}
+          />
+        </div>
+      )}
     </>
   )
 }
