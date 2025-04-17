@@ -85,15 +85,37 @@ const AdminBuilderCreate = () => {
                       type='text'
                       id='pizza-name'
                       className='shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
-                 text-black 
-                  placeholder-gray-500 
-                  border-slate-500
-                  bg-gray-200 
-                  focus:bg-gray-100 focus:border-sky-700
+                      text-black 
+                      placeholder-gray-500 
+                      border-slate-500
+                      bg-gray-200 
+                      focus:bg-gray-100 
+                      focus:border-sky-700
               '
                       placeholder='Meat Lovers'
                       required
                     />
+                  </div>
+                  {/* Upload new Photo */}
+                  <div id='imgUploader' className='max-w-lg mx-auto mb-5'>
+                    <label
+                      className='block mb-2 text-sm font-medium pl-2 text-gray-900 capitlize'
+                      htmlFor='pizza_photo'
+                    >
+                      Upload photo
+                    </label>
+                    <input
+                      className='block w-full text-lg focus:outline-none p-2 text-gray-800 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 '
+                      aria-describedby='pizza_photo_help'
+                      id='pizza_photo'
+                      type='file'
+                    />
+                    <div
+                      className='mt-1 text-sm text-gray-500'
+                      id='pizza_photo_help'
+                    >
+                      Add picture of desired pizza
+                    </div>
                   </div>
                   <h1 className='block mb-2 text-lg font-medium text-gray-900 text-center'>
                     Pizza Base
@@ -114,11 +136,12 @@ const AdminBuilderCreate = () => {
                       type='text'
                       id='crust'
                       className='shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light cursor-not-allowed
-                 text-black 
-                  placeholder-gray-500 
-                  border-slate-500
-                  bg-gray-400 
-                  focus:bg-sky-200 focus:border-sky-700
+                      text-black 
+                      placeholder-gray-500 
+                      border-slate-500
+                      bg-gray-400 
+                      focus:bg-sky-200 
+                      focus:border-sky-700
               '
                       required
                     >
@@ -132,11 +155,12 @@ const AdminBuilderCreate = () => {
                       type='text'
                       id='cheese'
                       className='shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light cursor-not-allowed
-                 text-black 
-                  placeholder-gray-500 
-                  border-slate-500
-                  bg-gray-400 
-                  focus:bg-sky-200 focus:border-sky-700
+                      text-black 
+                        placeholder-gray-500 
+                        border-slate-500
+                        bg-gray-400 
+                        focus:bg-sky-200 
+                        focus:border-sky-700
               '
                       required
                     >
@@ -158,13 +182,13 @@ const AdminBuilderCreate = () => {
                       // }
                       id='suace'
                       className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
-                 text-black 
-                  placeholder-gray-500 
-                  border-slate-500
-                  bg-gray-200 
-                  focus:bg-gray-300 
-                  focus:ring-white
-                  focus:border-sky-500'
+                      text-black 
+                        placeholder-gray-500 
+                        border-slate-500
+                        bg-gray-200 
+                        focus:bg-gray-300 
+                        focus:ring-white
+                        focus:border-sky-500'
                       required
                     >
                       <option value='Red'>Signature Red Sauce</option>
@@ -192,13 +216,13 @@ const AdminBuilderCreate = () => {
                           // }
                           id='meat-type'
                           className='text-sm rounded-lg block w-full p-2.5 shadow-sm-light border-2
-                  text-white 
-                  placeholder-gray-400 
-                  border-red-950
-                  bg-red-800 
-                  focus:bg-red-950 
-                  focus:ring-red-500
-                  focus:border-red-500'
+                          text-white 
+                          placeholder-gray-400 
+                          border-red-950
+                          bg-red-800 
+                          focus:bg-red-950 
+                          focus:ring-red-500
+                          focus:border-red-500'
                         >
                           <option defaultValue>- - None - - </option>
                           <option value='Pepperoni'>Pepperoni</option>
@@ -224,13 +248,13 @@ const AdminBuilderCreate = () => {
                           // }
                           id='meat-type'
                           className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
-                  text-white 
-                  placeholder-gray-400 
-                  border-red-950
-                  bg-red-800 
-                  focus:bg-red-950 
-                  focus:ring-red-500
-                  focus:border-red-500'
+                          text-white 
+                          placeholder-gray-400 
+                          border-red-950
+                          bg-red-800 
+                          focus:bg-red-950 
+                          focus:ring-red-500
+                          focus:border-red-500'
                         >
                           <option defaultValue>- - None - - </option>
                           <option value='Pepperoni'>Pepperoni</option>
@@ -256,13 +280,13 @@ const AdminBuilderCreate = () => {
                           // }
                           id='meat-type'
                           className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
-                text-white 
-                placeholder-gray-400 
-                border-red-950
-                bg-red-800 
-                focus:bg-red-950 
-                focus:ring-red-500
-                focus:border-red-500 '
+                          text-white 
+                          placeholder-gray-400 
+                          border-red-950
+                          bg-red-800 
+                          focus:bg-red-950 
+                          focus:ring-red-500
+                          focus:border-red-500 '
                         >
                           <option defaultValue>- - None - - </option>
                           <option value='Pepperoni'>Pepperoni</option>
@@ -299,13 +323,13 @@ const AdminBuilderCreate = () => {
                           // }
                           id='veggie-type'
                           className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
-                text-white 
-                placeholder-gray-400 
-                border-green-800
-                bg-emerald-500
-                focus:bg-emerald-800
-                focus:ring-emerald-100
-                focus:border-emerald-200 '
+                          text-white 
+                          placeholder-gray-400 
+                          border-green-800
+                          bg-emerald-500
+                          focus:bg-emerald-800
+                          focus:ring-emerald-100
+                          focus:border-emerald-200 '
                         >
                           <option defaultValue>- - None - - </option>
                           <option value='Mushrooms'>Mushrooms</option>
@@ -329,13 +353,13 @@ const AdminBuilderCreate = () => {
                           // }
                           id='veggie-type'
                           className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
-                text-white 
-                placeholder-gray-400 
-                border-green-800
-                bg-emerald-500
-                focus:bg-emerald-800
-                focus:ring-emerald-100
-                focus:border-emerald-200 '
+                          text-white 
+                          placeholder-gray-400 
+                          border-green-800
+                          bg-emerald-500
+                          focus:bg-emerald-800
+                          focus:ring-emerald-100
+                          focus:border-emerald-200 '
                         >
                           <option defaultValue>- - None - - </option>
                           <option value='Mushrooms'>Mushrooms</option>
@@ -361,13 +385,13 @@ const AdminBuilderCreate = () => {
                           // }
                           id='veggie-type'
                           className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
-                text-white 
-                placeholder-gray-400 
-                border-green-800
-                bg-emerald-500
-                focus:bg-emerald-800
-                focus:ring-emerald-100
-                focus:border-emerald-200 '
+                          text-white 
+                          placeholder-gray-400 
+                          border-green-800
+                          bg-emerald-500
+                          focus:bg-emerald-800
+                          focus:ring-emerald-100
+                          focus:border-emerald-200 '
                         >
                           <option defaultValue>- - None - - </option>
                           <option value='Mushrooms'>Mushrooms</option>
@@ -391,13 +415,13 @@ const AdminBuilderCreate = () => {
                           // }
                           id='veggie-type'
                           className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2 
-                text-white 
-                placeholder-gray-400 
-                border-green-800
-                bg-emerald-500
-                focus:bg-emerald-800
-                focus:ring-emerald-100
-                focus:border-emerald-200 '
+                            text-white 
+                            placeholder-gray-400 
+                            border-green-800
+                            bg-emerald-500
+                            focus:bg-emerald-800
+                            focus:ring-emerald-100
+                            focus:border-emerald-200 '
                         >
                           <option defaultValue>- - None - - </option>
                           <option value='Mushrooms'>Mushrooms</option>
@@ -413,13 +437,13 @@ const AdminBuilderCreate = () => {
                     // onClick={showSuccessAlert}
                     type='submit'
                     className='flex justify-center mx-auto cursor-pointer disabled:cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center  focus:outline-nonehover:bg-gradient-to-br bg-gradient-to-r  focus:ring-4 focus:outline-none
-                shadow-green-800/80 
-                hover:text-black
-                text-white 
-                from-cyan-400 
-                via-blue-700 
-                to-cyan-600
-                focus:ring-blue-800'
+                      shadow-green-800/80 
+                      hover:text-black
+                      text-white 
+                      from-cyan-400 
+                      via-blue-700 
+                      to-cyan-600
+                      focus:ring-blue-800'
                   >
                     Submit New Pizza
                   </button>

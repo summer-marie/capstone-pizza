@@ -1,7 +1,4 @@
-import AlertBlack from "../components/AlertBlack"
-import AlertRed from "../components/AlertRed"
-import AlertSuccess from "../components/AlertSuccess"
-import AlertTest from "../components/AlertTest"
+
 
 const Contact = () => {
   return (
@@ -24,9 +21,7 @@ const Contact = () => {
           Add picture off desired pizza
         </div>
       </form> */}
-      <AlertRed />
-      <AlertSuccess />
-      <AlertBlack />
+ 
 
     </div>
   )

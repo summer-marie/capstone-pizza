@@ -24,8 +24,8 @@ function App() {
   return (
     <>
       {/* TODO: Add sidnav to private routes */}
-      {/* <AdminSidenav />  */}
-      <Navbar />
+      <AdminSidenav /> 
+      {/* <Navbar /> */}
       <Routes>
         <Route path='/' element={<About />} />
         <Route path='/order-menu' element={<OrderMenu />} />
