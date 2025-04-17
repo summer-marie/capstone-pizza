@@ -27,7 +27,7 @@ const Order = () => {
           <div
             className='max-w-sm rounded-lg shadow-2xl w-1/4 m-4 sm:w-full
           bg-white border 
-          border-gray-200 '
+          border-gray-200 shadow-red-700'
           >
             <img
               className='object-cover w-full rounded-t-lg h-auto rounded-s-lg p-2'
@@ -72,7 +72,7 @@ const Order = () => {
           <div
             className='max-w-sm rounded-lg shadow-2xl w-1/4 m-4 sm:w-full
           bg-white border 
-          border-gray-200'
+          border-gray-200 shadow-emerald-700'
           >
             <div className='relative h-0 aspect-ratio'>
               <img

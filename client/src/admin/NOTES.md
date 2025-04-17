@@ -9,3 +9,6 @@ TODO:
 - edit single pizza 
 
 - Archive Orders
+
+- Add Reports to side bar
+  > needs to track cost of supplies 
