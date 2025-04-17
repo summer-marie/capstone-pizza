@@ -1,4 +1,5 @@
-//TODO: put into a modal???
+import { useState } from "react"
+import AlertSuccess from "../components/AlertSuccess"
 
 const bitCoinSvg = (
   <svg
@@ -54,13 +55,27 @@ const applePaySvg = (
   </svg>
 )
 
+const successMsg = "Item deleted successfully"
+const successDescription = ""
+
 const Checkout = () => {
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("handleSubmit")
     // dispatch(createOrder(order))
     // setShowModal(true)
     // setSubmitDisabled(true)
+  }
+
+  const handleItemDelete = () => {
+    console.log("Item delete button works!!!")
+    setShowSuccessAlert(true)
+    // Delete item from order
+    setTimeout(() => {
+      setShowSuccessAlert(false)
+    }, 2000)
   }
 
   return (
@@ -74,10 +89,9 @@ const Checkout = () => {
         <div className='w-150 h-80 bg-gray-400 rounded-xl'></div>
       </div> */}
 
-      {/* Right side of the screen will have the total information in a modale or a card off the side */}
-      <form onSubmit={handleSubmit} className='mt-10'>
+      <form onSubmit={handleSubmit} className='mt-10 '>
         <div className='min-h-screen mx-auto w-full'>
-          <div className='flex flex-col sm:flex-row items-start justify-center mx-auto space-y-6 sm:space-y-0 sm:space-x-6 w-1/2 bg-gray-100'>
+          <div className='flex flex-col sm:flex-row items-start justify-center mx-auto space-y-6 sm:space-y-0 sm:space-x-6 w-2/3 bg-gray-100'>
             <ul
               role='list'
               className='divide-y w-full border-2 rounded-xl p-5
@@ -100,13 +114,28 @@ const Checkout = () => {
                     {/* {order.items.map((item, index) => ( */}
                     <div
                       // key={item.id}
-                      className='flex items-center space-x-4 mt-1'
+                      className='flex items-center space-x-4 mt-1 border-cyan-300 border-3 relative'
                     >
+                      <div className='w-1/5'>
+                        <button
+                          onClick={handleItemDelete}
+                          // onClick={() => {
+                          //   setTaskToDelete(task);
+                          // setShowAlert(true)
+                          //   // setSaveBubbles(true)
+                          // }}
+                          type='button'
+                          className='text-sm font-mediumabsolute left-0 text-red-700 w-3/4 h-full border-3 rounded-xl hover:bg-red-700 hover:text-white hover:border-black cursor-pointer capitalize ml-0'
+                        >
+                          remove item
+                        </button>
+                      </div>
+
                       <dt className='text-lg font-medium text-gray-900 capitalize'>
                         {/* {index + 1}. {item.name} */}
                         pizza name or type
                       </dt>
-                      <dd className='text-lg text-gray-500 ml-auto'>
+                      <dd className='text-lg text-gray-500 ml-auto absolute right-0'>
                         {/* ${item.price} */}
                         item price $ (5.00)
                       </dd>
@@ -219,6 +248,15 @@ const Checkout = () => {
           </div>
         </div>
       </form>
+
+      {showSuccessAlert && (
+        <div className='absolute top-[50%] left-[40%] z-30 border-6 rounded-2xl border-green-400'>
+          <AlertSuccess
+            successMsg={successMsg}
+            successDescription={successDescription}
+          />
+        </div>
+      )}
     </>
   )
 }
