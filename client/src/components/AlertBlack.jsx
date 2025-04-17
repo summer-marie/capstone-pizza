@@ -27,14 +27,14 @@ const AlertBlack = ({
           <div className='text-base'>{alertDesription}</div>
         </div>
 
-        <div class='flex justify-end bottom-0 right-0 absolute p-2'>
+        <div className='flex justify-end bottom-0 right-0 absolute p-2'>
           <button
             onClick={handleConfirm}
             type='button'
-            class='text-white bg-green-600 hover:bg-green-900 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center'
+            className='text-white bg-green-600 hover:bg-green-900 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center'
           >
             <svg
-              class='me-2 h-3 w-3'
+              className='me-2 h-3 w-3'
               aria-hidden='true'
               xmlns='http://www.w3.org/2000/svg'
               fill='currentColor'
@@ -47,7 +47,7 @@ const AlertBlack = ({
           <button
             onClick={handleCancel}
             type='button'
-            class='text-stone-300 bg-transparent border border-stone-800 hover:bg-red-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-700 font-medium rounded-lg text-xs px-3 py-1.5 text-center'
+            className='text-stone-300 bg-transparent border border-stone-800 hover:bg-red-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-700 font-medium rounded-lg text-xs px-3 py-1.5 text-center'
           >
             No, Cancel
           </button>
