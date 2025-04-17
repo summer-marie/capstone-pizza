@@ -1,6 +1,6 @@
-const AlertSuccess = () => {
+const AlertSuccess = ({successMsg, successDescription}) => {
   return (
-    <div className='rounded-lg w-[600px] h-32  bg-[#08aa38] text-[#ffffff] mx-auto sticky z-20'>
+    <div className='rounded-lg w-[600px] h-32  bg-[#08aa38] text-[#ffffff]'>
       <div className='flex flex-row gap-5 justify-center items-center px-5 w-full h-full'>
         <div className='my-auto text-lg'>
           <svg
@@ -21,9 +21,9 @@ const AlertSuccess = () => {
         </div>
 
         <div>
-          <div className='font-bold text-lg'>Check your Inbox!</div>
+          <div className='font-bold text-lg'>{successMsg}</div>
           <div className=' text-base'>
-            You have one new unread message in your inbox.
+        {successDescription}
           </div>
         </div>
       </div>

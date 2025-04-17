@@ -1,6 +1,7 @@
 import AlertBlack from "../components/AlertBlack"
 import AlertRed from "../components/AlertRed"
 import AlertSuccess from "../components/AlertSuccess"
+import AlertTest from "../components/AlertTest"
 
 const Contact = () => {
   return (
@@ -26,6 +27,7 @@ const Contact = () => {
       <AlertRed />
       <AlertSuccess />
       <AlertBlack />
+
     </div>
   )
 }

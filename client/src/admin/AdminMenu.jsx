@@ -1,7 +1,9 @@
 // TODO: Confirmation modal for Delete
 // Update button = go to details page of pizza where you can edit the ingredients
+import { useNavigate } from "react-router"
 
 const AdminMenu = () => {
+  const navigate = useNavigate()
   return (
     <>
       {/* Header  */}
@@ -22,6 +24,7 @@ const AdminMenu = () => {
                 alt=''
               />
               <button
+                onClick={() => navigate("/admin-update-one")}
                 type='button'
                 className='absolute mt-2 top-0 right-0 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
                 shadow-green-800/80 
@@ -61,8 +64,6 @@ const AdminMenu = () => {
             </div>
           </div>
           {/* End of card */}
-
-          
         </div>
       </div>
     </>
