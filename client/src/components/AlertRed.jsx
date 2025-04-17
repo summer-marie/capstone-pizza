@@ -1,6 +1,6 @@
 const AlertRed = ({ alertMsg, alertDesription, handleClose }) => {
   return (
-    <div className='rounded-lg w-[600px] h-32  bg-red-800/80 text-[#ffffff] mx-auto sticky z-20'>
+    <div className='rounded-lg w-[600px] h-32 bg-red-800/80 text-[#ffffff] mx-auto sticky z-20'>
       <div className='flex flex-row gap-5 justify-center items-center px-5 w-full h-full'>
         <div className='my-auto text-lg'>
           <svg

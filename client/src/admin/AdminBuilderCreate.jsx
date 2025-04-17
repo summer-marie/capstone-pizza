@@ -1,63 +1,16 @@
 import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router"
+import AlertSuccess from "../components/AlertSuccess"
 // import { createOrder } from "./redux/orderSlice"
 // import { builderGetMany } from "../redux/builderSlice"
 // import { userGetMany } from "../redux/userSlice"
 
-const Modal = () => {
-  // const navigate = useNavigate()
-
-  return (
-    <>
-      <div
-        id='updateModal'
-        tabIndex='-1'
-        className='overflow-y-auto overflow-x-hidden fixed z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full'
-      >
-        <div
-          id='center-modal'
-          className='relative p-4 w-full max-w-md max-h-full border dark:border-slate-300'
-        >
-          <div className='relative bg-white rounded-lg shadow dark:bg-cyan-800 border-2 opacity-95'>
-            <div className='p-4 md:p-5 text-center'>
-              <svg
-                className='mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200'
-                aria-hidden='true'
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  stroke='currentColor'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M12 21a9 9 0 1 1 0-18c1.052 0 2.062.18 3 .512M7 9.577l3.923 3.923 8.5-8.5M17 14v6m-3-3h6'
-                />
-              </svg>
-
-              <h3 className='mb-5 text-lg font-normal text-gray-500 dark:text-gray-400'>
-                Order was created successfully.
-              </h3>
-              <button
-                // onClick={() => navigate("/dashboard")}
-                type='button'
-                className='text-white bg-green-800 hover:bg-slate-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-slate-700 
-                dark:hover:text-green-500
-                dark:focus:ring-slate-700 dark:border-slate-600'
-              >
-                OK
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  )
-}
+const successMsg = "Pizza was created successfully!!"
+const successDescription = "navigating you to the admin menu...."
 
 const AdminBuilderCreate = () => {
+  const navigate = useNavigate()
   // const [pizza, setPizza] = useState({
   //   pizzaName: "",
   //   crust: "brick-oven-crust",
@@ -71,7 +24,8 @@ const AdminBuilderCreate = () => {
   //   veggies3: "",
   //   veggies4: "",
   // })
-  // const [showModal, setShowModal] = useState(false)
+
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
   const [submitDisabled, setSubmitDisabled] = useState(false)
   // const { loading } = useSelector((state) => state.order);
   // const { builders } = useSelector((state) => state.builder)
@@ -98,9 +52,10 @@ const AdminBuilderCreate = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("handleSubmit")
-    // dispatch(createOrder(order))
-    // setShowModal(true)
-    // setSubmitDisabled(true)
+    setShowSuccessAlert(true)
+    setTimeout(() => {
+      navigate("/admin-menu")
+    }, 2000)
   }
 
   return (
@@ -112,7 +67,7 @@ const AdminBuilderCreate = () => {
       <div className='h-screen'>
         <div className='flex flex-wrap flex-row-reverse justify-center'>
           <form onSubmit={handleSubmit} className='w-1/3 mb-10 min-h-screen'>
-            <div className='border-4 border-green-700'>
+            <div className='border-4 border-green-700 mb-20'>
               <div className='border-4 border-white'>
                 <div className='border-4 border-red-700 p-5'>
                   <div className='mb-5'>
@@ -455,6 +410,7 @@ const AdminBuilderCreate = () => {
                   </div>
                   <button
                     // disabled={submitDisabled}
+                    // onClick={showSuccessAlert}
                     type='submit'
                     className='flex justify-center mx-auto cursor-pointer disabled:cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center  focus:outline-nonehover:bg-gradient-to-br bg-gradient-to-r  focus:ring-4 focus:outline-none
                 shadow-green-800/80 
@@ -473,8 +429,14 @@ const AdminBuilderCreate = () => {
           </form>
         </div>
       </div>
-
-      {/* {showModal && <Modal />} */}
+      {showSuccessAlert && (
+        <div className='absolute top-[50%] left-[40%] z-30'>
+          <AlertSuccess
+            successMsg={successMsg}
+            successDescription={successDescription}
+          />
+        </div>
+      )}
     </>
   )
 }

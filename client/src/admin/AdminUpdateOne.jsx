@@ -10,10 +10,6 @@ const AdminUpdateOne = () => {
 
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
 
-  // const handleOpenModal = () => {
-  //   setShowModal(true)
-  // }
-
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("handleSubmit")
@@ -23,7 +19,6 @@ const AdminUpdateOne = () => {
     }, 2000)
 
     // dispatch(createOrder(order))
-    // setShowModal(true)
     // setSubmitDisabled(true)
   }
   return (
