@@ -29,6 +29,17 @@
 .benthamFont {
   font-family: "Bentham";
 }
+.cursiveFont {
+  font-family: "Calligraffitti";
+}
+
+.charmFont {
+  font-family: "Charm";
+}
+
+.letterSpace1{
+  letter-spacing: 2px;
+}
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {

@@ -29,7 +29,7 @@ const svgLock = (
 const AdminLogin = () => {
   return (
     <>
-      {/* <div className='p-30 borderShadow h-screen bg-gray-400'>
+      <div className='p-30 borderShadow h-screen bg-gray-400'>
         <div className='flex flex-col w-full md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 rounded-2xl shadow-2xl bg-[#e4dcdc]'>
           <div className='flex flex-row gap-3 pb-4'>
             <div>{svgPrint}</div>
@@ -140,7 +140,8 @@ const AdminLogin = () => {
             </div>
           </form>
         </div>
-      </div> */}
+      </div>
+      
       <div className='borderShadow min-h-screen bg-gray-400 p-10'>
         <div className='flex flex-col w-full md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 bg-[#d9e4e5] rounded-2xl shadow-xl'>
           {/*       <div className='flex flex-col w-full md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 rounded-2xl shadow-2xl bg-[#e4dcdc]'> */}
