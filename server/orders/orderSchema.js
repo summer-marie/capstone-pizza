@@ -8,25 +8,24 @@ const Schema = mongoose.Schema
 const orderSchema = new Schema({
   orderNumber: {
     type: String,
-    defaultFormat: "integer",
+    default: "",
   },
   Date: {
-    type: String,
-    defaultFormat: "YYYY-MM-DD",
+    type: Date,
+    default: new Date(),
   },
   orderDetails: {
-    type: String,
-    defaultFormat: "object",
     pizzaName: {
       type: String,
-      defaultFormat: "object",
+      default: "",
     },
     pizzaPrice: {
-      type: DecimalNumber,
-      format: "$XX.XX",
+      type: Number,
+      default: 0,
     },
     quantity: {
       type: Number,
+      default: 0,
     },
   },
   address: {
@@ -48,9 +47,7 @@ const orderSchema = new Schema({
     },
   },
   phone: {
-    type: Number,
-    minimum: 10,
-    maximum: 20,
+    type: String,
   },
   firstName: {
     type: String,
@@ -59,8 +56,7 @@ const orderSchema = new Schema({
     type: String,
   },
   orderTotal: {
-    type: DecimalNumber,
-    defaultFormat: "$XX.XX",
+    type: Number,
   },
   status: {
     type: String,

@@ -15,16 +15,19 @@ const orderCreate = async (req, res) => {
   } = req.body
   // Validation
   if (
-    !orderNumber ||
-    orderNumber == "" ||
+    // !orderNumber ||
+    // orderNumber == "" ||
     !orderDetails ||
-    orderDetails == "" ||
-    !Date == "" ||
-    !address ||
-    !firstName ||
-    firstName == "" ||
-    !orderTotal ||
-    orderTotal.length === 0
+    orderDetails == "" 
+    // ||
+    // !Date == "" 
+    // ||
+    // !address == ""
+    // ||
+    // !firstName ||
+    // firstName == "" ||
+    // !orderTotal ||
+    // orderTotal.length === 0
   ) {
     res.status(500).json({ message: "ERR: Invalid order information" })
   } else {
