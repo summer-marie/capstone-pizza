@@ -20,7 +20,7 @@ orderIndex.post("/", orderCreate)
 
 // Get all, no validation
 // TODO: add validation so only the owner can see all orders
-// orderIndex.get("/", orderGetAll)
+orderIndex.get("/", orderGetAll)
 
 // Get one order by id
 // orderIndex.put("/order-detail/:id", orderUpdateOne)

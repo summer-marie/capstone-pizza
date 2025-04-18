@@ -8,7 +8,7 @@ import SpinnerBubbles from "../components/SpinnerBubbles"
 //   orderTaskUpdate,
 //   orderTaskDelete,
 // } from "../redux/orderSlice";
-// import Spinner from "../components/Spinner";
+
 
 const alertMsg = "Are you sure you want to archive this order?"
 const alertDesription = "Click to confirm"
@@ -19,13 +19,7 @@ const AdminOpenOrders = () => {
   const navigate = useNavigate()
   // const { id } = useParams();
 
-  // const initialTask = {
-  //   taskIndex: 0,
-  //   taskName: "",
-  //   status: "",
-  //   roles: [],
-  //   users: [{ firstName: "", lastName: "" }],
-  // };
+
 
   const [saveBubbles, setSaveBubbles] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -62,9 +56,11 @@ const AdminOpenOrders = () => {
     setShowAlert(false)
   }
   const handleConfirm = () => {
-    // setShowAlert(false)
-    // handle delete of pizza
+    // send pizza to archived 
     console.log("ARCHIVE pizza")
+    setTimeout(() => {
+   setShowAlert(false)
+    }, 2000)
   }
 
   return (
