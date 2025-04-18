@@ -3,7 +3,7 @@ import orderModel from "./orderModel.js"
 const orderCreate = async (req, res) => {
   const {
     orderNumber,
-    Date,
+    date,
     orderDetails,
     address,
     phone,
@@ -15,25 +15,22 @@ const orderCreate = async (req, res) => {
   } = req.body
   // Validation
   if (
-    // !orderNumber ||
-    // orderNumber == "" ||
+    !orderNumber ||
+    orderNumber == "" ||
     !orderDetails ||
-    orderDetails == "" 
-    // ||
-    // !Date == "" 
-    // ||
-    // !address == ""
-    // ||
-    // !firstName ||
-    // firstName == "" ||
-    // !orderTotal ||
-    // orderTotal.length === 0
+    orderDetails == "" ||
+    !address ||
+    address == "" ||
+    !firstName ||
+    firstName == "" ||
+    !orderTotal ||
+    orderTotal.length === 0
   ) {
     res.status(500).json({ message: "ERR: Invalid order information" })
   } else {
     const newOrder = await orderModel.create({
       orderNumber,
-      Date,
+      date,
       orderDetails,
       address,
       phone,

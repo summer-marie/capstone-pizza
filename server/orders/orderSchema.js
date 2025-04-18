@@ -10,7 +10,7 @@ const orderSchema = new Schema({
     type: String,
     default: "",
   },
-  Date: {
+  date: {
     type: Date,
     default: new Date(),
   },
