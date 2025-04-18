@@ -10,7 +10,7 @@ const builderSchema = new Schema({
   // Crust && Cheese
   base: { name: String, description: String, required: true },
   sauce: { name: String, description: String, required: true },
-  toppings: [
+  meatTopping: [
     // Fixed ingredients for each pizza
     {
       name: String,
@@ -18,7 +18,15 @@ const builderSchema = new Schema({
       required: true,
     },
   ],
-  price: { type: Number, required: true },
+  veggieTopping: [
+    {
+      name: String,
+      description: String,
+      required: true,
+    }
+  ],
+  pizzaPrice: { type: Number, required: true },
+  
   //  image: { data: Buffer, contentType: String }, // for binary images
   image: [],
 })

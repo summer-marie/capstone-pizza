@@ -72,8 +72,7 @@ export const orderSlice = createSlice({
       .addCase(orderGetAll.fulfilled, (state, action) => {
         console.log("orderSlice orderGetAll.fulfilled", action.payload)
         state.loading = false
-
-        state.allOrders = action.payload.orders
+        state.orders = action.payload.orders
       })
       .addCase(orderGetAll.rejected, (state, action) => {
         console.log("orderSlice orderGetAll.rejected", action.payload)

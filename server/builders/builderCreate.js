@@ -11,8 +11,8 @@ const builderCreate = async (req, res) => {
       .status(500)
       .json({ "ERR 500 MESG": "The server has spoken and you suck" })
   } else {
-    const newbuilder = await builderModel.create({ pizzaName })
-    console.log("newbuilder", newbuilder)
+    const newBuilder = await builderModel.create({ pizzaName })
+    console.log("newBuilder", newBuilder)
 
     res
       .status(200)

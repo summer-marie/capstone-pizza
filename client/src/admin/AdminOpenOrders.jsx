@@ -117,7 +117,7 @@ const AdminOpenOrders = () => {
           <tbody>
             {orders.map((order, index) => (
               <tr
-                // key={index}
+                key={index}
                 className=' border-b px-4 py-4
               odd:bg-stone-200
               even:bg-gray-300 
@@ -129,13 +129,18 @@ const AdminOpenOrders = () => {
                 font-medium 
                 text-gray-900   '
                 >
-                  <p className=''>0001{order.orderNumber}</p>
+                  <p className=''>{order.orderNumber}</p>
                 </th>
                 <td className='px-4 py-4'>
-                  <p className='line-clamp-3'>3/24/2025</p>
+                  <p className='line-clamp-3'>{order.date}</p>
                 </td>
                 <td className='px-4 py-4'>
-                  <p className='line-clamp-3'>Pizza 1 x1 Pizza 2 x4</p>
+                  {/* <p className='line-clamp-3'>Pizza 1 x1 Pizza 2 x4</p> */}
+                  <ul>
+                    <li>{order.orderDetails.pizzaName} </li>
+                    <li>{order.orderDetails.pizzaPrice} </li>
+                    <li>{order.orderDetails.quantity} </li>
+                  </ul>
                 </td>
                 <td className='px-4 py-4'>
                   {/* {" "}
@@ -144,10 +149,10 @@ const AdminOpenOrders = () => {
                       {task.users[0].firstName} {task.users[0].lastName}
                     </>
                   )} */}{" "}
-                  1234 Smith Drive
+                 {order.address.street}
                 </td>
-                <td className='px-4 py-4'> Sally Weston</td>
-                <td className='px-4 py-4'>25.00</td>
+                <td className='px-4 py-4'> {order.firstName} {order.lastName}</td>
+                <td className='px-4 py-4'>$ {order.orderTotal}</td>
                 <td className='px-4 py-4 '>
                   <select
                     // onChange={(e) =>
@@ -166,7 +171,7 @@ const AdminOpenOrders = () => {
                     className='dark:text-cyan-700 bg-slate-300 rounded-xl font-semibold px-2 py-2 w-full'
                   >
                     {/* <option className="text-sm">{ task.status || ("Choose a status")}</option> */}
-                    <option className='text-sm'>my status</option>
+                    <option className='text-sm'>{ order.status || ("Choose a status")}</option>
                     <option
                       className='text-cyan-900 hover:text-semibold'
                       value='Pending'
