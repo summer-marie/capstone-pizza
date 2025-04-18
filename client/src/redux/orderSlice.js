@@ -44,7 +44,7 @@ export const orderGetAll = createAsyncThunk("order/getAll", async () => {
 })
 
 export const orderSlice = createSlice({
-  name: "orders",
+  name: "order",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -81,3 +81,5 @@ export const orderSlice = createSlice({
       })
   },
 })
+
+export default orderSlice.reducer
