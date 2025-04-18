@@ -6,7 +6,6 @@ import Navbar from "./components/Navbar"
 import AdminSidenav from "./admin/AdminSidenav"
 import NoMatch from "./components/NoMatch"
 import About from "./customer/About"
-
 import OrderMenu from "./customer/OrderMenu"
 import Contact from "./customer/Contact"
 import Checkout from "./customer/Checkout"
@@ -24,8 +23,8 @@ function App() {
   return (
     <>
       {/* TODO: Add sidnav to private routes */}
-      <AdminSidenav />
-      {/* <Navbar /> */}
+      {/* <AdminSidenav /> */}
+      <Navbar />
       <Routes>
         <Route path='/' element={<About />} />
         <Route path='/order-menu' element={<OrderMenu />} />

@@ -110,7 +110,9 @@ const Checkout = () => {
         <div className='w-150 h-80 bg-gray-400 rounded-xl'></div>
       </div> */}
 
-      <form onSubmit={handleSubmit} className='mt-10 '>
+      <form
+       onSubmit={handleSubmit} 
+       className='mt-10 '>
         <div className='min-h-screen mx-auto w-full'>
           <div className='flex flex-col sm:flex-row items-start justify-center mx-auto space-y-6 sm:space-y-0 sm:space-x-6 w-2/3 bg-gray-100'>
             <ul
@@ -250,7 +252,8 @@ const Checkout = () => {
 
                 <button
                   type='submmit'
-                  className='focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 shadow-lg shadow-black
+                  className='focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 shadow-lg 
+                  shadow-black
                   text-white 
                   bg-[#050708] 
                   hover:bg-[#050708]/80  
@@ -262,7 +265,8 @@ const Checkout = () => {
 
                 <button
                   type='submit'
-                  className=' focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 shadow-lg shadow-amber-600
+                  className=' focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 shadow-lg 
+                  shadow-amber-600
                   text-white 
                   bg-[#FF9119] 
                   hover:bg-[#FF9119]/80 
