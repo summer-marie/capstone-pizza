@@ -26,8 +26,8 @@ const orderSchema = new Schema({
       format: "$XX.XX",
     },
     quantity: {
-      type: Number
-    }
+      type: Number,
+    },
   },
   address: {
     street: {
@@ -61,6 +61,19 @@ const orderSchema = new Schema({
   orderTotal: {
     type: DecimalNumber,
     defaultFormat: "$XX.XX",
+  },
+  status: {
+    type: String,
+    enum: {
+      processing: "processing",
+      completed: "completed",
+      delivered: "delivered",
+      archived: "archived",
+    },
+  },
+  isArchived: {
+    type: Boolean,
+    default: false,
   },
 })
 

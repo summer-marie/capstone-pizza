@@ -1,4 +1,4 @@
-import orderModel from "../../schemas/orderModel.js"
+import orderModel from "./orderModel.js"
 
 const orderCreate = async (req, res) => {
   const {
@@ -10,6 +10,8 @@ const orderCreate = async (req, res) => {
     firstName,
     lastName,
     orderTotal,
+    status,
+    isArchived,
   } = req.body
   // Validation
   if (
@@ -35,6 +37,8 @@ const orderCreate = async (req, res) => {
       firstName,
       lastName,
       orderTotal,
+      status,
+      isArchived,
     })
     console.log("newOrder", newOrder)
 
