@@ -3,7 +3,6 @@ import generateOrderNumber from "./generateOrderNumber.js"
 
 const orderCreate = async (req, res) => {
   const orderId = generateOrderNumber();
-
   const {
     orderNumber,
     date,
@@ -30,6 +29,7 @@ const orderCreate = async (req, res) => {
     orderTotal.length === 0
   ) {
     res.status(500).json({ message: "ERR: Invalid order information" })
+
   } else {
     const newOrder = await orderModel.create({
       orderNumber: orderId,
