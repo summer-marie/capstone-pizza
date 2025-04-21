@@ -1,27 +1,20 @@
-
 import ingredientsModel from "./ingredientsModel.js"
 
 // TODO: Add price to validation???
 
 const ingredientsCreate = async (req, res) => {
-  const { pizzaName } = req.body
+  const ingredientData = req.body
 
-  // Validation
-  if (!pizzaName || pizzaName == "") {
-    res
-      .status(500)
-      .json({ "ERR 500 MESG": "The server has spoken and you suck" })
-  } else {
-    const newIngredient = await ingredientsModel.create({ pizzaName })
-    console.log("newIngredient", newIngredient)
+  // Validate the incoming data using Mongoose's built-in schema validator
+  const ingredient = await ingredientsModel.create(ingredientData)
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "SERVER ingredient created.",
-      })
-  }
+  console.log("newIngredient", ingredient)
+
+  res.status(201).json({
+    success: true,
+    message: "SERVER ingredient created.",
+    data: ingredient,
+  })
 }
 
 export default ingredientsCreate

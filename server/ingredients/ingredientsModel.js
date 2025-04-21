@@ -9,6 +9,6 @@ ingredientsSchema.set("toJSON", {
     return ret
   },
 })
-const ingredientsModel = mongoose.model("Builder", ingredientsSchema)
+const ingredientsModel = mongoose.model("Ingredients", ingredientsSchema)
 
 export default ingredientsModel
