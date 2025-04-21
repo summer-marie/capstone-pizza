@@ -5,16 +5,25 @@ import builderModel from "./builderModel"
 const pizzaUpdateOne = async (req, res) => {
   const { id } = req.params
 
-  const { pizzaName, base, sauce, toppings, price, image } = req.body
+  const {
+    pizzaName,
+    pizzaPrice,
+    base,
+    sauce,
+    meatTopping,
+    veggieToppings,
+    image,
+  } = req.body
 
   const pizza = await builderModel.findOneAndUpdate(
     { _id: id },
     {
       pizzaName,
+      pizzaPrice,
       base,
       sauce,
-      toppings,
-      price,
+      meatTopping,
+      veggieToppings,
       image,
     }
   )

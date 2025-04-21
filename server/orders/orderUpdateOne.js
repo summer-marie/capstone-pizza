@@ -3,7 +3,7 @@ import orderModel from "./orderModel.js"
 const orderUpdateOne = async (req, res) => {
   const { id } = req.params
   const {
-    orderNumber,
+    // orderNumber,
     date,
     orderDetails,
     address,
@@ -20,7 +20,7 @@ const orderUpdateOne = async (req, res) => {
   const order = await orderModel.findOneAndUpdate(
     { _id: id },
     {
-      orderNumber,
+      // orderNumber,
       date,
       orderDetails,
       address,

@@ -7,14 +7,31 @@ const builderSchema = new Schema({
     type: String,
     required: true,
   },
+  pizzaPrice: {
+    type: Number,
+    default: 0,
+  },
   // Crust && Cheese
-  base: { name: String, description: String, required: true },
-  sauce: { name: String, description: String, required: true },
+  base: [
+    {
+      name: String,
+      description: String,
+      unitPrice: { type: Number, default: 0 },
+      required: true,
+    },
+  ],
+  sauce: {
+    name: String,
+    description: String,
+    unitPrice: { type: Number, default: 0 },
+    required: true,
+  },
   meatTopping: [
     // Fixed ingredients for each pizza
     {
       name: String,
       description: String,
+      unitPrice: { type: Number, default: 0 },
       required: true,
     },
   ],
@@ -22,11 +39,11 @@ const builderSchema = new Schema({
     {
       name: String,
       description: String,
+      unitPrice: { type: Number, default: 0 },
       required: true,
-    }
+    },
   ],
-  pizzaPrice: { type: Number, required: true },
-  
+
   //  image: { data: Buffer, contentType: String }, // for binary images
   image: [],
 })
