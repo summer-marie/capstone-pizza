@@ -7,7 +7,7 @@ const initialState = {
     name: "",
     description: "",
     itemType: "",
-    price: 0.00,
+    price: 0.0,
   },
   ingredients: [],
 }
@@ -34,7 +34,7 @@ export const ingredientGetAll = createAsyncThunk(
   }
 )
 
-export const orderSlice = createSlice({
+export const ingredientSlice = createSlice({
   name: "ingredient",
   initialState,
   reducers: {},
@@ -78,4 +78,4 @@ export const orderSlice = createSlice({
   },
 })
 
-export default orderSlice.reducer
+export default ingredientSlice.reducer

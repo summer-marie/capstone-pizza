@@ -9,7 +9,7 @@ const IngredientsTable = () => {
     name: "",
     description: "",
     itemType: "",
-    price: 0,
+    price: 0.0,
   })
   const dispatch = useDispatch()
 
@@ -21,16 +21,27 @@ const IngredientsTable = () => {
       .catch((err) => console.error(err))
   }, [])
 
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    if (name === "price") {
+      setFormData((prevState) => ({
+        ...prevState,
+        price: parseFloat(value),
+        formattedPrice: `${parseFloat(value).toFixed(2)}`,
+      }))
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("handle submit")
-    // const newIngredient = {
-    //   name: formData.name,
-    //   description: formData.description,
-    //   itemType: formData.itemType,
-    //   price: formData.price,
-    // }
-    dispatch(createIngredient(formData))
+    const newIngredient = {
+      name: formData.name,
+      description: formData.description,
+      itemType: formData.itemType,
+      price: formData.price,
+    }
+    dispatch(createIngredient(newIngredient))
   }
 
   return (
@@ -55,7 +66,7 @@ const IngredientsTable = () => {
                 <input
                   type='text'
                   id='name'
-                  value={formData.name}
+                  // value={formData.name}
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
@@ -77,7 +88,7 @@ const IngredientsTable = () => {
                 <input
                   type='text'
                   id='discription'
-                  value={formData.description}
+                  // value={formData.description}
                   onChange={(e) =>
                     setFormData({ ...formData, description: e.target.value })
                   }
@@ -96,7 +107,7 @@ const IngredientsTable = () => {
               </label>
               <div className=' text-gray-400'>
                 <select
-                  value={formData.itemType}
+                  // value={formData.itemType}
                   onChange={(e) =>
                     setFormData({ ...formData, itemType: e.target.value })
                   }
@@ -123,16 +134,16 @@ const IngredientsTable = () => {
                 htmlFor='price'
                 className='block mb-2 text-sm font-medium text-[#111827]'
               >
-                Item Price
+                Item Price $
               </label>
               <div className=' text-gray-400'>
                 <input
                   type='text'
                   id='price'
-                  value={formData.price}
-                  onChange={(e) =>
-                    setFormData({ ...formData, price: e.target.value })
-                  }
+                  name='price'
+                  step="0.25" 
+                  // value={formData.price}
+                  onChange={handleChange}
                   className='pl-5 mb-2 border focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden block w-full p-2.5 rounded-l-lg py-3 px-4
                 bg-gray-50 
                 text-gray-600 
