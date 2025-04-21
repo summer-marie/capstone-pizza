@@ -7,7 +7,7 @@ const initialState = {
     name: "",
     description: "",
     itemType: "",
-    price: 0,
+    price: 0.00,
   },
   ingredients: [],
 }

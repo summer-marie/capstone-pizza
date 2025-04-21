@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-import ingredientsModel from "./ingredientsModel.js"
 
 const Schema = mongoose.Schema
 
@@ -43,12 +42,12 @@ const IngredientsAll = new Schema({
   veggieToppings: [veggieToppingSchema],
   // Single object for the crust and cheese
   base: { type: baseSchema, required: true },
-  itemType: {
-    type: String,
-     // Allowed item types
-    enum: ["meatTopping", "veggieTopping", "sauce", "base"],
-    required: true,
-  },
+  // itemType: {
+  //   type: String,
+  //    // Allowed item types
+  //   enum: ["meatTopping", "veggieTopping", "sauce", "base"],
+  //   required: true,
+  // },
 })
 
 export default IngredientsAll

@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { createIngredient } from "../redux/ingredientSlice"
 import axios from "axios"
 
 const IngredientsTable = () => {
   const [ingredients, setIngredients] = useState([])
-  const [formData, setFormData] = useState({ name: "" })
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    itemType: "",
+    price: 0,
+  })
+  const dispatch = useDispatch()
 
   useEffect(() => {
     // Make an API request to fetch the ingredients data
@@ -14,13 +22,15 @@ const IngredientsTable = () => {
   }, [])
 
   const handleSubmit = (e) => {
-    console.log("handle submit")
     e.preventDefault()
-    axios
-      .post("/ingredients", formData)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.error(err))
-    setFormData({ name: "" })
+    console.log("handle submit")
+    // const newIngredient = {
+    //   name: formData.name,
+    //   description: formData.description,
+    //   itemType: formData.itemType,
+    //   price: formData.price,
+    // }
+    dispatch(createIngredient(formData))
   }
 
   return (
@@ -41,8 +51,7 @@ const IngredientsTable = () => {
               >
                 Item Name
               </label>
-              <div className='relative text-gray-400'>
-                <span className='absolute inset-y-0 left-0 flex items-center p-1 pl-3'></span>
+              <div className=' text-gray-400'>
                 <input
                   type='text'
                   id='name'
@@ -50,7 +59,7 @@ const IngredientsTable = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className='pl-12 mb-2 focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden  block w-full p-2.5 rounded-l-lg py-3 px-4
+                  className='pl-5 mb-2 focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden  block w-full p-2.5 rounded-l-lg py-3 px-4
                   bg-gray-50 
                   text-gray-600 border 
                   border-gray-300 
@@ -59,18 +68,38 @@ const IngredientsTable = () => {
                 />
               </div>
               <label
+                htmlFor='description'
+                className='block mb-2 text-sm font-medium text-[#111827]'
+              >
+                Item Description
+              </label>
+              <div className=' text-gray-400'>
+                <input
+                  type='text'
+                  id='discription'
+                  value={formData.description}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
+                  className='pl-5 mb-2 focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden  block w-full p-2.5 rounded-l-lg py-3 px-4
+                  bg-gray-50 
+                  text-gray-600 border 
+                  border-gray-300 
+                  focus:ring-gray-400'
+                />
+              </div>
+              <label
                 htmlFor='name'
                 className='block mb-2 text-sm font-medium text-[#111827]'
               >
-                Item Type
+                Item Type (Catagory)
               </label>
-              <div className='relative text-gray-400'>
-                <span className='absolute inset-y-0 left-0 flex items-center p-1 pl-3'></span>
+              <div className=' text-gray-400'>
                 <select
-                  // value={order.orderStatus}
-                  // onChange={(e) =>
-                  //   setOrder({ ...order, orderStatus: e.target.value })
-                  // }
+                  value={formData.itemType}
+                  onChange={(e) =>
+                    setFormData({ ...formData, itemType: e.target.value })
+                  }
                   id='meat-type'
                   className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2 capitalize
                           text-white 
@@ -96,8 +125,7 @@ const IngredientsTable = () => {
               >
                 Item Price
               </label>
-              <div className='relative text-gray-400'>
-                <span className='absolute inset-y-0 left-0 flex items-center p-1 pl-3'></span>
+              <div className=' text-gray-400'>
                 <input
                   type='text'
                   id='price'
@@ -105,7 +133,7 @@ const IngredientsTable = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, price: e.target.value })
                   }
-                  className='pl-12 mb-2 border focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden block w-full p-2.5 rounded-l-lg py-3 px-4
+                  className='pl-5 mb-2 border focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden block w-full p-2.5 rounded-l-lg py-3 px-4
                 bg-gray-50 
                 text-gray-600 
                 border-gray-300 
