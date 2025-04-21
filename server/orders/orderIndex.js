@@ -20,7 +20,7 @@ orderIndex.post("/", orderCreate)
 orderIndex.get("/", orderGetAll)
 
 // Archive order
-orderIndex.put("./archive/:id", orderArchiveOne)
+orderIndex.put("/archive/:id", orderArchiveOne)
 
 // Get orders by validated email
 // orderIndex.get("/:email", orderGetMany)

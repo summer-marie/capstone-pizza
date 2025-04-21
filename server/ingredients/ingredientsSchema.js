@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import ingredientsModel from "./ingredientsModel";
+import ingredientsModel from "./ingredientsModel"
 
 const Schema = mongoose.Schema
 
@@ -8,42 +8,45 @@ const sauceSchema = new Schema({
   name: { type: String, required: true },
   description: String,
   imageUrl: String,
-  price: Number
-});
+  price: Number,
+})
 
 // MeatToppings schema
 const meatToppingSchema = new Schema({
   name: { type: String, required: true },
   description: String,
   imageUrl: String,
-  price: Number
-});
+  price: Number,
+})
 
 // VeggieToppings schema
 const veggieToppingSchema = new Schema({
   name: { type: String, required: true },
   description: String,
   imageUrl: String,
-  price: Number
-});
+  price: Number,
+})
 
 // Base schema (Crust and Cheese)
 const baseSchema = new Schema({
   name: { type: String, required: true },
   description: String,
   imageUrl: String,
-  price: Number
-});
+  price: Number,
+})
 
 // Create the Ingredient model using the combined schema
-const Ingredient = ingredientsModel.model('Ingredient', new Schema({
-  // Array of ingredient objects
-  sauce: [sauceSchema], 
-  meatToppings: [meatToppingSchema], 
-  veggieToppings: [veggieToppingSchema], 
-  // Single object for the crust and cheese
-  base: { type: baseSchema, required: true }, 
-}));
+const Ingredient = ingredientsModel.model(
+  "Ingredient",
+  new Schema({
+    // Array of ingredient objects
+    sauce: [sauceSchema],
+    meatToppings: [meatToppingSchema],
+    veggieToppings: [veggieToppingSchema],
+    // Single object for the crust and cheese
+    base: { type: baseSchema, required: true },
+  })
+)
 
 // Export the Ingredient model
-module.exports = Ingredient;
+module.exports = Ingredient
