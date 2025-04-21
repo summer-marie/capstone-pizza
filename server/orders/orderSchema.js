@@ -60,6 +60,7 @@ const orderSchema = new Schema({
   },
   status: {
     type: String,
+    // Allowable entries
     enum: {
       processing: "processing",
       completed: "completed",

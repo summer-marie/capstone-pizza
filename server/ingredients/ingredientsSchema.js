@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import ingredientsModel from "./ingredientsModel"
+import ingredientsModel from "./ingredientsModel.js"
 
 const Schema = mongoose.Schema
 
@@ -7,7 +7,7 @@ const Schema = mongoose.Schema
 const sauceSchema = new Schema({
   name: { type: String, required: true },
   description: String,
-  imageUrl: String,
+  itemType: String,
   price: Number,
 })
 
@@ -15,7 +15,7 @@ const sauceSchema = new Schema({
 const meatToppingSchema = new Schema({
   name: { type: String, required: true },
   description: String,
-  imageUrl: String,
+  itemType: String,
   price: Number,
 })
 
@@ -23,7 +23,7 @@ const meatToppingSchema = new Schema({
 const veggieToppingSchema = new Schema({
   name: { type: String, required: true },
   description: String,
-  imageUrl: String,
+  itemType: String,
   price: Number,
 })
 
@@ -31,22 +31,24 @@ const veggieToppingSchema = new Schema({
 const baseSchema = new Schema({
   name: { type: String, required: true },
   description: String,
-  imageUrl: String,
+  itemType: String,
   price: Number,
 })
 
 // Create the Ingredient model using the combined schema
-const Ingredient = ingredientsModel.model(
-  "Ingredient",
-  new Schema({
-    // Array of ingredient objects
-    sauce: [sauceSchema],
-    meatToppings: [meatToppingSchema],
-    veggieToppings: [veggieToppingSchema],
-    // Single object for the crust and cheese
-    base: { type: baseSchema, required: true },
-  })
-)
+const IngredientsAll = new Schema({
+  // Array of ingredient objects
+  sauce: [sauceSchema],
+  meatToppings: [meatToppingSchema],
+  veggieToppings: [veggieToppingSchema],
+  // Single object for the crust and cheese
+  base: { type: baseSchema, required: true },
+  itemType: {
+    type: String,
+     // Allowed item types
+    enum: ["meatTopping", "veggieTopping", "sauce", "base"],
+    required: true,
+  },
+})
 
-// Export the Ingredient model
-module.exports = Ingredient
+export default IngredientsAll

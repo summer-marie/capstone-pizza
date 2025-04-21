@@ -18,12 +18,13 @@ import AdminLogin from "./admin/AdminLogin"
 import "./App.css"
 import BuildYourOwn from "./customer/BuildYourOwn"
 import AdminUpdateOne from "./admin/AdminUpdateOne"
+import IngredientsTable from "./admin/ingredientsTable"
 
 function App() {
   return (
     <>
       {/* TODO: Add sidnav to private routes */}
-      <AdminSidenav />
+      {/* <AdminSidenav /> */}
       <Navbar />
       <Routes>
         <Route path='/' element={<About />} />
@@ -38,6 +39,7 @@ function App() {
         <Route path='/completed-orders' element={<AdminCompletedOrders />} />
         <Route path='/admin-menu' element={<AdminMenu />} />
         <Route path='/admin-update-one' element={<AdminUpdateOne />} />
+        <Route path='/settings' element={< IngredientsTable/>} />
 
         <Route element={<PrivateRoute />}></Route>
 

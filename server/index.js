@@ -3,6 +3,7 @@ import express from "express"
 import cors from "cors"
 import mongoose from "mongoose"
 import orderIndex from "./orders/orderIndex.js"
+import ingredientsIndex from "./ingredients/ingredientsIndex.js"
 
 
 console.log(process.env.MONGODB_URL)
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 
 // app.use("/users", userIndex)
 app.use("/orders", orderIndex)
+app.use("/ingredients", ingredientsIndex)
 // app.use("/builders", builderIndex)
 
 // 404
