@@ -1,12 +1,15 @@
 import { useNavigate } from "react-router"
-import { useState, useEffect } from 'react';
-
+import { useState, useEffect } from "react"
+import OrderNumberGenerator from "../components/generateOrderNumber"
 const BuildYourOwn = () => {
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("handleSubmit")
+
+    // dispatch(createOrder());
+
     // dispatch(createOrder(order))
     // setShowModal(true)
     // setSubmitDisabled(true)
