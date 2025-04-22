@@ -10,6 +10,8 @@ const IngredientModal = ({ isOpen, onClose, setShoeModal }) => {
     price: 0,
   })
 
+  const dispatch = useDispatch()
+
   const handleChange = (e) => {
     const { name, value } = e.target
     if (name === "price") {
@@ -37,15 +39,16 @@ const IngredientModal = ({ isOpen, onClose, setShoeModal }) => {
 
   return (
     <>
-      <div className='borderShadow min-h-[50%] p-20'>
-        <div className='flex flex-col w-full md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 rounded-2xl shadow-2xl bg-stone-300'>
-          <div className='flex flex-row gap-3 pb-4'>
-            <h1 className='text-3xl font-bold text-[#4B5563]  my-auto capitalize text-center'>
+      <div className='min-h-[50%] p-2'>
+        <div className='flex flex-col w-auto md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 rounded-2xl shadow-2xl shadow-cyan-800/80  bg-stone-300'>
+          <div className='flex flex-row gap-3 pb-4 '>
+            <h1 className='text-3xl font-bold text-[#4B5563] mx-auto my-auto capitalize text-center'>
               add ingredient to table
             </h1>
           </div>
+          {/* shadow-lg shadow-cyan-800/80  */}
 
-          <form onSubmit={handleSubmit} className='flex flex-col'>
+          <form onSubmit={handleSubmit} className='flex flex-col '>
             <div className='pb-2'>
               <label
                 htmlFor='name'
@@ -113,10 +116,10 @@ const IngredientModal = ({ isOpen, onClose, setShoeModal }) => {
                           focus:border-cyan-500'
                 >
                   <option defaultValue>Select type from list</option>
-                  <option value='base'>Base: Crust or Cheese</option>
-                  <option value='sauce'>Sauce</option>
-                  <option value='meatTopping'>Meat Topping</option>
-                  <option value='veggieTopping'>Veggie Topping</option>
+                  <option value='Base'>Base: Crust or Cheese</option>
+                  <option value='Sauce'>Sauce</option>
+                  <option value='Meat Topping'>Meat Topping</option>
+                  <option value='Veggie Topping'>Veggie Topping</option>
                 </select>
               </div>
             </div>
@@ -136,10 +139,10 @@ const IngredientModal = ({ isOpen, onClose, setShoeModal }) => {
                   // value={formData.price}
                   onChange={handleChange}
                   className='pl-5 mb-2 border focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden block w-full p-2.5 rounded-l-lg py-3 px-4
-                bg-gray-50 
-                text-gray-600 
-                border-gray-300 
-                focus:ring-gray-400'
+                    bg-gray-50 
+                    text-gray-600 
+                    border-gray-300 
+                    focus:ring-gray-400'
                   required
                 />
               </div>
@@ -177,8 +180,6 @@ const IngredientsTable = () => {
 
   const dispatch = useDispatch()
 
-
-
   useEffect(() => {
     dispatch(ingredientGetAll())
   }, [])
@@ -193,51 +194,125 @@ const IngredientsTable = () => {
 
   return (
     <>
-      <button onClick={handleOpenModal} className="p-5">
-        <div
-          className='cursor-pointer w-full focus:ring-4 focus:outline-hidden focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6 
+      {/* Centers Button above table */}
+      <div className='flex items-center justify-center w-full'>
+        <button onClick={handleOpenModal} className='p-5'>
+          <div
+            className='cursor-pointer w-full focus:ring-4 focus:outline-hidden focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow-lg
+                   shadow-cyan-800/80 
               text-[#FFFFFF] 
               bg-cyan-800 
               hover:bg-cyan-600 '
-        >
-          <p className='text-2xl text-gray-300 dark:text-gray-200'>
-            Add Ingredient
-          </p>
-        </div>
-      </button>
-
+          >
+            <p className='text-2xl text-gray-300'>Add Ingredient</p>
+          </div>
+        </button>
+      </div>
       <IngredientModal
         isOpen={showModal}
         onClose={handleCloseModal}
         setShowModal={setShowModal}
       />
-
-      <table id='myTable'>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Ingredient Name</th>
-            <th>Ingredient Price</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {ingredients.map((ingredient, index) => (
-            <tr key={ingredient._id}>
-              <td>{ingredient._id}</td>
-              <td>{ingredient.name}</td>
-              <td>{ingredient.price}</td>
-              <td>
-                <button
-                // onClick={() => deleteIngredient(ingredient._id)}
+      {/*  Table container  */}
+      <div className='mt-0'>
+        <div name='ingredients-table' className='w-3/4 ml-[20rem] shadow-2xl'>
+          <table
+            className='w-full text-sm text-left rtl:text-right rounded-2xl
+            text-gray-500 shadow-lg shadow-cyan-800/80 '
+          >
+            <thead
+              className='text-xs uppercase 
+              bg-gray-400
+              text-teal-950'
+            >
+              <tr>
+                <th scope='col' className='px-2 py-4'>
+                  ID
+                </th>
+                <th scope='col' className='px-2 py-4'>
+                  catagory
+                </th>
+                <th scope='col' className='px-2 py-4'>
+                  name
+                </th>
+                <th scope='col' className='px-2 py-4'>
+                  description
+                </th>
+                <th scope='col' className='px-2 py-4 text-center'>
+                  price $
+                </th>
+                <th scope='col' className='px-2 py-4 text-center'>
+                  Update
+                </th>
+                <th scope='col' className='px-2 py-4 text-center'>
+                  delete
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {ingredients.map((ingredient, index) => (
+                <tr
+                  key={ingredient._id}
+                  className=' border-b px-2 py-2
+                  odd:bg-stone-200
+                  even:bg-gray-300 
+                  border-gray-700'
                 >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  <th
+                    scope='row'
+                    className='px-2 py-2 font-medium 
+                    text-gray-900'
+                  >
+                    {ingredient._id}
+                  </th>
+                  <td className='px-2 py-2'>{ingredient.itemType}</td>
+                  <td className='px-2 py-2'>{ingredient.name}</td>
+                  <td className='px-2 py-2'>{ingredient.description}</td>
+
+                  <td className='px-2 py-2 text-center'>
+                    $ {ingredient.price}
+                  </td>
+
+                  {/* Buttons */}
+
+                  <td className='px-2 py-2'>
+                    <button
+                      // onClick={() => handleStatusUpdate()}
+
+                      type='button'
+                      className='font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
+                      text-cyan-600'
+                    >
+                      Edit
+                    </button>
+                    {/* Spinner  */}
+                    <div className='w-full top-0 right-0 ml-5'>
+                      {/* {saveBubbles && <SpinnerBubbles loading={loading} />} */}
+                    </div>
+                  </td>
+                  <td className='px-2 py-2'>
+                    <div className='w-full top-0 right-2 '></div>
+                    <button
+                      // onClick={() => {
+
+                      //   setShowAlert(true)
+
+                      // }}
+                      type='button'
+                      className='font-medium  cursor-pointer
+                      text-red-700 w-full h-full border-3 rounded-xl hover:bg-red-700 
+                      hover:text-white 
+                      hover:border-black'
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </>
   )
 }

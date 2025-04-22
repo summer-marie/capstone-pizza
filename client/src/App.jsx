@@ -39,7 +39,7 @@ function App() {
         <Route path='/completed-orders' element={<AdminCompletedOrders />} />
         <Route path='/admin-menu' element={<AdminMenu />} />
         <Route path='/admin-update-one' element={<AdminUpdateOne />} />
-        <Route path='/settings' element={< IngredientsTable/>} />
+        <Route path='/ingredient-table' element={< IngredientsTable/>} />
 
         <Route element={<PrivateRoute />}></Route>
 
