@@ -20,6 +20,7 @@ import BuildYourOwn from "./customer/BuildYourOwn"
 import AdminUpdateOne from "./admin/AdminUpdateOne"
 import IngredientsTable from "./admin/ingredientsTable"
 
+
 function App() {
   return (
     <>
@@ -40,6 +41,7 @@ function App() {
         <Route path='/admin-menu' element={<AdminMenu />} />
         <Route path='/admin-update-one' element={<AdminUpdateOne />} />
         <Route path='/ingredient-table' element={< IngredientsTable/>} />
+   
 
         <Route element={<PrivateRoute />}></Route>
 

@@ -34,6 +34,17 @@ export const ingredientGetAll = createAsyncThunk(
   }
 )
 
+// Get One
+export const ingredientGetOne = createAsyncThunk(
+  "ingredient/getOne",
+  async (id) => {
+    console.log("redux ingredientGetOne order", id)
+    const response = await orderService.ingredientGetOne(id)
+    console.log("redux ingredientGetOne order response", response)
+    return response.data
+  }
+)
+
 // Update One
 export const ingredientUpdateOne = createAsyncThunk(
   "ingredient/updateOne",
@@ -84,6 +95,25 @@ export const ingredientSlice = createSlice({
       })
       .addCase(ingredientGetAll.rejected, (state, action) => {
         console.log("ingredientSlice ingredientGetAll.rejected", action.payload)
+        state.loading = false
+      })
+
+      // Get One
+      .addCase(ingredientGetOne.pending, (state, action) => {
+        console.log("ingredientSlice ingredientGetOne.pending", action.payload)
+        state.loading = true
+      })
+      .addCase(ingredientGetOne.fulfilled, (state, action) => {
+        console.log(
+          "ingredientSlice ingredientGetOne.fulfilled",
+          action.payload.ingredient[0]
+        )
+        state.loading = false
+        // Updates state
+        state.ingredient = action.payload.ingredient[0]
+      })
+      .addCase(ingredientGetOne.rejected, (state, action) => {
+        console.log("ingredientSlice ingredientGetOne.rejected", action.payload)
         state.loading = false
       })
 

@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { createIngredient, ingredientGetAll, ingredientUpdateOne } from "../redux/ingredientSlice"
+import {
+  createIngredient,
+  ingredientGetAll,
+  ingredientUpdateOne,
+} from "../redux/ingredientSlice"
 import AlertBlack from "../components/AlertBlack"
 
 const IngredientModal = ({ isOpen, onClose, setShoeModal }) => {
@@ -175,12 +179,172 @@ const IngredientModal = ({ isOpen, onClose, setShoeModal }) => {
   )
 }
 
+const IngredientEditModal = ({
+  ingredient,
+  isOpen,
+  onClose,
+  setShowEditModal,
+}) => {
+  const [inputFields, setInputFields] = useState(ingredient)
+
+  function handleInputChange(event) {
+    // Update the input fields based on the event.target.name and event.target.value
+    setInputFields({ ...inputFields, [event.target.name]: event.target.value })
+  }
+
+  // function saveChanges() {
+  //   // Merge the updated state with the original ingredient data (id remains the same since it's unique)
+  //   const updatedIngredient = { ...ingredient, ...inputFields };
+  //   dispatch(ingredientUpdateOne(updatedIngredient));
+  // }
+
+  if (!isOpen) return null
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log("handle submit")
+    // Merge the updated state with the original ingredient data (id remains the same since it's unique)
+    const updatedIngredient = { ...ingredient, ...inputFields }
+    dispatch(ingredientUpdateOne(updatedIngredient))
+  }
+
+  return (
+    <>
+      <div className='min-h-[50%] p-2'>
+        <div className='flex flex-col w-auto md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 rounded-2xl shadow-2xl shadow-cyan-800/80  bg-stone-300'>
+          <div className='flex flex-row gap-3 pb-4 '>
+            <h1 className='text-3xl font-bold text-[#4B5563] mx-auto my-auto capitalize text-center'>
+              add ingredient to table
+            </h1>
+          </div>
+
+          <form onSubmit={handleSubmit} className='flex flex-col '>
+            <div className='pb-2'>
+              <label
+                htmlFor='name'
+                className='block mb-2 text-sm font-medium text-[#111827]'
+              >
+                Item Name
+              </label>
+              <div className=' text-gray-400'>
+                <input
+                  type='text'
+                  id='name'
+                  // value={formData.name}
+                  onChange={handleInputChange}
+                  className='pl-5 mb-2 focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden  block w-full p-2.5 rounded-l-lg py-3 px-4
+                bg-gray-50 
+                text-gray-600 border 
+                border-gray-300 
+                focus:ring-gray-400'
+                  required
+                />
+              </div>
+              <label
+                htmlFor='description'
+                className='block mb-2 text-sm font-medium text-[#111827]'
+              >
+                Item Description
+              </label>
+              <div className=' text-gray-400'>
+                <input
+                  type='text'
+                  id='discription'
+                  // value={formData.description}
+                  onChange={handleInputChange}
+                  className='pl-5 mb-2 focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden  block w-full p-2.5 rounded-l-lg py-3 px-4
+                bg-gray-50 
+                text-gray-600 border 
+                border-gray-300 
+                focus:ring-gray-400'
+                />
+              </div>
+              <label
+                htmlFor='name'
+                className='block mb-2 text-sm font-medium text-[#111827]'
+              >
+                Item Type (Catagory)
+              </label>
+              <div className=' text-gray-400'>
+                <select
+                  // value={formData.itemType}
+                  onChange={handleInputChange}
+                  id='meat-type'
+                  className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2 capitalize
+                        text-white 
+                        placeholder-gray-400 
+                        border-cyan-950
+                        bg-cyan-800 
+                        focus:bg-cyan-950 
+                        focus:ring-cyan-500
+                        focus:border-cyan-500'
+                >
+                  <option defaultValue>Select type from list</option>
+                  <option value='Base'>Base: Crust or Cheese</option>
+                  <option value='Sauce'>Sauce</option>
+                  <option value='Meat Topping'>Meat Topping</option>
+                  <option value='Veggie Topping'>Veggie Topping</option>
+                </select>
+              </div>
+            </div>
+            <div className='pb-6'>
+              <label
+                htmlFor='price'
+                className='block mb-2 text-sm font-medium text-[#111827]'
+              >
+                Item Price $
+              </label>
+              <div className=' text-gray-400'>
+                <input
+                  type='text'
+                  id='price'
+                  name='price'
+                  step='0.25'
+                  // value={formData.price}
+                  onChange={handleInputChange}
+                  className='pl-5 mb-2 border focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden block w-full p-2.5 rounded-l-lg py-3 px-4
+                  bg-gray-50 
+                  text-gray-600 
+                  border-gray-300 
+                  focus:ring-gray-400'
+                  required
+                />
+              </div>
+            </div>
+            <button
+              type='submit'
+              className='cursor-pointer w-full focus:ring-4 focus:outline-hidden focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6 
+            text-[#FFFFFF] 
+            bg-cyan-800 
+            hover:bg-cyan-600 '
+            >
+              Save Changes
+            </button>
+            <button
+              onClick={onClose}
+              name='close-button'
+              type='button'
+              className='cursor-pointer w-full focus:ring-4 focus:outline-hidden focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6 
+            text-[#FFFFFF] 
+            bg-black 
+            hover:bg-slate-800'
+            >
+              Cancel
+            </button>
+          </form>
+        </div>
+      </div>
+    </>
+  )
+}
+
 const alertMsg = "Are you sure you want to delete?"
 const alertDesription = "Ingredient will permenitly removed from data set"
 
 const IngredientsTable = () => {
   const { ingredients } = useSelector((state) => state.ingredient)
   const [showModal, setShowModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
 
   const dispatch = useDispatch()
@@ -190,12 +354,20 @@ const IngredientsTable = () => {
     dispatch(ingredientGetAll())
   }, [])
 
-  // Modal funstions
+  // Add New Modal
   const handleOpenModal = () => {
     setShowModal(true)
   }
   const handleCloseModal = () => {
     setShowModal(false)
+  }
+
+  // Edit Modal
+  const handleEditModal = () => {
+    setShowEditModal(true)
+  }
+  const handleCloseEditModal = () => {
+    setShowEditModal(false)
   }
 
   // Alert functions
@@ -207,35 +379,6 @@ const IngredientsTable = () => {
     // handle delete of pizza
     console.log("delete ingredient")
   }
-  const [editingPrice, setEditingPrice] = useState(false)
-  const [editingRowIndex, setEditingRowIndex] = useState(-1)
-
-  const handleEditClick = () => {
-    setEditingPrice(!editingPrice)
-  }
-
-  const handlePriceChange = (e) => {
-    const newPrice = e.target.value;
-  }
-
-  const handleEditRowClick = (rowIndex) => {
-    if (rowIndex === editingRowIndex) {
-      // Save changes and set the editing status back to false.
-    } else {
-      setEditingRowIndex(rowIndex)
-      setEditingPrice(!editingPrice)
-    }
-  }
-  // const IngredientRow = ({ ingredient }) => {
-  //   const [editingPrice, setEditingPrice] = useState(false);
-
-  //   const handleEditClick = () => {
-  //     setEditingPrice(!editingPrice);
-  //   };
-
-  //   const handlePriceChange = (event) => {
-
-  //   };
 
   return (
     <>
@@ -257,6 +400,11 @@ const IngredientsTable = () => {
         isOpen={showModal}
         onClose={handleCloseModal}
         setShowModal={setShowModal}
+      />
+      <IngredientEditModal
+        isOpen={showEditModal}
+        onClose={handleCloseEditModal}
+        setShowEditModal={setShowEditModal}
       />
       {/*  Table container  */}
       <div className='mt-0'>
@@ -314,54 +462,22 @@ const IngredientsTable = () => {
                   <td className='px-2 py-2'>{ingredient.name}</td>
                   <td className='px-2 py-2'>{ingredient.description}</td>
 
-                  <td className='px-2 py-2 text-center'>
-                    $
-                    {editingPrice ? (
-                      <input
-                        className='bg-stone-100 border-cyan-500 border-1 rounded-lg p-1 text-center'
-                        type='text'
-                        value={ingredient.price}
-                        onChange={handlePriceChange}
-                      />
-                    ) : (
-                      ingredient.price
-                    )}
-                  </td>
+                  <td className='px-2 py-2 text-center'>${ingredient.price}</td>
 
-                  {/* Buttons */}
                   {/* Rendering the edit button conditionally based on editing status */}
                   <td className='px-2 py-2'>
-                    {/* <button
-                      onClick={handleEditClick}
+                    {/* Spinner  */}
+                    {/* <div className='w-full top-0 right-0 ml-5'>
+                      {saveBubbles && <SpinnerBubbles loading={loading} />}
+                    </div> */}
+                    <button
                       type='button'
                       className='font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
                       text-cyan-600'
+                      onClick={handleEditModal}
                     >
                       Edit
-                    </button> */}
-                    {/* Spinner  */}
-                    <div className='w-full top-0 right-0 ml-5'>
-                      {/* {saveBubbles && <SpinnerBubbles loading={loading} />} */}
-                    </div>
-                    {editingRowIndex === index ? (
-                      <button
-                        type='button'
-                        className='font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
-                    text-cyan-600'
-                        onClick={() => handleSaveClick(index)}
-                      >
-                        Save
-                      </button>
-                    ) : (
-                      <button
-                        type='button'
-                        className='font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
-                      text-cyan-600'
-                        onClick={() => handleEditRowClick(index)}
-                      >
-                        Edit
-                      </button>
-                    )}
+                    </button>
                   </td>
                   <td className='px-2 py-2'>
                     <div className='w-full top-0 right-2 '></div>
@@ -400,3 +516,14 @@ const IngredientsTable = () => {
 }
 
 export default IngredientsTable
+
+{
+  /* <button
+type='button'
+className='font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
+text-cyan-600'
+onClick={() => saveChanges(index)}
+>
+Save
+</button> */
+}

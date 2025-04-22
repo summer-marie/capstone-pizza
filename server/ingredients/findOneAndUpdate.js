@@ -11,7 +11,7 @@ const findOneAndUpdate = async (req, res) => {
         { name, description, itemType, price },
         { new: true }
       )
-      .then((ingredient) => {
+      .then(() => {
         res.status(200).json({ success: true, ingredient: updateIngredient })
       })
       .catch((error) => {
