@@ -49,7 +49,7 @@ const Navbar = () => {
                   }
                       `}
                 >
-                  Order
+                  Menu
                 </Link>
               </li>
               <li>

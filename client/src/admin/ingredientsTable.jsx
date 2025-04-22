@@ -1,25 +1,14 @@
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { createIngredient } from "../redux/ingredientSlice"
-import axios from "axios"
+import { createIngredient, ingredientGetAll } from "../redux/ingredientSlice"
 
-const IngredientsTable = () => {
-  const [ingredients, setIngredients] = useState([])
+const IngredientModal = ({ isOpen, onClose, setShoeModal }) => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     itemType: "",
-    price: 0.0,
+    price: 0,
   })
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    // Make an API request to fetch the ingredients data
-    axios
-      .get("/")
-      .then((res) => setIngredients(res.data))
-      .catch((err) => console.error(err))
-  }, [])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -43,6 +32,8 @@ const IngredientsTable = () => {
     }
     dispatch(createIngredient(newIngredient))
   }
+
+  if (!isOpen) return null
 
   return (
     <>
@@ -141,7 +132,7 @@ const IngredientsTable = () => {
                   type='text'
                   id='price'
                   name='price'
-                  step="0.25" 
+                  step='0.25'
                   // value={formData.price}
                   onChange={handleChange}
                   className='pl-5 mb-2 border focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden block w-full p-2.5 rounded-l-lg py-3 px-4
@@ -155,15 +146,73 @@ const IngredientsTable = () => {
             </div>
             <button
               type='submit'
-              className='w-full focus:ring-4 focus:outline-hidden focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6 text-[#FFFFFF] bg-cyan-800 '
+              className='cursor-pointer w-full focus:ring-4 focus:outline-hidden focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6 
+              text-[#FFFFFF] 
+              bg-cyan-800 
+              hover:bg-cyan-600 '
             >
               Add
+            </button>
+            <button
+              onClick={onClose}
+              name='close-button'
+              type='button'
+              className='cursor-pointer w-full focus:ring-4 focus:outline-hidden focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6 
+              text-[#FFFFFF] 
+              bg-black 
+              hover:bg-slate-800'
+            >
+              Close
             </button>
           </form>
         </div>
       </div>
+    </>
+  )
+}
 
-      {/* <table id='myTable'>
+const IngredientsTable = () => {
+  const { ingredients } = useSelector((state) => state.ingredient)
+  const [showModal, setShowModal] = useState(false)
+
+  const dispatch = useDispatch()
+
+
+
+  useEffect(() => {
+    dispatch(ingredientGetAll())
+  }, [])
+
+  const handleOpenModal = () => {
+    setShowModal(true)
+  }
+
+  const handleCloseModal = () => {
+    setShowModal(false)
+  }
+
+  return (
+    <>
+      <button onClick={handleOpenModal} className="p-5">
+        <div
+          className='cursor-pointer w-full focus:ring-4 focus:outline-hidden focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6 
+              text-[#FFFFFF] 
+              bg-cyan-800 
+              hover:bg-cyan-600 '
+        >
+          <p className='text-2xl text-gray-300 dark:text-gray-200'>
+            Add Ingredient
+          </p>
+        </div>
+      </button>
+
+      <IngredientModal
+        isOpen={showModal}
+        onClose={handleCloseModal}
+        setShowModal={setShowModal}
+      />
+
+      <table id='myTable'>
         <thead>
           <tr>
             <th>ID</th>
@@ -188,7 +237,7 @@ const IngredientsTable = () => {
             </tr>
           ))}
         </tbody>
-      </table> */}
+      </table>
     </>
   )
 }
