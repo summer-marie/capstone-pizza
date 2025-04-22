@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { createIngredient, ingredientGetAll } from "../redux/ingredientSlice"
+import { createIngredient, ingredientGetAll, ingredientUpdateOne } from "../redux/ingredientSlice"
 import AlertBlack from "../components/AlertBlack"
 
 const IngredientModal = ({ isOpen, onClose, setShoeModal }) => {
@@ -207,6 +207,35 @@ const IngredientsTable = () => {
     // handle delete of pizza
     console.log("delete ingredient")
   }
+  const [editingPrice, setEditingPrice] = useState(false)
+  const [editingRowIndex, setEditingRowIndex] = useState(-1)
+
+  const handleEditClick = () => {
+    setEditingPrice(!editingPrice)
+  }
+
+  const handlePriceChange = (e) => {
+    const newPrice = e.target.value;
+  }
+
+  const handleEditRowClick = (rowIndex) => {
+    if (rowIndex === editingRowIndex) {
+      // Save changes and set the editing status back to false.
+    } else {
+      setEditingRowIndex(rowIndex)
+      setEditingPrice(!editingPrice)
+    }
+  }
+  // const IngredientRow = ({ ingredient }) => {
+  //   const [editingPrice, setEditingPrice] = useState(false);
+
+  //   const handleEditClick = () => {
+  //     setEditingPrice(!editingPrice);
+  //   };
+
+  //   const handlePriceChange = (event) => {
+
+  //   };
 
   return (
     <>
@@ -286,25 +315,53 @@ const IngredientsTable = () => {
                   <td className='px-2 py-2'>{ingredient.description}</td>
 
                   <td className='px-2 py-2 text-center'>
-                    $ {ingredient.price}
+                    $
+                    {editingPrice ? (
+                      <input
+                        className='bg-stone-100 border-cyan-500 border-1 rounded-lg p-1 text-center'
+                        type='text'
+                        value={ingredient.price}
+                        onChange={handlePriceChange}
+                      />
+                    ) : (
+                      ingredient.price
+                    )}
                   </td>
 
                   {/* Buttons */}
-
+                  {/* Rendering the edit button conditionally based on editing status */}
                   <td className='px-2 py-2'>
-                    <button
-                      // onClick={() => handleStatusUpdate()}
-
+                    {/* <button
+                      onClick={handleEditClick}
                       type='button'
                       className='font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
                       text-cyan-600'
                     >
                       Edit
-                    </button>
+                    </button> */}
                     {/* Spinner  */}
                     <div className='w-full top-0 right-0 ml-5'>
                       {/* {saveBubbles && <SpinnerBubbles loading={loading} />} */}
                     </div>
+                    {editingRowIndex === index ? (
+                      <button
+                        type='button'
+                        className='font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
+                    text-cyan-600'
+                        onClick={() => handleSaveClick(index)}
+                      >
+                        Save
+                      </button>
+                    ) : (
+                      <button
+                        type='button'
+                        className='font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
+                      text-cyan-600'
+                        onClick={() => handleEditRowClick(index)}
+                      >
+                        Edit
+                      </button>
+                    )}
                   </td>
                   <td className='px-2 py-2'>
                     <div className='w-full top-0 right-2 '></div>

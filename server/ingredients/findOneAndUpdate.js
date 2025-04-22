@@ -3,12 +3,16 @@ import ingredientsModel from "./ingredientsModel.js"
 const findOneAndUpdate = async (req, res) => {
   try {
     const { id } = req.params
-    const updatedData = req.body
+    const { name, description, itemType, price } = req.body
 
     const updateIngredient = await ingredientsModel
-      .findOneAndUpdate({ _id: id }, { $set: updatedData }, { new: true })
+      .findOneAndUpdate(
+        { _id: id },
+        { name, description, itemType, price },
+        { new: true }
+      )
       .then((ingredient) => {
-        res.status(200).json({ success: true, igUpdate: updateIngredient })
+        res.status(200).json({ success: true, ingredient: updateIngredient })
       })
       .catch((error) => {
         console.error(error)

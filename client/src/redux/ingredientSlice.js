@@ -34,6 +34,17 @@ export const ingredientGetAll = createAsyncThunk(
   }
 )
 
+// Update One
+export const ingredientUpdateOne = createAsyncThunk(
+  "ingredient/updateOne",
+  async (id) => {
+    console.log("redux ingredientUpdateOne ingredient", id)
+    const response = await ingredientService.ingredientUpdateOne(id)
+    console.log("redux ingredientUpdateOne ingredient response", response)
+    return response.data
+  }
+)
+
 export const ingredientSlice = createSlice({
   name: "ingredient",
   initialState,
@@ -73,6 +84,36 @@ export const ingredientSlice = createSlice({
       })
       .addCase(ingredientGetAll.rejected, (state, action) => {
         console.log("ingredientSlice ingredientGetAll.rejected", action.payload)
+        state.loading = false
+      })
+
+      // Update One
+      .addCase(ingredientUpdateOne.pending, (state, action) => {
+        console.log(
+          "ingredientSlice ingredientUpdateOne.pending",
+          action.payload
+        )
+        state.loading = true
+      })
+      .addCase(ingredientUpdateOne.fulfilled, (state, action) => {
+        console.log(
+          "ingredientSlice ingredientUpdateOne.fulfilled",
+          action.payload
+        )
+        state.loading = false
+        // Find the updated ingredient in the existing ingredient list and replace it with the new data.
+        const indexOfUpdatedIngredient = state.ingredients.findIndex(
+          (ingredient) =>
+            ingredient._id === action.payload.updatedIngredient._id
+        )
+        state.ingredients[indexOfUpdatedIngredient] =
+          action.payload.updatedIngredient
+      })
+      .addCase(ingredientUpdateOne.rejected, (state, action) => {
+        console.log(
+          "ingredientSlice ingredientUpdateOne.rejected",
+          action.payload
+        )
         state.loading = false
       })
   },
