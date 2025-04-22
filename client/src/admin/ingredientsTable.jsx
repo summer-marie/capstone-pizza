@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { createIngredient, ingredientGetAll } from "../redux/ingredientSlice"
+import AlertBlack from "../components/AlertBlack"
 
 const IngredientModal = ({ isOpen, onClose, setShoeModal }) => {
   const [formData, setFormData] = useState({
@@ -174,22 +175,37 @@ const IngredientModal = ({ isOpen, onClose, setShoeModal }) => {
   )
 }
 
+const alertMsg = "Are you sure you want to delete?"
+const alertDesription = "Ingredient will permenitly removed from data set"
+
 const IngredientsTable = () => {
   const { ingredients } = useSelector((state) => state.ingredient)
   const [showModal, setShowModal] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
 
   const dispatch = useDispatch()
 
+  // Grab ingredients from database
   useEffect(() => {
     dispatch(ingredientGetAll())
   }, [])
 
+  // Modal funstions
   const handleOpenModal = () => {
     setShowModal(true)
   }
-
   const handleCloseModal = () => {
     setShowModal(false)
+  }
+
+  // Alert functions
+  const handleCancel = () => {
+    setShowAlert(false)
+  }
+  const handleConfirm = () => {
+    setShowAlert(false)
+    // handle delete of pizza
+    console.log("delete ingredient")
   }
 
   return (
@@ -293,11 +309,9 @@ const IngredientsTable = () => {
                   <td className='px-2 py-2'>
                     <div className='w-full top-0 right-2 '></div>
                     <button
-                      // onClick={() => {
-
-                      //   setShowAlert(true)
-
-                      // }}
+                      onClick={() => {
+                        setShowAlert(true)
+                      }}
                       type='button'
                       className='font-medium  cursor-pointer
                       text-red-700 w-full h-full border-3 rounded-xl hover:bg-red-700 
@@ -313,6 +327,17 @@ const IngredientsTable = () => {
           </table>
         </div>
       </div>
+
+      {showAlert && (
+        <div className='absolute top-[40%] left-[40%] z-30 min-w-sm'>
+          <AlertBlack
+            alertMsg={alertMsg}
+            alertDesription={alertDesription}
+            handleCancel={handleCancel}
+            handleConfirm={handleConfirm}
+          />
+        </div>
+      )}
     </>
   )
 }

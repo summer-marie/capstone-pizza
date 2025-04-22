@@ -15,7 +15,7 @@ const AdminMenu = () => {
     setShowAlert(false)
   }
   const handleConfirm = () => {
-    // setShowAlert(false)
+    setShowAlert(false)
     // handle delete of pizza
     console.log("delete pizza")
   }
