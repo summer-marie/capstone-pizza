@@ -4,25 +4,30 @@ import { useNavigate } from "react-router"
 import AlertSuccess from "../components/AlertSuccess"
 // import { builderGetMany, builderCreate } from "../redux/builderSlice"
 
-
 const successMsg = "Pizza was created successfully!!"
 const successDescription = "navigating you to the admin menu...."
 
 const AdminBuilderCreate = () => {
   const navigate = useNavigate()
-  // const [pizza, setPizza] = useState({
-  //   pizzaName: "",
-  //   crust: "brick-oven-crust",
-  //   cheese: "italian-blend",
-  //   sauce: "",
-  //   meat1: "",
-  //   meat2: "",
-  //   meat3: "",
-  //   veggies1: "",
-  //   veggies2: "",
-  //   veggies3: "",
-  //   veggies4: "",
-  // })
+  const [newPizza, setNewPizza] = useState({
+    pizzaName: "",
+    base: [
+      {
+        name: "Brick Oven Crust",
+        itemType: "base",
+      },
+      { name: "Brick Oven Crust", itemType: "base" },
+    ],
+    cheese: "italian-blend",
+    sauce: "",
+    meat1: "",
+    meat2: "",
+    meat3: "",
+    veggies1: "",
+    veggies2: "",
+    veggies3: "",
+    veggies4: "",
+  })
 
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
   const [submitDisabled, setSubmitDisabled] = useState(false)
@@ -35,13 +40,9 @@ const AdminBuilderCreate = () => {
     // dispatch(builderCreate())
   }, [])
 
-
-
   // useEffect(() => {
   //   console.log("builders", builders);
   // }, [builders]);
-
-
 
   const handleSubmit = (e) => {
     e.preventDefault()

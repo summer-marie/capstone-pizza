@@ -2,7 +2,7 @@ import "dotenv/config"
 import axios from "axios"
 import { createFakeBuilder } from "./createFakeBuilder.js"
 
-const testBuilders = createFakeBuilder(4)
+const testBuilders = createFakeBuilder(1)
 
 testBuilders.forEach(async (builder) => {
   const addTestBuilder = await axios.post(

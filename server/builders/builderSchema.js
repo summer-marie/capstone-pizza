@@ -25,24 +25,28 @@ const builderSchema = new Schema({
     name: String,
     description: String,
     price: Number,
+
     // required: true,
   },
   meatTopping: [
-    // Fixed ingredients for each pizza
     {
-      name: String,
+      name: { type: String, required: true },
       description: String,
       price: Number,
-      // required: true,
+      itemType: String,
+      amount: { type: Number, default: 1 },
     },
+    // required: true,
   ],
   veggieTopping: [
     {
-      name: String,
+      name: { type: String, required: true },
       description: String,
       price: Number,
-      // required: true,
+      itemType: String,
+      amount: { type: Number, default: 1 },
     },
+    // required: true,
   ],
 
   //  image: { data: Buffer, contentType: String }, // for binary images
