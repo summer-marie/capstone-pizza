@@ -11,7 +11,7 @@ const pizzaUpdateOne = async (req, res) => {
     base,
     sauce,
     meatTopping,
-    veggieToppings,
+    veggieTopping,
     image,
   } = req.body
 
@@ -23,7 +23,7 @@ const pizzaUpdateOne = async (req, res) => {
       base,
       sauce,
       meatTopping,
-      veggieToppings,
+      veggieTopping,
       image,
     }
   )

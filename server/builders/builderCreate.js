@@ -19,7 +19,7 @@ const builderCreate = async (req, res) => {
       .status(500)
       .json({ "ERR 500 MESG": "The server has spoken and you suck" })
   } else {
-    const newBuilder = await builderModel.create({
+    const newPizza = await builderModel.create({
       pizzaName,
       pizzaPrice,
       base,
@@ -28,7 +28,7 @@ const builderCreate = async (req, res) => {
       veggieTopping,
       image,
     })
-    console.log("newBuilder", newBuilder)
+    console.log("newPizza", newPizza)
 
     res.status(200).json({
       success: true,

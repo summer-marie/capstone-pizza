@@ -1,6 +1,4 @@
-import { useState } from "react"
 import { Routes, Route } from "react-router"
-// import Colors from './Colors'
 import PrivateRoute from "./PrivateRoute"
 import Navbar from "./components/Navbar"
 import AdminSidenav from "./admin/AdminSidenav"
@@ -9,23 +7,22 @@ import About from "./customer/About"
 import OrderMenu from "./customer/OrderMenu"
 import Contact from "./customer/Contact"
 import Checkout from "./customer/Checkout"
-import AdminBuilderCreate from "./admin/adminBuilderCreate"
 import AdminOpenOrders from "./admin/AdminOpenOrders"
 import AdminCompletedOrders from "./admin/AdminCompletedOrders"
 import AdminMenu from "./admin/AdminMenu"
 import Footer from "./components/Footer"
 import AdminLogin from "./admin/AdminLogin"
-import "./App.css"
 import BuildYourOwn from "./customer/BuildYourOwn"
 import AdminUpdateOne from "./admin/AdminUpdateOne"
 import IngredientsTable from "./admin/ingredientsTable"
-
+import AdminBuilderCreate from "./admin/AdminBuilderCreate"
+import "./App.css"
 
 function App() {
   return (
     <>
       {/* TODO: Add sidnav to private routes */}
-      {/* <AdminSidenav /> */}
+      <AdminSidenav />
       <Navbar />
       <Routes>
         <Route path='/' element={<About />} />
@@ -40,16 +37,13 @@ function App() {
         <Route path='/completed-orders' element={<AdminCompletedOrders />} />
         <Route path='/admin-menu' element={<AdminMenu />} />
         <Route path='/admin-update-one' element={<AdminUpdateOne />} />
-        <Route path='/ingredient-table' element={< IngredientsTable/>} />
-   
+        <Route path='/ingredient-table' element={<IngredientsTable />} />
 
         <Route element={<PrivateRoute />}></Route>
 
         <Route path='*' element={<NoMatch />} />
       </Routes>
       <Footer />
-
-      {/* <Colors /> */}
     </>
   )
 }

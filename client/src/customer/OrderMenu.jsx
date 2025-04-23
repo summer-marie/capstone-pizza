@@ -27,7 +27,7 @@ const Order = () => {
       {/* Flex container */}
       <div className='mx-auto max-w-[120rem]'>
         <div className='flex flex-wrap justify-center items-start flex-row sm:flex-col sm:items-center md:flex-row lg:flex-col xl:flex-row m-[3rem]'>
-                    {/* End of CARD  */}
+          {/* End of CARD  */}
 
           {/* Build your own pizza card  **LEAVE OUTSIDE OF MAP*/}
           <div
@@ -99,7 +99,15 @@ const Order = () => {
                   {builder.pizzaName}
                 </h5>
                 <ul className='flex flex-wrap gap-x-2 '>
-                  Brick Oven Crust, House Blend Italian Cheese,
+                  {builder.base &&
+                    builder.base.map((base, baseIndex) => (
+                      <li
+                        className='mt-1'
+                        key={`meat-topping-${index}-${baseIndex}`}
+                      >
+                        {base.name}
+                      </li>
+                    ))}
                   {builder.meatTopping &&
                     builder.meatTopping.map((meatTopping, meatToppingIndex) => (
                       <li
@@ -144,7 +152,6 @@ const Order = () => {
               </div>
             </div>
           ))}
-
         </div>
       </div>
     </>
