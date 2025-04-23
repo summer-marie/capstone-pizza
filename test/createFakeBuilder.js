@@ -3,11 +3,11 @@ import { faker } from "@faker-js/faker"
 const names = [
   "Double Trouble",
   "Supreme",
-  "Peperoni Deluxe",
+  "Pepperoni Deluxe",
   "Cheese Me",
   "Build Your Own",
 ]
-const meatNames = ["Peppronie", "Chicken", "Sausage", "Canadian Ham", "Bacon"]
+const meatNames = ["Pepproni", "Chicken", "Sausage", "Canadian Ham", "Bacon"]
 const vegNames = ["Olives", "Bell Peppers", "Mushrooms", "Pineapple", "Spinach"]
 const amounts = [1, 2, 3]
 
