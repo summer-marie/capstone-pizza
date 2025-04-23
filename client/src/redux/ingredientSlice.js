@@ -106,11 +106,11 @@ export const ingredientSlice = createSlice({
       .addCase(ingredientGetOne.fulfilled, (state, action) => {
         console.log(
           "ingredientSlice ingredientGetOne.fulfilled",
-          action.payload.ingredient[0]
+          action.payload.ingredient
         )
         state.loading = false
         // Updates state
-        state.ingredient = action.payload.ingredient[0]
+        state.ingredient = action.payload.ingredient
       })
       .addCase(ingredientGetOne.rejected, (state, action) => {
         console.log("ingredientSlice ingredientGetOne.rejected", action.payload)

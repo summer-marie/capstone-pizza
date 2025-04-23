@@ -1,15 +1,19 @@
-// 11. **Payment Method**: Accept payments through popular payment gateways like PayPal, Stripe, or Square. Offer the option to pay at pickup as well.
-// Build pizza. one crust, sixe, cheese
-// 2 sauces
-// meats
-// veggies
-// Special intructions text area for users
-// total $$
-
 import { useNavigate } from "react-router"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { builderGetMany } from "../redux/builderSlice"
 
 const Order = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const { builders } = useSelector((state) => state.builder)
+
+  useEffect(() => {
+    dispatch(builderGetMany())
+    console.log("useEffect", builders)
+  }, [])
+
   return (
     <>
       {/* Header */}
@@ -23,50 +27,7 @@ const Order = () => {
       {/* Flex container */}
       <div className='mx-auto max-w-[120rem]'>
         <div className='flex flex-wrap justify-center items-start flex-row sm:flex-col sm:items-center md:flex-row lg:flex-col xl:flex-row m-[3rem]'>
-          {/* Card  */}
-          <div
-            className='max-w-sm rounded-lg shadow-2xl w-1/4 m-4 sm:w-full
-          bg-white border 
-          border-gray-200 shadow-red-700'
-          >
-            <img
-              className='object-cover w-full rounded-t-lg h-auto rounded-s-lg p-2'
-              src={new URL("../assets/basePizza.jpg", import.meta.url).href}
-              alt='yummy pizza picture'
-            />
-
-            <div className='px-5 pb-5'>
-              <h5 className='text-xl font-semibold tracking-tight text-gray-900 '>
-                Meat Lovers
-              </h5>
-              <p>
-                pizza ingredients Brick oven crust, special cheese blend,
-                pepperoni, peppers, red signature sauce
-              </p>
-
-              {/* <div className='flex items-center mt-2.5 mb-5'></div> */}
-
-              <div className='flex items-center justify-between'>
-                <span className='text-3xl font-bold text-gray-900'>
-                  $20.00 pizza.price
-                </span>
-
-                <button
-                  type='button'
-                  className='font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 top-0 right-0 shadow-lg   me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
-                shadow-green-800/80 hover:text-black
-                text-white 
-                from-green-950
-                via-green-500 
-                to-green-600
-                focus:ring-green-800'
-                >
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-          {/* End of CARD  */}
+                    {/* End of CARD  */}
 
           {/* Build your own pizza card  **LEAVE OUTSIDE OF MAP*/}
           <div
@@ -114,6 +75,76 @@ const Order = () => {
             </div>
           </div>
           {/* End of CARD  */}
+          {/* Card  */}
+          {builders.map((builder, index) => (
+            <div
+              key={index}
+              className='max-w-sm rounded-lg shadow-2xl w-1/4 m-4 sm:w-full
+          bg-white border 
+          border-gray-200 shadow-red-700'
+            >
+              {/* <img
+                className='object-cover w-full rounded-t-lg h-auto rounded-s-lg p-2'
+                src={new URL("../assets/basePizza.jpg", import.meta.url).href}
+                alt='yummy pizza picture'
+              /> */}
+              <img
+                className='object-cover w-full rounded-t-lg h-auto rounded-s-lg p-2'
+                src={new URL(`${builder.image}`, import.meta.url).href}
+                alt='yummy pizza picture'
+              />
+
+              <div className='px-5 pb-5'>
+                <h5 className='text-xl font-semibold tracking-tight text-gray-900 '>
+                  {builder.pizzaName}
+                </h5>
+                <ul className='flex flex-wrap gap-x-2 '>
+                  Brick Oven Crust, House Blend Italian Cheese,
+                  {builder.meatTopping &&
+                    builder.meatTopping.map((meatTopping, meatToppingIndex) => (
+                      <li
+                        className='mt-1'
+                        key={`meat-topping-${index}-${meatToppingIndex}`}
+                      >
+                        {meatTopping.name}
+                      </li>
+                    ))}
+                  {builder.veggieTopping &&
+                    builder.veggieTopping.map(
+                      (veggieTopping, veggieToppingIndex) => (
+                        <li
+                          className='mt-1'
+                          key={`meat-topping-${index}-${veggieToppingIndex}`}
+                        >
+                          {veggieTopping.name}
+                        </li>
+                      )
+                    )}
+                </ul>
+                {/* <div className='flex items-center mt-2.5 mb-5'></div> */}
+
+                <div className='flex items-center justify-between'>
+                  <span className='text-3xl font-bold text-gray-900'>
+                    $ {builder.pizzaPrice}
+                  </span>
+
+                  <button
+                    type='button'
+                    className='font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 top-0 right-0 shadow-lg   me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
+                    shadow-green-800/80 hover:text-black
+                    text-white 
+                    from-green-950
+                    via-green-500 
+                    to-green-600
+                    focus:ring-green-800'
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+
         </div>
       </div>
     </>

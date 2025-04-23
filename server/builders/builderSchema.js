@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const builderSchema = new Schema({
   pizzaName: {
     type: String,
-    required: true,
+    // required: true,
   },
   pizzaPrice: {
     type: Number,
@@ -16,31 +16,32 @@ const builderSchema = new Schema({
     {
       name: String,
       description: String,
-      unitPrice: { type: Number, default: 0 },
-      required: true,
+      itemType: String,
+      price: Number,
+      // required: true,
     },
   ],
   sauce: {
     name: String,
     description: String,
-    unitPrice: { type: Number, default: 0 },
-    required: true,
+    price: Number,
+    // required: true,
   },
   meatTopping: [
     // Fixed ingredients for each pizza
     {
       name: String,
       description: String,
-      unitPrice: { type: Number, default: 0 },
-      required: true,
+      price: Number,
+      // required: true,
     },
   ],
   veggieTopping: [
     {
       name: String,
       description: String,
-      unitPrice: { type: Number, default: 0 },
-      required: true,
+      price: Number,
+      // required: true,
     },
   ],
 

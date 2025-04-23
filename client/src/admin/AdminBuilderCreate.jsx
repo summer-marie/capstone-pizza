@@ -2,9 +2,8 @@ import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router"
 import AlertSuccess from "../components/AlertSuccess"
-// import { createOrder } from "./redux/orderSlice"
-// import { builderGetMany } from "../redux/builderSlice"
-// import { userGetMany } from "../redux/userSlice"
+// import { builderGetMany, builderCreate } from "../redux/builderSlice"
+
 
 const successMsg = "Pizza was created successfully!!"
 const successDescription = "navigating you to the admin menu...."
@@ -27,27 +26,22 @@ const AdminBuilderCreate = () => {
 
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
   const [submitDisabled, setSubmitDisabled] = useState(false)
-  // const { loading } = useSelector((state) => state.order);
   // const { builders } = useSelector((state) => state.builder)
-  // const { users } = useSelector((state) => state.user)
+
   // const dispatch = useDispatch()
 
   useEffect(() => {
     // dispatch(builderGetMany())
-    // dispatch(userGetMany())
+    // dispatch(builderCreate())
   }, [])
 
-  // useEffect(() => {
-  //   console.log("users", users);
-  // }, [users]);
+
 
   // useEffect(() => {
   //   console.log("builders", builders);
   // }, [builders]);
 
-  // useEffect(() => {
-  //   console.log("order", order);
-  // }, [order]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault()

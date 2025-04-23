@@ -7,7 +7,7 @@ const IngredientsAll = new Schema({
   description: String,
   itemType: String,
   price: Number,
-  itemType: String,
+  // itemType: String,
 })
 
 export default IngredientsAll

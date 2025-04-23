@@ -50,7 +50,7 @@ export const orderSlice = createSlice({
   extraReducers: (builder) => {
     builder
 
-      // Orders create one
+      // Create one
       .addCase(createOrder.pending, (state, action) => {
         console.log("orderSlice createOrder.pending", action.payload)
         state.loading = true
@@ -64,7 +64,7 @@ export const orderSlice = createSlice({
         state.loading = false
       })
 
-      // Orders get all/No Validation
+      // Get all/No Validation
       .addCase(orderGetAll.pending, (state, action) => {
         console.log("orderSlice orderGetAll.pending", action.payload)
         state.loading = true

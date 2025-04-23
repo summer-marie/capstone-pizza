@@ -4,7 +4,7 @@ import cors from "cors"
 import mongoose from "mongoose"
 import orderIndex from "./orders/orderIndex.js"
 import ingredientsIndex from "./ingredients/ingredientsIndex.js"
-
+import builderIndex from "./builders/builderIndex.js"
 
 console.log(process.env.MONGODB_URL)
 
@@ -20,10 +20,10 @@ app.get("/", (req, res) => {
 // app.use("/users", userIndex)
 app.use("/orders", orderIndex)
 app.use("/ingredients", ingredientsIndex)
-// app.use("/builders", builderIndex)
+app.use("/builders", builderIndex)
 
 // 404
-app.all('/', (req, res) => {
+app.all("/", (req, res) => {
   res.status(404).json({
     success: false,
     data: "404",

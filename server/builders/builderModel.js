@@ -9,6 +9,6 @@ builderSchema.set("toJSON", {
     return ret
   },
 })
-const builderModel = mongoose.model("Builder", builderSchema)
+const builderModel = mongoose.model("builder", builderSchema)
 
 export default builderModel
