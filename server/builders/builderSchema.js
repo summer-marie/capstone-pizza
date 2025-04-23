@@ -5,28 +5,26 @@ const Schema = mongoose.Schema
 const builderSchema = new Schema({
   pizzaName: {
     type: String,
-    // required: true,
+    required: true,
   },
   pizzaPrice: {
     type: Number,
     default: 0,
+    required: true,
   },
   // Crust && Cheese
   base: [
     {
-      name: String,
+      name: { type: String, required: true },
       description: String,
       itemType: String,
       price: Number,
-      // required: true,
     },
   ],
   sauce: {
-    name: String,
+    name: { type: String, required: true },
     description: String,
     price: Number,
-
-    // required: true,
   },
   meatTopping: [
     {
@@ -36,7 +34,6 @@ const builderSchema = new Schema({
       itemType: String,
       amount: { type: Number, default: 1 },
     },
-    // required: true,
   ],
   veggieTopping: [
     {
@@ -46,7 +43,6 @@ const builderSchema = new Schema({
       itemType: String,
       amount: { type: Number, default: 1 },
     },
-    // required: true,
   ],
 
   //  image: { data: Buffer, contentType: String }, // for binary images

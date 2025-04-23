@@ -7,27 +7,30 @@ import AlertSuccess from "../components/AlertSuccess"
 const successMsg = "Pizza was created successfully!!"
 const successDescription = "navigating you to the admin menu...."
 
+const base = [
+  {
+    name: "Italian Blend Cheese",
+    description: "Italian Blend Cheese",
+    itemType: "base",
+    price: "2.00",
+  },
+  {
+    name: "Brick Oven Crust",
+    description: "Brick Oven Crust",
+    itemType: "base",
+    price: "2.00",
+  },
+]
+
 const AdminBuilderCreate = () => {
   const navigate = useNavigate()
-  const [newPizza, setNewPizza] = useState({
-    pizzaName: "",
-    base: [
-      {
-        name: "Brick Oven Crust",
-        itemType: "base",
-      },
-      { name: "Brick Oven Crust", itemType: "base" },
-    ],
-    cheese: "italian-blend",
-    sauce: "",
-    meat1: "",
-    meat2: "",
-    meat3: "",
-    veggies1: "",
-    veggies2: "",
-    veggies3: "",
-    veggies4: "",
-  })
+  const [newPizza, setNewPizza] = useState([
+    { key: "pizzaName", value: "" },
+    { key: "base", value: [...base] },
+    { key: "sauce", value: "" },
+    { key: "meatTopping", value: [] },
+    { key: "veggieTopping", value: [] },
+  ])
 
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
   const [submitDisabled, setSubmitDisabled] = useState(false)
@@ -138,7 +141,6 @@ const AdminBuilderCreate = () => {
                       focus:bg-sky-200 
                       focus:border-sky-700
               '
-                      required
                     >
                       Brick Oven Crust
                     </div>
@@ -157,7 +159,6 @@ const AdminBuilderCreate = () => {
                         focus:bg-sky-200 
                         focus:border-sky-700
               '
-                      required
                     >
                       Italian Blend Cheese
                     </div>
@@ -190,11 +191,16 @@ const AdminBuilderCreate = () => {
                       <option value='White'>White Sauce</option>
                     </select>
                   </div>
-
-                  <h1 className='block mb-2 text-lg font-medium text-gray-900 text-center'>
-                    Meat Options
-                  </h1>
+                  <h1 className='block text-lg font-medium text-gray-900 text-center'></h1>
+                  <p className='tex-md mb-2 p-1 text-center'>
+                    *Each topping has bade value of quantity 1, if you want
+                    extra just select it twice
+                  </p>
                   <hr className='mb-5' />
+                  <h1 className='block mb-5 text-lg font-medium text-gray-900 text-left'>
+                    Meat Options:
+                  </h1>
+
                   <div id='nested-flex-container' className='nested-flex-meat'>
                     <div id='nested-col-1' className='px-2'>
                       <div className='mb-5'>
@@ -294,10 +300,10 @@ const AdminBuilderCreate = () => {
                   </div>
 
                   {/* Nested flex with 2 cols */}
-                  <h1 className='block mb-2 text-lg font-medium text-gray-900 text-center'>
-                    Veggie Options
+                  <h1 className='block mb-5 text-lg font-medium text-gray-900 text-left'>
+                    Veggie Options:
                   </h1>
-                  <hr className='mb-5' />
+
                   <div
                     id='nested-flex-container'
                     className='nested-flex-veggie'

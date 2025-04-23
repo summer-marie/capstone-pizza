@@ -15,9 +15,7 @@ const builderCreate = async (req, res) => {
 
   // Validation
   if (!pizzaName || pizzaName == "") {
-    res
-      .status(500)
-      .json({ "ERR 500 MESG": "The server has spoken and you suck" })
+    res.status(500).json({ message: "ERR 500 MESG: Validation issue" })
   } else {
     const newPizza = await builderModel.create({
       pizzaName,
@@ -32,7 +30,7 @@ const builderCreate = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Congrats, it worked!! You're not a loser.",
+      message: "Congrats, it worked!!",
     })
   }
 }
