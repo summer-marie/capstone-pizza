@@ -20,9 +20,10 @@ const ingredientService = {
   },
 
 
-  ingredientUpdateOne: async (id) => {
+  ingredientUpdateOne: async (ingredient) => {
     return await axios.put(
-      `${import.meta.env.VITE_API_SERVER_URL}/ingredients/${id}`
+      `${import.meta.env.VITE_API_SERVER_URL}/ingredients/${ingredient.id}`,
+      ingredient
     )
   },
 }

@@ -1,7 +1,7 @@
 import express from "express"
 import builderCreate from "./builderCreate.js"
 import builderGetMany from "./builderGetMany.js"
-// import pizzaUpdateOne from "./builderUpdateOne.js"
+import pizzaUpdateOne from "./builderUpdateOne.js"
 
 // TODO: builderDelete, builderUpdate
 
@@ -11,6 +11,9 @@ builderIndex.post("/", builderCreate)
 builderIndex.get("/", builderGetMany)
 
 // Update one
-// builderIndex.get("/:id", pizzaUpdateOne)
+builderIndex.get("/:id", pizzaUpdateOne)
+
+// Get One
+builderIndex.get("/pizza-detail/:id", pizzaUpdateOne)
 
 export default builderIndex

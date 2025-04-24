@@ -8,6 +8,7 @@ import {
 } from "../redux/ingredientSlice"
 import AlertBlack from "../components/AlertBlack"
 
+// Add new ingredient modal
 const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -39,6 +40,8 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
       price: formData.price,
     }
     dispatch(createIngredient(newIngredient))
+    /// Show sucess alert
+    setShowModal(false)
   }
 
   if (!isOpen) return null
@@ -180,34 +183,30 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
   )
 }
 
+// old update modal
 const IngredientEditModal = ({
   ingredient,
   isOpen,
   onClose,
   setShowEditModal,
-  // ingredient: selectedIngredient,
 }) => {
-
-  const [updateData, setUpdateData] = useState(selectedIngredient)
+  // const [updateData, setUpdateData] = useState()
   const dispatch = useDispatch()
-
-
 
   if (!isOpen) return null
 
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("handle submit")
-    dispatch(ingredientUpdateOne(selectedIngredient.id))
+    // dispatch(ingredientUpdateOne(id))
   }
-
 
   return (
     <>
-    
-      <div 
-      // id="customModalEditing" 
-      className='min-h-[50%] p-2'>
+      <div
+        // id="customModalEditing"
+        className='min-h-[50%] p-2'
+      >
         <div className='flex flex-col w-auto md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 rounded-2xl shadow-2xl shadow-cyan-800/80  bg-stone-300'>
           <div className='flex flex-row gap-3 pb-4 '>
             <h1 className='text-3xl font-bold text-[#4B5563] mx-auto my-auto capitalize text-center'>
@@ -215,10 +214,7 @@ const IngredientEditModal = ({
             </h1>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className='flex flex-col '
-          >
+          <form onSubmit={handleSubmit} className='flex flex-col '>
             <div className='pb-2'>
               <label
                 htmlFor='name'
@@ -256,7 +252,10 @@ const IngredientEditModal = ({
                   value={ingredient.description}
                   // onChange={handleInputChange}
                   onChange={(e) =>
-                    setUpdateData({ ...ingredient, description: e.target.value })
+                    setUpdateData({
+                      ...ingredient,
+                      description: e.target.value,
+                    })
                   }
                   className='pl-5 mb-2 focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden  block w-full p-2.5 rounded-l-lg py-3 px-4
                 bg-gray-50 
@@ -356,9 +355,14 @@ const alertDesription = "Ingredient will permenitly removed from data set"
 const IngredientsTable = () => {
   const { ingredients } = useSelector((state) => state.ingredient)
   const [showModal, setShowModal] = useState(false)
-  const [showEditModal, setShowEditModal] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
-  const [editing, setEditing] = useState(false)
+  const [editing, setEditing] = useState({})
+
+  const itemTypesArray = [
+    "Change to: Sauce",
+    "Change to: Meat Topping",
+    "Change to: Veggie Topping",
+  ]
 
   const dispatch = useDispatch()
 
@@ -367,7 +371,11 @@ const IngredientsTable = () => {
     dispatch(ingredientGetAll())
   }, [])
 
-  // Add New Modal
+  useEffect(() => {
+    console.log(editing)
+  }, [editing])
+
+  // Add New ingredient Modal
   const handleOpenModal = () => {
     setShowModal(true)
   }
@@ -375,13 +383,12 @@ const IngredientsTable = () => {
     setShowModal(false)
   }
 
-  // Edit Modal
-  const handleEditModal = () => {
-    setShowEditModal(true)
-    setEditing(true)
-  }
-  const handleCloseEditModal = () => {
-    setShowEditModal(false)
+  const handleUpdate = () => {
+    console.log("handleUpdate", editing)
+    // Dispatch service
+    dispatch(ingredientUpdateOne(editing))
+    // Reset editing ingredient data
+    setEditing({})
   }
 
   // Alert functions
@@ -390,13 +397,8 @@ const IngredientsTable = () => {
   }
   const handleConfirm = () => {
     setShowAlert(false)
-    // handle delete of pizza
+    // handle delete
     console.log("delete ingredient")
-  }
-
-  function handleEditClick() {
-    // Toggle the editing state and open the Modal with the selected ingredient's data
-    setEditing(!editing)
   }
 
   return (
@@ -427,12 +429,12 @@ const IngredientsTable = () => {
           <table
             className='w-full text-sm text-left rtl:text-right rounded-2xl
             text-gray-500 shadow-lg shadow-cyan-800/80 '
-            >
+          >
             <thead
               className='text-xs uppercase 
               bg-gray-400
               text-teal-950'
-              >
+            >
               <tr>
                 <th scope='col' className='px-2 py-4'>
                   ID
@@ -460,7 +462,7 @@ const IngredientsTable = () => {
             <tbody>
               {ingredients.map((ingredient, index) => (
                 <tr
-                  key={ingredient._id}
+                  key={index}
                   ingredient={ingredient}
                   className=' border-b px-2 py-2
                   odd:bg-stone-200
@@ -472,31 +474,112 @@ const IngredientsTable = () => {
                     className='px-2 py-2 font-medium 
                     text-gray-900'
                   >
-                    {ingredient._id}
+                    {/* {ingredient.id} */}
                   </th>
-                  <td className='px-2 py-2'>{ingredient.itemType}</td>
-                  <td className='px-2 py-2'>{ingredient.name}</td>
-                  <td onClick={handleEditClick} className='px-2 py-2'>
-                    {ingredient.description}
+                  <td // itemType
+                    className='px-2 py-2'
+                  >
+                    {editing.id === ingredient.id ? (
+                      <select
+                        className='bg-white rounded-2xl p-2 w-full'
+                        value={editing.itemType}
+                        onChange={(e) =>
+                          setEditing({ ...editing, itemType: e.target.value })
+                        }
+                      >
+                        <option defaultValue={ingredient.itemType}>
+                          <strong className='text-black text-lg'>
+                            {ingredient.itemType}
+                          </strong>
+                        </option>
+                        {itemTypesArray.map((type) => (
+                          <option key={type} value={type}>
+                            {type}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      ingredient.itemType
+                    )}
                   </td>
-                  <td className='px-2 py-2 text-center'>${ingredient.price}</td>
-                  {/* Rendering the edit button conditionally based on editing status */}
+
+                  <td // Name
+                    className='px-2 py-2'
+                  >
+                    {editing.id === ingredient.id ? (
+                      <input
+                        className='bg-white rounded-2xl p-2 w-full'
+                        value={editing.name}
+                        onChange={(e) =>
+                          setEditing({ ...editing, name: e.target.value })
+                        }
+                      />
+                    ) : (
+                      ingredient.name
+                    )}
+                  </td>
+                  <td
+                    // description
+                    className='px-2 py-2'
+                  >
+                    {editing.id === ingredient.id ? (
+                      <input
+                        className='bg-white rounded-2xl p-2  w-full'
+                        value={editing.description}
+                        onChange={(e) =>
+                          setEditing({
+                            ...editing,
+                            description: e.target.value,
+                          })
+                        }
+                      />
+                    ) : (
+                      ingredient.description
+                    )}
+                  </td>
+                  <td // Price
+                    className='px-2 py-2 text-center'
+                  >
+                    $
+                    {editing.id === ingredient.id ? (
+                      <input
+                        className='bg-white rounded-2xl p-2'
+                        value={editing.price}
+                        onChange={(e) =>
+                          setEditing({ ...editing, price: e.target.value })
+                        }
+                      />
+                    ) : (
+                      ingredient.price
+                    )}
+                  </td>
+
                   <td className='px-2 py-2'>
                     {/* Spinner  */}
                     {/* <div className='w-full top-0 right-0 ml-5'>
                       {saveBubbles && <SpinnerBubbles loading={loading} />}
                     </div> */}
-                    <button
-                      type='button'
-                      className='font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
-                      text-cyan-600'
-                      onClick={handleEditModal}
-                    >
-                      Edit
-                    </button>
+                    {editing.id === ingredient.id ? (
+                      <button
+                        type='button'
+                        className='font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
+                        text-cyan-600'
+                        onClick={(e) => handleUpdate()}
+                      >
+                        Save
+                      </button>
+                    ) : (
+                      <button
+                        type='button'
+                        className='font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
+                        text-cyan-600'
+                        onClick={(e) => setEditing({ ...ingredient })}
+                      >
+                        Edit
+                      </button>
+                    )}
                   </td>
                   <td className='px-2 py-2'>
-           
                     <button
                       onClick={() => {
                         setShowAlert(true)
@@ -511,20 +594,18 @@ const IngredientsTable = () => {
                     </button>
                   </td>
                 </tr>
-        ))}
+              ))}
             </tbody>
-              
           </table>
         </div>
       </div>
-        {editing && (
-          <IngredientEditModal
-            isOpen={showEditModal}
-            onClose={handleCloseEditModal}
-            setShowEditModal={setShowEditModal}
-            // ingredient={selectedIngredient}
-          />
-        )}
+      {/* {editing && (
+        <IngredientEditModal
+          isOpen={showEditModal}
+          onClose={handleCloseEditModal}
+          setShowEditModal={setShowEditModal}
+        />
+      )} */}
 
       {showAlert && (
         <div className='absolute top-[40%] left-[40%] z-30 min-w-sm'>

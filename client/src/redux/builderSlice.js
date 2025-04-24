@@ -37,6 +37,14 @@ export const builderCreate = createAsyncThunk(
   }
 )
 
+// Get One
+export const pizzaGetOne = createAsyncThunk("builder/getOne", async (id) => {
+  console.log("redux pizzaGetOne builder", id)
+  const response = await builderService.pizzaGetOne(id)
+  console.log("redux pizzaGetOne builder response", response)
+  return response.data
+})
+
 export const builderSlice = createSlice({
   name: "builder",
   initialState,
@@ -70,6 +78,22 @@ export const builderSlice = createSlice({
       })
       .addCase(builderGetMany.rejected, (state, action) => {
         console.log("builderSlice builderGetMany.rejected", action.payload)
+        state.loading = false
+      })
+
+      // Orders get one
+      .addCase(pizzaGetOne.pending, (state, action) => {
+        console.log("builderSlice pizzaGetOne.pending", action.payload)
+        state.loading = true
+      })
+      .addCase(pizzaGetOne.fulfilled, (state, action) => {
+        console.log("builderSlice pizzaGetOne.fulfilled", action.payload.pizza[0])
+        state.loading = false
+        // Updates state
+        state.builders = action.payload.builders[0]
+      })
+      .addCase(pizzaGetOne.rejected, (state, action) => {
+        console.log("builderSlice pizzaGetOne.rejected", action.payload)
         state.loading = false
       })
   },

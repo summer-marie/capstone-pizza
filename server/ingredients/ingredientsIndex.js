@@ -13,9 +13,9 @@ ingredientsIndex.post("/", ingredientsCreate)
 ingredientsIndex.get("/", ingredientsGetAll)
 
 // Get One
-ingredientsIndex.get("/ingredients/:id", ingredientGetOne)
+ingredientsIndex.get("/:id", ingredientGetOne)
 
 // find/Update One
-ingredientsIndex.put("/ingredients/:id", findOneAndUpdate)
+ingredientsIndex.put("/:id", findOneAndUpdate)
 
 export default ingredientsIndex

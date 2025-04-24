@@ -23,7 +23,7 @@ function App() {
     <>
       {/* TODO: Add sidnav to private routes */}
       <AdminSidenav />
-      <Navbar />
+      {/* <Navbar /> */}
       <Routes>
         <Route path='/' element={<About />} />
         <Route path='/order-menu' element={<OrderMenu />} />
@@ -38,6 +38,7 @@ function App() {
         <Route path='/admin-menu' element={<AdminMenu />} />
         <Route path='/admin-update-one' element={<AdminUpdateOne />} />
         <Route path='/ingredient-table' element={<IngredientsTable />} />
+        {/* <Route path='/pizza-update' element={<Update />} /> */}
 
         <Route element={<PrivateRoute />}></Route>
 

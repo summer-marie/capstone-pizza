@@ -11,6 +11,8 @@ const findOneAndUpdate = async (req, res) => {
       { new: true }
     )
 
+    console.log("updateIngredient", updateIngredient)
+
     res
       .status(200)
       .json({ success: true, ingredient: updateIngredient })

@@ -8,14 +8,20 @@ const orderService = {
       order
     );
   },
+
+  
   // orderGetMany: async (email) => {
   //   return await axios.get(
   //     `${import.meta.env.VITE_API_SERVER_URL}/orders/${email}`
   //   );
   // },
+
+
   orderGetAll: async () => {
     return await axios.get(`${import.meta.env.VITE_API_SERVER_URL}/orders`);
   },
+
+
   orderGetOne: async (id) => {
     return await axios.get(
       `${import.meta.env.VITE_API_SERVER_URL}/orders/order-detail/${id}`

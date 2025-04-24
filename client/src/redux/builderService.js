@@ -10,6 +10,12 @@ const builderService = {
       builder
     )
   },
+
+  pizzaGetOne: async (id) => {
+    return await axios.get(
+      `${import.meta.env.VITE_NODE_SERVER_URL}/builders/pizza-detail/${id}`
+    )
+  },
 }
 
 export default builderService
