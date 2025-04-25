@@ -12,19 +12,28 @@ const AdminUpdateOne = () => {
   const dispatch = useDispatch()
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
   const { id } = useParams()
+  console.log("pizza", id)
 
-  const { builder } = useSelector((state) => state.builder)
-  const [pizzaForm, setPizzaForm] = useState(builder)
+  const { builders } = useSelector((state) => state.builder)
 
+  const [pizzaForm, setPizzaForm] = useState(id)
+  // const [pizzaForm, setPizzaForm] = useState(builder)
+
+  useEffect(() => {
+    dispatch(builderUpdateOne(id))
+  }, [])
+  
   useEffect(() => {
     dispatch(pizzaGetOne(id))
-    console.log("get one useeffect", builder.id)
   }, [])
 
+  // useEffect(() => {
+  //   setPizzaForm(builder);
+  // }, [builder]);
 
-  useEffect(() => {
-    setPizzaForm(builder)
-  }, [builder])
+  // useEffect(() => {
+  //   setPizzaForm(builder)
+  // }, [builder])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -82,14 +91,14 @@ const AdminUpdateOne = () => {
             <div className='border-4 border-green-700 mb-15'>
               <div className='border-4 border-white'>
                 <div className='border-4 border-red-700 p-5'>
-
                   <div className='mb-5'>
                     <label
                       htmlFor='pizza-name'
                       className='block mb-2 text-sm font-medium text-gray-900'
                     >
                       Pizza Name
-                      {/* {pizza.pizzaName} */}
+                      {/* {builder.pizzaPrice} */}
+                      {/* {builder.id} */}
                     </label>
                     <input
                       // value={builder.pizzaName}

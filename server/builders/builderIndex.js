@@ -18,6 +18,6 @@ builderIndex.get("/", builderGetMany)
 builderIndex.put("/:id", pizzaUpdateOne)
 
 // Get One
-builderIndex.get("/:id", builderGetOne)
+builderIndex.get("/pizza-detail/:id", builderGetOne)
 
 export default builderIndex

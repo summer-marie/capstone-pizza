@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router"
 import AlertSuccess from "../components/AlertSuccess"
-// import { builderGetMany, builderCreate } from "../redux/builderSlice"
+import { builderCreate } from "../redux/builderSlice"
 
 const successMsg = "Pizza was created successfully!!"
 const successDescription = "navigating you to the admin menu...."
@@ -24,13 +24,25 @@ const base = [
 
 const AdminBuilderCreate = () => {
   const navigate = useNavigate()
-  const [newPizza, setNewPizza] = useState([
-    { key: "pizzaName", value: "" },
-    { key: "base", value: [...base] },
-    { key: "sauce", value: "" },
-    { key: "meatTopping", value: [] },
-    { key: "veggieTopping", value: [] },
-  ])
+  const dispatch = useDispatch()
+  // const [newPizza, setNewPizza] = useState([
+  //   { key: "pizzaName", value: "" },
+  //   { key: "base", value: [...base] },
+  //   { key: "sauce", value: "" },
+  //   { key: "meatTopping", value: [] },
+  //   { key: "veggieTopping", value: [] },
+  // ])
+
+  const [newPizza, setNewPizza] = useState({
+    pizzaName: "",
+    pizzaPrice: "",
+    base: [...base],
+    sauce: "",
+    meatTopping: [],
+    veggieTopping: [],
+    image: [],
+  })
+
 
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
   const [submitDisabled, setSubmitDisabled] = useState(false)
@@ -51,6 +63,12 @@ const AdminBuilderCreate = () => {
     e.preventDefault()
     console.log("handleSubmit")
     setShowSuccessAlert(true)
+
+    dispatch(createIngredient(newPizza))
+
+
+
+
     setTimeout(() => {
       navigate("/admin-menu")
     }, 2000)
@@ -76,10 +94,10 @@ const AdminBuilderCreate = () => {
                       Create Pizza Name
                     </label>
                     <input
-                      // value={order.orderNumber}
-                      // onChange={(e) =>
-                      //   setOrder({ ...order, orderNumber: e.target.value })
-                      // }
+                      value={newPizza.pizzaName}
+                      onChange={(e) =>
+                        setOrder({ ...newPizza, pizzaName: e.target.value })
+                      }
                       type='text'
                       id='pizza-name'
                       className='shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
@@ -172,10 +190,10 @@ const AdminBuilderCreate = () => {
                       Select Sauce Type
                     </label>
                     <select
-                      // value={order.orderStatus}
-                      // onChange={(e) =>
-                      //   setOrder({ ...order, orderStatus: e.target.value })
-                      // }
+                       value={newPizza.sauce}
+                       onChange={(e) =>
+                         setOrder({ ...newPizza, sauce: e.target.value })
+                       }
                       id='suace'
                       className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
                       text-black 
@@ -187,13 +205,13 @@ const AdminBuilderCreate = () => {
                         focus:border-sky-500'
                       required
                     >
-                      <option value='Red'>Signature Red Sauce</option>
-                      <option value='White'>White Sauce</option>
+                      <option value='Signature Red Sauce'>Signature Red Sauce</option>
+                      <option value='Signature White Suace'>White Sauce</option>
                     </select>
                   </div>
                   <h1 className='block text-lg font-medium text-gray-900 text-center'></h1>
                   <p className='tex-md mb-2 p-1 text-center'>
-                    *Each topping has bade value of quantity 1, if you want
+                    *Each topping has base value of quantity 1, if you want
                     extra just select it twice
                   </p>
                   <hr className='mb-5' />
@@ -211,10 +229,10 @@ const AdminBuilderCreate = () => {
                           Select Meat #1
                         </label>
                         <select
-                          // value={order.orderStatus}
-                          // onChange={(e) =>
-                          //   setOrder({ ...order, orderStatus: e.target.value })
-                          // }
+                           value={newPizza.meatTopping}
+                           onChange={(e) =>
+                             setOrder({ ...newPizza, meatTopping: e.target.value })
+                           }
                           id='meat-type'
                           className='text-sm rounded-lg block w-full p-2.5 shadow-sm-light border-2
                           text-white 
@@ -243,10 +261,10 @@ const AdminBuilderCreate = () => {
                           Select Meat #2
                         </label>
                         <select
-                          // value={order.orderStatus}
-                          // onChange={(e) =>
-                          //   setOrder({ ...order, orderStatus: e.target.value })
-                          // }
+                      value={newPizza.meatTopping}
+                      onChange={(e) =>
+                        setOrder({ ...newPizza, meatTopping: e.target.value })
+                      }
                           id='meat-type'
                           className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
                           text-white 
@@ -275,10 +293,10 @@ const AdminBuilderCreate = () => {
                           Select Meat #3
                         </label>
                         <select
-                          // value={order.orderStatus}
-                          // onChange={(e) =>
-                          //   setOrder({ ...order, orderStatus: e.target.value })
-                          // }
+                        value={newPizza.meatTopping}
+                        onChange={(e) =>
+                          setOrder({ ...newPizza, meatTopping: e.target.value })
+                        }
                           id='meat-type'
                           className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
                           text-white 
@@ -318,10 +336,10 @@ const AdminBuilderCreate = () => {
                           Select Veggies #1
                         </label>
                         <select
-                          // value={order.orderStatus}
-                          // onChange={(e) =>
-                          //   setOrder({ ...order, orderStatus: e.target.value })
-                          // }
+                        value={newPizza.veggieTopping}
+                        onChange={(e) =>
+                          setOrder({ ...newPizza, veggieTopping: e.target.value })
+                        }
                           id='veggie-type'
                           className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
                           text-white 
@@ -348,10 +366,10 @@ const AdminBuilderCreate = () => {
                           Select Veggies #2
                         </label>
                         <select
-                          // value={order.orderStatus}
-                          // onChange={(e) =>
-                          //   setOrder({ ...order, orderStatus: e.target.value })
-                          // }
+                             value={newPizza.veggieTopping}
+                             onChange={(e) =>
+                               setOrder({ ...newPizza, veggieTopping: e.target.value })
+                             }
                           id='veggie-type'
                           className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
                           text-white 
@@ -380,10 +398,10 @@ const AdminBuilderCreate = () => {
                           Select Veggies #3
                         </label>
                         <select
-                          // value={order.orderStatus}
-                          // onChange={(e) =>
-                          //   setOrder({ ...order, orderStatus: e.target.value })
-                          // }
+                             value={newPizza.veggieTopping}
+                             onChange={(e) =>
+                               setOrder({ ...newPizza, veggieTopping: e.target.value })
+                             }
                           id='veggie-type'
                           className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
                           text-white 
@@ -410,10 +428,10 @@ const AdminBuilderCreate = () => {
                           Select Veggies #4
                         </label>
                         <select
-                          // value={order.orderStatus}
-                          // onChange={(e) =>
-                          //   setOrder({ ...order, orderStatus: e.target.value })
-                          // }
+                          value={newPizza.veggieTopping}
+                          onChange={(e) =>
+                            setOrder({ ...newPizza, veggieTopping: e.target.value })
+                          }
                           id='veggie-type'
                           className='text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2 
                             text-white 
@@ -435,7 +453,7 @@ const AdminBuilderCreate = () => {
                   </div>
                   <button
                     // disabled={submitDisabled}
-                    // onClick={showSuccessAlert}
+                    // onClick={handleSubmit}
                     type='submit'
                     className='flex justify-center mx-auto cursor-pointer disabled:cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center  focus:outline-nonehover:bg-gradient-to-br bg-gradient-to-r  focus:ring-4 focus:outline-none
                       shadow-green-800/80 

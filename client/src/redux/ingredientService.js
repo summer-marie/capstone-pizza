@@ -13,9 +13,9 @@ const ingredientService = {
     return await axios.get(`${import.meta.env.VITE_API_SERVER_URL}/ingredients`)
   },
 
-  ingredientGetOne: async (id) => {
+  ingredientGetOne: async (builder) => {
     return await axios.get(
-      `${import.meta.env.VITE_NODE_SERVER_URL}/ingredient/${id}`
+      `${import.meta.env.VITE_NODE_SERVER_URL}/ingredient/${builder.id}`
     );
   },
 

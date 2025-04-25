@@ -9,8 +9,8 @@ const initialState = {
       pizzaPrice: 0,
       base: [],
       sauce: {},
-      meatToppings: [],
-      veggieToppings: [],
+      meatTopping: [],
+      veggieTopping: [],
       image: [],
     },
   ],
@@ -22,7 +22,6 @@ export const builderGetMany = createAsyncThunk("builder/getMany", async () => {
   console.log("redux builderGetMany builder")
   const response = await builderService.builderGetMany()
   console.log("redux builderGetMany builder response", response)
-
   return response.data
 })
 
@@ -55,6 +54,7 @@ export const builderUpdateOne = createAsyncThunk(
     return response.data
   }
 )
+
 
 export const builderSlice = createSlice({
   name: "builder",
@@ -103,7 +103,6 @@ export const builderSlice = createSlice({
           action.payload.builder
         )
         state.loading = false
-        // Updates state
         state.builder = action.payload.builder
       })
       .addCase(pizzaGetOne.rejected, (state, action) => {
@@ -133,6 +132,8 @@ export const builderSlice = createSlice({
         console.log("builderSlice builderUpdateOne.rejected", action.payload)
         state.loading = false
       })
+
+   
   },
 })
 
