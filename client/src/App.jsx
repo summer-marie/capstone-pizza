@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router"
+import { Routes, Route} from "react-router"
 import PrivateRoute from "./PrivateRoute"
 import Navbar from "./components/Navbar"
 import AdminSidenav from "./admin/AdminSidenav"
@@ -35,8 +35,8 @@ function App() {
         <Route path='/pizza-builder' element={<AdminBuilderCreate />} />
         <Route path='/open-orders' element={<AdminOpenOrders />} />
         <Route path='/completed-orders' element={<AdminCompletedOrders />} />
-        <Route path='/admin-menu' element={<AdminMenu />} />
-        <Route path='/admin-update-one' element={<AdminUpdateOne />} />
+        <Route path='/admin-menu/:id?' element={<AdminMenu />} />
+        <Route path='/admin-update-one/:id' element={<AdminUpdateOne />} />
         <Route path='/ingredient-table' element={<IngredientsTable />} />
         {/* <Route path='/pizza-update' element={<Update />} /> */}
 

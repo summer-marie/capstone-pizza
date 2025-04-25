@@ -45,6 +45,17 @@ export const pizzaGetOne = createAsyncThunk("builder/getOne", async (id) => {
   return response.data
 })
 
+// Update
+export const builderUpdateOne = createAsyncThunk(
+  "builder/updateOne",
+  async (builder) => {
+    console.log("redux pizzaGetOne builder", builder)
+    const response = await builderService.pizzaGetOne(builder)
+    console.log("redux pizzaGetOne builder response", response)
+    return response.data
+  }
+)
+
 export const builderSlice = createSlice({
   name: "builder",
   initialState,
@@ -81,19 +92,45 @@ export const builderSlice = createSlice({
         state.loading = false
       })
 
-      // Orders get one
+      // Pizza get one
       .addCase(pizzaGetOne.pending, (state, action) => {
         console.log("builderSlice pizzaGetOne.pending", action.payload)
         state.loading = true
       })
       .addCase(pizzaGetOne.fulfilled, (state, action) => {
-        console.log("builderSlice pizzaGetOne.fulfilled", action.payload.pizza[0])
+        console.log(
+          "builderSlice pizzaGetOne.fulfilled",
+          action.payload.builder
+        )
         state.loading = false
         // Updates state
-        state.builders = action.payload.builders[0]
+        state.builder = action.payload.builder
       })
       .addCase(pizzaGetOne.rejected, (state, action) => {
         console.log("builderSlice pizzaGetOne.rejected", action.payload)
+        state.loading = false
+      })
+
+      // Update
+      .addCase(builderUpdateOne.pending, (state, action) => {
+        console.log("builderSlice builderUpdateOne.pending", action.payload)
+        state.loading = true
+      })
+      .addCase(builderUpdateOne.fulfilled, (state, action) => {
+        console.log(
+          "builderSlice builderUpdateOne.fulfilled",
+          action.payload.builder
+        )
+        state.loading = false
+        state.builder = action.payload.builder
+        // state.builders = state.builders.map((builder) =>
+        //   builder.id === action.payload.builder.id
+        //     ? action.payload.builder
+        //     : builder
+        // )
+      })
+      .addCase(builderUpdateOne.rejected, (state, action) => {
+        console.log("builderSlice builderUpdateOne.rejected", action.payload)
         state.loading = false
       })
   },

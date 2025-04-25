@@ -1,18 +1,35 @@
-import { useNavigate } from "react-router"
-import { useState } from "react"
+import { useNavigate, useParams } from "react-router"
+import { useSelector, useDispatch } from "react-redux"
+import { useState, useEffect } from "react"
 import AlertSuccess from "../components/AlertSuccess"
+import { pizzaGetOne, builderUpdateOne } from "../redux/builderSlice"
 
 const successMsg = "Pizza was updated successfully"
 const successDescription = "navigating you back to the admin menu...."
 
 const AdminUpdateOne = () => {
   const navigate = useNavigate()
-
+  const dispatch = useDispatch()
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const { id } = useParams()
+
+  const { builder } = useSelector((state) => state.builder)
+  const [pizzaForm, setPizzaForm] = useState(builder)
+
+  useEffect(() => {
+    dispatch(pizzaGetOne(id))
+    console.log("get one useeffect", builder.id)
+  }, [])
+
+
+  useEffect(() => {
+    setPizzaForm(builder)
+  }, [builder])
 
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("handleSubmit")
+
     setShowSuccessAlert(true)
     setTimeout(() => {
       navigate("/admin-menu")
@@ -23,11 +40,12 @@ const AdminUpdateOne = () => {
   }
   return (
     <>
-      <div class='flex '></div>
+      <div className='flex '></div>
       <h2 className='berkshireSwashFont mt-5 text-center text-2xl font-bold text-slate-800'>
         Update Pizza Page
       </h2>
       <hr className='my-6 sm:mx-auto lg:my-8 border-gray-700' />
+      {/*  Back button */}
       <button
         onClick={() => navigate("/admin-menu")}
         type='button'
@@ -64,15 +82,17 @@ const AdminUpdateOne = () => {
             <div className='border-4 border-green-700 mb-15'>
               <div className='border-4 border-white'>
                 <div className='border-4 border-red-700 p-5'>
+
                   <div className='mb-5'>
                     <label
                       htmlFor='pizza-name'
                       className='block mb-2 text-sm font-medium text-gray-900'
                     >
                       Pizza Name
+                      {/* {pizza.pizzaName} */}
                     </label>
                     <input
-                      // value={order.orderNumber}
+                      // value={builder.pizzaName}
                       // onChange={(e) =>
                       //   setOrder({ ...order, orderNumber: e.target.value })
                       // }
@@ -426,7 +446,7 @@ const AdminUpdateOne = () => {
                   </div>
                   <button
                     // disabled={submitDisabled}
-                    onClick={showSuccessAlert}
+                    onClick={handleSubmit}
                     type='submit'
                     className='flex justify-center mx-auto cursor-pointer disabled:cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center  focus:outline-nonehover:bg-gradient-to-br bg-gradient-to-r  focus:ring-4 focus:outline-none
                         shadow-green-800/80 

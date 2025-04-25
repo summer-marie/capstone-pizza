@@ -16,6 +16,14 @@ const builderService = {
       `${import.meta.env.VITE_NODE_SERVER_URL}/builders/pizza-detail/${id}`
     )
   },
+
+  
+  builderUpdateOne: async (builder) => {
+    return await axios.put(
+      `${import.meta.env.VITE_API_SERVER_URL}/builders/${builder.id}`,
+      builder
+    )
+  },
 }
 
 export default builderService

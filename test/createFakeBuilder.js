@@ -15,20 +15,20 @@ const base = [
   {
     name: "Italian Blend Cheese",
     description: "Italian Blend Cheese",
-    itemType: "base",
+    itemType: "Base",
     price: "2.00",
   },
   {
     name: "Brick Oven Crust",
     description: "Brick Oven Crust",
-    itemType: "base",
+    itemType: "Base",
     price: "2.00",
   },
 ]
 
 const fakeBuilder = () => {
   function generateVeggieTopping() {
-    const itemType = "veggie topping"
+    const itemType = "Veggie Topping"
     return {
       name: faker.helpers.arrayElement(vegNames),
       description: "",
@@ -39,7 +39,7 @@ const fakeBuilder = () => {
   }
 
   function generateMeatTopping() {
-    const itemType = "meat topping"
+    const itemType = "Meat Topping"
     return {
       // Generates a random meat name like "chicken" or "beef"
       name: faker.helpers.arrayElement(meatNames),
@@ -59,11 +59,11 @@ const fakeBuilder = () => {
     base,
     sauce: {
       name: faker.helpers.arrayElement(
-        ["Signature Red Sauce", "creamy White Sauce"],
+        ["Signature Red Sauce", "Signature White Sauce"],
         { min: 1, max: 1 }
       ),
       description: "",
-      itemType: "sauce",
+      itemType: "Sauce",
       price: faker.commerce.price({ min: 2, max: 3 }),
     },
     meatTopping: faker.helpers.multiple(() => generateMeatTopping(), {

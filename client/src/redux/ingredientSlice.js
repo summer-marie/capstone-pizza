@@ -131,14 +131,11 @@ export const ingredientSlice = createSlice({
           action.payload
         )
         state.loading = false
-        state.ingredients = state.ingredients.map(ingredient => ingredient.id === action.payload.ingredient.id ? action.payload.ingredient : ingredient)
-        // Find the updated ingredient in the existing ingredient list and replace it with the new data.
-        // const indexOfUpdatedIngredient = state.ingredients.findIndex(
-        //   (ingredient) =>
-        //     ingredient._id === action.payload.updatedIngredient._id
-        // )
-        // state.ingredients[indexOfUpdatedIngredient] =
-        //   action.payload.updatedIngredient
+        state.ingredients = state.ingredients.map((ingredient) =>
+          ingredient.id === action.payload.ingredient.id
+            ? action.payload.ingredient
+            : ingredient
+        )
       })
       .addCase(ingredientUpdateOne.rejected, (state, action) => {
         console.log(
