@@ -15,6 +15,8 @@ const AdminCompletedOrders = () => {
     console.log("useEffect", orders)
   }, [])
 
+  // TODO: need to have another map to map over order details?
+
   return (
     <>
       <h2 className='berkshireSwashFont mt-5 text-center text-2xl font-bold text-slate-800'>
@@ -40,10 +42,7 @@ const AdminCompletedOrders = () => {
                 {/* **Order ID** */}
                 Order Number
               </th>
-              <th scope='col' className='px-4 py-4'>
-                {/* **Order Date** */}
-                Date/Time Order
-              </th>
+
               <th scope='col' className='px-4 py-4'>
                 {/* **Items in Order (Product Name, Quantity)** */}
                 Order Details/Quantity
@@ -64,6 +63,10 @@ const AdminCompletedOrders = () => {
                 {/* Is order completed && archived */}
                 Status
               </th>
+              <th scope='col' className='px-4 py-4'>
+                {/* **Order Date** */}
+                Date/Time Order
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -83,27 +86,20 @@ const AdminCompletedOrders = () => {
                 >
                   <p className=''>{order.orderNumber}</p>
                 </th>
-                <td className='px-4 py-4'>
-                  <p className='line-clamp-3 text-gray-900'>{order.date}</p>
-                </td>
+
                 <td className='px-4 py-4'>
                   <ul>
+                    {/* {order.orderDetails.length > 0 && (
+                      <li>{orderDetails.pizzaName}</li>
+                    )} */}
                     <li>
                       {order.orderDetails.pizzaName},{" "}
                       {order.orderDetails.pizzaPrice} : QTY{" "}
                       {order.orderDetails.quantity}{" "}
                     </li>
-                    <li> </li>
-                    <li> </li>
                   </ul>
                 </td>
                 <td className='px-4 py-4 text-gray-900'>
-                  {/* {" "}
-                  {task.users.length > 0 && (
-                    <>
-                      {task.users[0].firstName} {task.users[0].lastName}
-                    </>
-                  )} */}{" "}
                   {order.address.street}
                 </td>
                 <td className='px-4 py-4 text-gray-900'>
@@ -113,7 +109,12 @@ const AdminCompletedOrders = () => {
                 <td className='px-4 py-4 text-gray-900'>
                   $ {order.orderTotal}
                 </td>
-                <td className='px-4 py-4 text-gray-900'>{order.status}</td>
+                <td className='px-4 py-4 text-gray-900 uppercase'>
+                  {order.status}
+                </td>
+                <td className='px-4 py-4'>
+                  <p className='line-clamp-3 text-gray-900'>{order.date}</p>
+                </td>
               </tr>
             ))}
           </tbody>

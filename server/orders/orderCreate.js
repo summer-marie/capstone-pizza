@@ -40,7 +40,6 @@ const orderCreate = async (req, res) => {
       lastName,
       orderTotal,
       status,
-      isArchived,
     })
     console.log("newOrder", newOrder)
 

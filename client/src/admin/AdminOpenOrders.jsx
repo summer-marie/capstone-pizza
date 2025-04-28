@@ -63,6 +63,8 @@ const AdminOpenOrders = () => {
     }, 2000)
   }
 
+    // TODO: need to have another map to map over order details?
+
   return (
     <>
       <h2 className='berkshireSwashFont mt-5 text-center text-2xl font-bold text-slate-800'>
@@ -200,8 +202,8 @@ const AdminOpenOrders = () => {
                       onClick={() => handleStatusUpdate()}
                       // onClick={() => handleSave(task)}
                       //   onClick={handleSave}
-                      // disabled={!task.submitEnabled}
-                      //   disabled={false}
+             
+             
                       type='button'
                       className='font-medium hover:underline disabled:cursor-not-allowed  w-full h-full cursor-pointer
                     text-blue-600 
