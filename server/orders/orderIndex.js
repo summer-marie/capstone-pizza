@@ -5,9 +5,7 @@ import orderArchiveOne from "./orderArchiveOne.js"
 import orderGetOne from "./orderGetOne.js"
 import orderGetArchived from "./orderGetArchived.js"
 import orderGetOpen from "./orderGetOpen.js"
-import orderUpdateOne from "./orderUpdateOne.js"
-// import orderGetMany from "./orderGetMany.js"
-// import orderUpdateOne from "./orderUpdateOne.js"
+import orderUpdateStatus from "./orderUpdateStatus.js"
 
 const orderIndex = express.Router()
 
@@ -27,18 +25,12 @@ orderIndex.get("/archived", orderGetArchived)
 orderIndex.get("/open", orderGetOpen)
 
 // Get all open orders
-orderIndex.put("/open/:id", orderUpdateOne)
-
+orderIndex.put("/open/:id", orderUpdateStatus)
 
 // Get one order by id
-orderIndex.get("/order-detail/:id", orderGetOne)
+orderIndex.get("/order/:id", orderGetOne)
 
 export default orderIndex
-
-
-
-
-
 
 // Get orders by validated email
 // orderIndex.get("/:email", orderGetMany)

@@ -93,8 +93,7 @@ const AdminCompletedOrders = () => {
                       <li>{orderDetails.pizzaName}</li>
                     )} */}
                     <li>
-                      {order.orderDetails.pizzaName},{" "}
-                      {order.orderDetails.pizzaPrice} : QTY{" "}
+                      {order.orderDetails.pizzaName}, : QTY{" "}
                       {order.orderDetails.quantity}{" "}
                     </li>
                   </ul>

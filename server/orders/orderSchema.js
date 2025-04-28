@@ -61,15 +61,9 @@ const orderSchema = new Schema({
   status: {
     type: String,
     // Allowable entries
-    enum: {
-      processing: "processing",
-      completed: "completed",
-      delivered: "delivered",
-      archived: "archived",
-    },
+    enum: ["processing", "completed", "delivered", "archived"],
   },
 
-  
   // Remove, is not needed if the status of archived is in the status
   isArchived: {
     type: Boolean,

@@ -10,6 +10,8 @@ console.log(process.env.MONGODB_URL)
 
 const app = express()
 app.use(express.json())
+// app.use(express.urlencoded({ extended: true }));
+
 app.use(cors())
 const port = process.env.PORT || 8010
 

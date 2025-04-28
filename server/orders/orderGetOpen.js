@@ -5,7 +5,7 @@ const orderGetOpen = async (req, res) => {
     { $match: { status: { $ne: "archived" } } },
   ])
 
-  console.log("getOrders", getOrders)
+  // console.log("getOrders", getOrders) 
 
   res.status(200).json({ success: true, orders: getOrders })
 }

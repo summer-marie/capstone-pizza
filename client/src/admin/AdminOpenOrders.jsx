@@ -3,67 +3,68 @@ import { useSelector, useDispatch } from "react-redux"
 import { useParams, useNavigate } from "react-router"
 import AlertBlack from "../components/AlertBlack"
 import SpinnerBubbles from "../components/SpinnerBubbles"
-import {  orderGetOpen } from "../redux/orderSlice"
-
-// import {
-//   orderGetOne,
-//   orderTaskUpdate,
-//   orderTaskDelete,
-// } from "../redux/orderSlice";
+import {
+  orderGetOne,
+  orderGetOpen,
+  orderUpdateStatus,
+} from "../redux/orderSlice"
 
 const alertMsg = "Are you sure you want to archive this order?"
 const alertDesription = "Click to confirm"
 
 const AdminOpenOrders = () => {
   const { orders } = useSelector((state) => state.order)
+  const { order } = useSelector((state) => state.order)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
-
+  const [newStatus, setNewStatus] = useState({})
   const [saveBubbles, setSaveBubbles] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
 
-  // Grab order
+  const statusArray = ["processing", "completed", "delivered"]
+
+  // Grab open order
   useEffect(() => {
-    // dispatch(orderGetAll())
     dispatch(orderGetOpen())
     console.log("useEffect", orders)
   }, [])
 
-  // const handleSave = (task) => {
-  //   console.log("orderId:", id, "task:", task);
-  //   setLoading(true);
-  //   setSaveBubbles(true);
-  //   dispatch(orderTaskUpdate({ id, task }));
-  //   setTimeout(() => {
-  //     setSaveBubbles(false);
-  //   }, 2000);
-  //   // setTaskForm(taskForm.filter((t) => t._id !== task._id))
-  // };
+  // useEffect(() => {
+  //   dispatch(orderGetOne(id))
+  //   console.log("useEffect", id)
+  // }, [])
 
-  const handleStatusUpdate = () => {
-    console.log("SAVE STATUS")
+  const handleStatusUpdate = (id) => {
+    console.log("id", id)
+    console.log("shdjkshfjkhsd", newStatus)
     setLoading(true)
     setSaveBubbles(true)
     // dispatch update of status
+    dispatch(orderUpdateStatus({ id: id, status: newStatus }))
+
     setTimeout(() => {
       setSaveBubbles(false)
-    }, 2000)
+    }, 1500)
   }
 
   const handleCancel = () => {
     setShowAlert(false)
   }
-  const handleConfirm = () => {
+
+  const handleConfirm = (id) => {
+    console.log("id", id)
+    console.log("shdjkshfjkhsd", newStatus)
+    const value = "archive"
     // send pizza to archived
-    console.log("ARCHIVE pizza")
+    dispatch(orderUpdateStatus({ id: id, status: value }))
+
     setTimeout(() => {
       setShowAlert(false)
     }, 2000)
   }
 
-    // TODO: need to have another map to map over order details?
+  // TODO: need to have another map to map over order details?
 
   return (
     <>
@@ -71,7 +72,7 @@ const AdminOpenOrders = () => {
         Open Orders
       </h2>
       <hr className='my-6 sm:mx-auto lg:my-8 border-gray-700' />
-      
+
       <div id='openOrdersTAble' className='w-3/4 ml-[20rem] shadow-2xl'>
         <table
           className='w-full mt-6 text-sm text-left rtl:text-right rounded-2xl
@@ -122,6 +123,7 @@ const AdminOpenOrders = () => {
             {orders.map((order, index) => (
               <tr
                 key={index}
+                order={order}
                 className=' border-b px-4 py-4
               odd:bg-stone-200
               even:bg-gray-300 
@@ -153,57 +155,62 @@ const AdminOpenOrders = () => {
                       {task.users[0].firstName} {task.users[0].lastName}
                     </>
                   )} */}{" "}
-                 {order.address.street}
+                  {order.address.street}
                 </td>
-                <td className='px-4 py-4'> {order.firstName} {order.lastName}</td>
+                <td className='px-4 py-4'>
+                  {" "}
+                  {order.firstName} {order.lastName}
+                </td>
                 <td className='px-4 py-4'>$ {order.orderTotal}</td>
                 <td className='px-4 py-4 '>
-                  <select
-                    // onChange={(e) =>
-                    //   setTaskForm(
-                    //     taskForm.map((t) =>
-                    //       t._id === task._id
-                    //         ? {
-                    //             ...t,
-                    //             submitEnabled: true,
-                    //             status: e.target.value,
-                    //           }
-                    //         : t
-                    //     )
-                    //   )
-                    // }
-                    className='dark:text-cyan-700 bg-slate-300 rounded-xl font-semibold px-2 py-2 w-full'
-                  >
-                    {/* <option className="text-sm">{ task.status || ("Choose a status")}</option> */}
-                    <option className='text-sm'>{ order.status || ("Choose a status")}</option>
-                    <option
-                      className='text-cyan-900 hover:text-semibold'
-                      value='Pending'
+                  {newStatus.id === order._id ? (
+                    <select
+                      value={newStatus.status}
+                      onChange={(e) =>
+                        setNewStatus({ id: order._id, status: e.target.value })
+                      }
+                      className='dark:text-cyan-700 bg-slate-100 rounded-xl font-semibold px-2 py-2 w-full'
                     >
-                      In Progress
-                    </option>
-                    <option
-                      className='text-cyan-900 hover:text-semibold'
-                      value='Started'
+                      <option defaultValue={newStatus.status}>
+                        {order.status}
+                      </option>
+                      {/* Only show types that are different from default */}
+                      {order.status &&
+                        [...statusArray]
+                          .filter((status) => status !== order.status)
+                          .map((status) => (
+                            <option key={status} value={status}>
+                              {status}
+                            </option>
+                          ))}
+                    </select>
+                  ) : (
+                    <select
+                      value={order.status}
+                      onChange={(e) =>
+                        setNewStatus({ id: order._id, status: e.target.value })
+                      }
+                      className='dark:text-cyan-700 bg-slate-100 rounded-xl font-semibold px-2 py-2 w-full'
                     >
-                      Completed
-                    </option>
-                    <option
-                      className='text-cyan-900 hover:text-semibold'
-                      value='In Progress'
-                    >
-                      Delivered
-                    </option>
-                  </select>
+                      <option defaultValue={order.status}>
+                        {order.status}
+                      </option>
+                      {/* Only show types that are different from default */}
+                      {order.status &&
+                        [...statusArray]
+                          .filter((status) => status !== order.status)
+                          .map((status) => (
+                            <option key={status} value={status}>
+                              {status}
+                            </option>
+                          ))}
+                    </select>
+                  )}
                 </td>
                 <td className='px-4 py-4'>
                   <div className='relative'>
                     <button
-                      onClick={() => handleStatusUpdate()}
-                      // onClick={() => handleSave(task)}
-                      //   onClick={handleSave}
-             
-             
+                      onClick={() => handleStatusUpdate(order._id)}
                       type='button'
                       className='font-medium hover:underline disabled:cursor-not-allowed  w-full h-full cursor-pointer
                     text-blue-600 
@@ -221,11 +228,8 @@ const AdminOpenOrders = () => {
                   <div className='relative'>
                     <div className='w-full top-0 right-2 '></div>
                     <button
-                      // onClick={handleAlert}
                       onClick={() => {
-                        //   setTaskToDelete(task);
                         setShowAlert(true)
-                        //   // setSaveBubbles(true)
                       }}
                       type='submit'
                       className='font-medium text-red-700 w-full h-full border-3 rounded-xl hover:bg-red-700 hover:text-white hover:border-black cursor-pointer'
@@ -245,7 +249,7 @@ const AdminOpenOrders = () => {
             alertMsg={alertMsg}
             alertDesription={alertDesription}
             handleCancel={handleCancel}
-            handleConfirm={handleConfirm}
+            handleConfirm={() => handleConfirm(order._id)}
           />
         </div>
       )}

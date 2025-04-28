@@ -35,6 +35,24 @@ export const createOrder = createAsyncThunk("order/create", async (order) => {
   return response.data
 })
 
+// Update order status
+export const orderUpdateStatus = createAsyncThunk(
+  "order/update",
+  async (id) => {
+    console.log("redux orderUpdateStatus order", id)
+    const response = await orderService.orderUpdateStatus(id)
+    console.log(response)
+    return response.data
+  }
+)
+// Order get one
+export const orderGetOne = createAsyncThunk("order/getOne", async (id) => {
+  console.log("redux orderGetOne order", id)
+  const response = await orderService.orderGetOne(id)
+  console.log(response)
+  return response.data
+})
+
 // Get ALL
 export const orderGetAll = createAsyncThunk("order/getAll", async () => {
   console.log("redux orderGetAll order")
@@ -43,7 +61,7 @@ export const orderGetAll = createAsyncThunk("order/getAll", async () => {
   return response.data
 })
 
-// Get Only open orders 
+// Get Only open orders
 export const orderGetOpen = createAsyncThunk("order/getOpen", async () => {
   console.log("redux orderGetOpen order")
   const response = await orderService.orderGetOpen()
@@ -52,12 +70,15 @@ export const orderGetOpen = createAsyncThunk("order/getOpen", async () => {
 })
 
 // Get archived orders
-export const orderGetArchived = createAsyncThunk("order/getArchived", async () => {
-  console.log("redux orderGetArchived order")
-  const response = await orderService.orderGetArchived()
-  console.log("redux orderGetArchived order response", response)
-  return response.data
-})
+export const orderGetArchived = createAsyncThunk(
+  "order/getArchived",
+  async () => {
+    console.log("redux orderGetArchived order")
+    const response = await orderService.orderGetArchived()
+    console.log("redux orderGetArchived order response", response)
+    return response.data
+  }
+)
 
 export const orderSlice = createSlice({
   name: "order",
@@ -80,6 +101,41 @@ export const orderSlice = createSlice({
         state.loading = false
       })
 
+      // Update status
+      .addCase(orderUpdateStatus.pending, (state, action) => {
+        console.log("orderSlice orderUpdateStatus.pending", action.payload)
+        state.loading = true
+      })
+      .addCase(orderUpdateStatus.fulfilled, (state, action) => {
+        console.log("orderSlice orderUpdateStatus.fulfilled", action.payload)
+        // const updatedOrder = state.orders.map((order) =>
+        //   order._id === action.payload._id ? action.payload : order
+        // )
+        state.loading = false
+        state.orders = action.payload.orders
+
+      })
+
+      .addCase(orderUpdateStatus.rejected, (state, action) => {
+        console.log("orderSlice orderUpdateStatus.rejected", action.payload)
+        state.loading = false
+      })
+
+      // Order get one
+      .addCase(orderGetOne.pending, (state, action) => {
+        console.log("orderSlice orderGetOne.pending", action.payload)
+        state.loading = true
+      })
+      .addCase(orderGetOne.fulfilled, (state, action) => {
+        console.log("orderSlice orderGetOne.fulfilled", action.payload)
+        state.loading = false
+        state.order = action.payload.order
+      })
+      .addCase(orderGetOne.rejected, (state, action) => {
+        console.log("orderSlice orderGetOne.rejected", action.payload)
+        state.loading = false
+      })
+
       // Get all/No Validation
       .addCase(orderGetAll.pending, (state, action) => {
         console.log("orderSlice orderGetAll.pending", action.payload)
@@ -94,7 +150,7 @@ export const orderSlice = createSlice({
         console.log("orderSlice orderGetAll.rejected", action.payload)
         state.loading = false
       })
-      
+
       // Get only open orders
       .addCase(orderGetOpen.pending, (state, action) => {
         console.log("orderSlice orderGetOpen.pending", action.payload)

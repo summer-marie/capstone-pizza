@@ -1,21 +1,25 @@
 import orderModel from "./orderModel.js"
 
-const orderUpdateOne = async (req, res) => {
+const orderUpdateStatus = async (req, res) => {
   const { id } = req.params
   const { status } = req.body
 
-  console.log("SERVER: i am id", id, "SERVER: i am orderForm", orderNumber)
+  console.log("SERVER: i am id", id, status)
   try {
     const order = await orderModel.findOneAndUpdate(
       { _id: id },
       {
-        $set: { status },
+        status: status.status
       },
       { new: true }
     )
 
+    const getOrders = await orderModel.aggregate([
+      { $match: { status: { $ne: "archived" } } },
+    ])
+
     console.log("SERVER: order", order)
-    res.status(200).json(order)
+    res.status(200).json({ orders: getOrders })
   } catch (error) {
     console.error("SERVER: Error updating order", error)
     res
@@ -24,5 +28,4 @@ const orderUpdateOne = async (req, res) => {
   }
 }
 
-export default orderUpdateOne
-
+export default orderUpdateStatus
