@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useParams, useNavigate } from "react-router"
 import AlertBlack from "../components/AlertBlack"
 import SpinnerBubbles from "../components/SpinnerBubbles"
-import { orderGetAll } from "../redux/orderSlice"
+import {  orderGetOpen } from "../redux/orderSlice"
 
 // import {
 //   orderGetOne,
@@ -18,7 +18,7 @@ const AdminOpenOrders = () => {
   const { orders } = useSelector((state) => state.order)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { id } = useParams()
+
 
   const [saveBubbles, setSaveBubbles] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -26,7 +26,8 @@ const AdminOpenOrders = () => {
 
   // Grab order
   useEffect(() => {
-    dispatch(orderGetAll())
+    // dispatch(orderGetAll())
+    dispatch(orderGetOpen())
     console.log("useEffect", orders)
   }, [])
 

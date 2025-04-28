@@ -1,9 +1,11 @@
 import express from "express"
 import orderCreate from "./orderCreate.js"
-// import orderGetMany from "./orderGetMany.js"
 import orderGetAll from "./orderGetAll.js"
 import orderArchiveOne from "./orderArchiveOne.js"
 import orderGetOne from "./orderGetOne.js"
+import orderGetArchived from "./orderGetArchived.js"
+import orderGetOpen from "./orderGetOpen.js"
+// import orderGetMany from "./orderGetMany.js"
 // import orderUpdateOne from "./orderUpdateOne.js"
 
 const orderIndex = express.Router()
@@ -16,11 +18,16 @@ orderIndex.post("/", orderCreate)
 //   });
 
 // Get all, no validation
-// TODO: add validation so only the owner can see all orders
 orderIndex.get("/", orderGetAll)
 
 // Archive order
 orderIndex.put("/archive/:id", orderArchiveOne)
+
+// Get all archived orders
+orderIndex.get("/archived", orderGetArchived)
+
+// Get all open orders
+orderIndex.get("/open", orderGetOpen)
 
 // Get orders by validated email
 // orderIndex.get("/:email", orderGetMany)

@@ -68,6 +68,9 @@ const orderSchema = new Schema({
       archived: "archived",
     },
   },
+
+  
+  // Remove, is not needed if the status of archived is in the status
   isArchived: {
     type: Boolean,
     default: false,

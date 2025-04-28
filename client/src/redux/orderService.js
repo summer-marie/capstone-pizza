@@ -16,9 +16,19 @@ const orderService = {
   //   );
   // },
 
-
+// Get all Orders
   orderGetAll: async () => {
     return await axios.get(`${import.meta.env.VITE_API_SERVER_URL}/orders`);
+  },
+
+  // Get only open orders
+  orderGetOpen: async () => {
+    return await axios.get(`${import.meta.env.VITE_API_SERVER_URL}/orders/open`);
+  },
+
+  // Get only archived orders 
+  orderGetArchived: async () => {
+    return await axios.get(`${import.meta.env.VITE_API_SERVER_URL}/orders/archived`);
   },
 
 
