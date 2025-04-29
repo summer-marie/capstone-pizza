@@ -41,9 +41,31 @@ const orderCreate = async (req, res) => {
       orderTotal,
       status,
     })
-    console.log("newOrder", newOrder)
+    // Format the date before logging and sending the response
+    const formattedDate = new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    }).format(new Date(newOrder.date));
 
-    res.status(200).json({ success: true, message: "Order created!!" })
+    // Format the date before logging and sending the response
+    const formattedOrder = {
+      ...newOrder.toObject(),
+      date: formattedDate,
+    };
+
+    console.log("newOrder", formattedOrder)
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Order created!!",
+        order: formattedOrder,
+      })
   }
 }
 

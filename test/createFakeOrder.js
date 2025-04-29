@@ -1,12 +1,15 @@
 import { faker } from "@faker-js/faker"
-// const _ = require('lodash');
+import generateOrderNumber from "./generateOrderNumber.js"
 
 const names = ["Double Trouble", "Supreme", "Peperoni Delux", "Cheese Me", "Build Your Own"]
 const statusOptions = ["processing", "completed", "delivered", "archived"]
 
+const orderId = generateOrderNumber()
+
 const fakeOrder = () => {
   return {
-    orderNumber: faker.number.int({ min: 500, max: 99999 }),
+    // orderNumber: faker.number.int({ min: 500, max: 99999 }),
+    orderNumber: orderId,
     Date: faker.date.between({ from: '2025-04-01', to: Date.now() }),
     orderDetails: {
       pizzaName: faker.helpers.arrayElement(names),
@@ -23,8 +26,12 @@ const fakeOrder = () => {
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
     orderTotal: faker.commerce.price({ min: 20, max: 100, dec: 2 }),
-    status: faker.helpers.arrayElement(statusOptions),
-    // status: "archived",
+    // status: faker.helpers.arrayElement(statusOptions),
+    // status: "processing",
+    // status: "completed",
+    // status: "delivered",
+    status: "archived",
+
     isArchived: false,
     // isArchived: faker.helpers.arrayElement([true, false], {
     //   min: 1,

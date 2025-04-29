@@ -54,8 +54,8 @@ const AdminOpenOrders = () => {
 
   const handleConfirm = (id) => {
     console.log("id", id)
-    console.log("shdjkshfjkhsd", newStatus)
-    const value = "archive"
+    // console.log("shdjkshfjkhsd", newStatus)
+    const value = "archived"
     // send pizza to archived
     dispatch(orderUpdateStatus({ id: id, status: value }))
 
@@ -228,9 +228,10 @@ const AdminOpenOrders = () => {
                   <div className='relative'>
                     <div className='w-full top-0 right-2 '></div>
                     <button
-                      onClick={() => {
-                        setShowAlert(true)
-                      }}
+                      // onClick={() => {
+                      //   setShowAlert(true)
+                      // }}
+                      onClick={() => handleConfirm(order._id)}
                       type='submit'
                       className='font-medium text-red-700 w-full h-full border-3 rounded-xl hover:bg-red-700 hover:text-white hover:border-black cursor-pointer'
                     >
@@ -243,16 +244,16 @@ const AdminOpenOrders = () => {
           </tbody>
         </table>
       </div>
-      {showAlert && (
-        <div className='absolute top-[40%] left-[40%] z-30'>
-          <AlertBlack
-            alertMsg={alertMsg}
-            alertDesription={alertDesription}
-            handleCancel={handleCancel}
-            handleConfirm={() => handleConfirm(order._id)}
-          />
-        </div>
-      )}
+            {showAlert && (
+              <div className='absolute top-[40%] left-[40%] z-30'>
+                <AlertBlack
+                  alertMsg={alertMsg}
+                  alertDesription={alertDesription}
+                  handleCancel={handleCancel}
+                  handleConfirm={() => handleConfirm(order._id)}
+                />
+              </div>
+            )}
     </>
   )
 }

@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-
 // TODO: Combine customer info into its own obj called customer:
 // top level is good for small ammounts of data, but if it grows may need to nest the info
 
@@ -12,7 +11,7 @@ const orderSchema = new Schema({
   },
   date: {
     type: Date,
-    default: new Date(),
+    default: Date.now,
   },
   orderDetails: {
     pizzaName: {
@@ -63,6 +62,7 @@ const orderSchema = new Schema({
     // Allowable entries
     enum: ["processing", "completed", "delivered", "archived"],
   },
+ 
 
   // Remove, is not needed if the status of archived is in the status
   isArchived: {
