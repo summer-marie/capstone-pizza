@@ -65,7 +65,17 @@ const AdminOpenOrders = () => {
   }
 
   // TODO: need to have another map to map over order details?
-
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleString("en-US", {
+      // year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
   return (
     <>
       <h2 className='berkshireSwashFont mt-5 text-center text-2xl font-bold text-slate-800'>
@@ -73,7 +83,7 @@ const AdminOpenOrders = () => {
       </h2>
       <hr className='my-6 sm:mx-auto lg:my-8 border-gray-700' />
 
-      <div id='openOrdersTAble' className='w-3/4 ml-[20rem] shadow-2xl'>
+      <div id='openOrdersTAble' className='w-3/4 ml-[20rem] shadow-2xl mb-20'>
         <table
           className='w-full mt-6 text-sm text-left rtl:text-right rounded-2xl
         text-gray-500'
@@ -138,7 +148,8 @@ const AdminOpenOrders = () => {
                   <p className=''>{order.orderNumber}</p>
                 </th>
                 <td className='px-4 py-4'>
-                  <p className='line-clamp-3'>{order.date}</p>
+
+                  <p className='line-clamp-3'>     {formatDate(order.date)}</p>
                 </td>
                 <td className='px-4 py-4'>
                   {/* <p className='line-clamp-3'>Pizza 1 x1 Pizza 2 x4</p> */}
@@ -244,16 +255,16 @@ const AdminOpenOrders = () => {
           </tbody>
         </table>
       </div>
-            {showAlert && (
-              <div className='absolute top-[40%] left-[40%] z-30'>
-                <AlertBlack
-                  alertMsg={alertMsg}
-                  alertDesription={alertDesription}
-                  handleCancel={handleCancel}
-                  handleConfirm={() => handleConfirm(order._id)}
-                />
-              </div>
-            )}
+      {showAlert && (
+        <div className='absolute top-[40%] left-[40%] z-30'>
+          <AlertBlack
+            alertMsg={alertMsg}
+            alertDesription={alertDesription}
+            handleCancel={handleCancel}
+            handleConfirm={() => handleConfirm(order._id)}
+          />
+        </div>
+      )}
     </>
   )
 }

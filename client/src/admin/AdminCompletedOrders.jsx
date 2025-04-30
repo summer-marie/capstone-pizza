@@ -15,6 +15,18 @@ const AdminCompletedOrders = () => {
     console.log("useEffect", orders)
   }, [])
 
+ 
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleString("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
   // TODO: need to have another map to map over order details?
 
   return (
@@ -112,7 +124,10 @@ const AdminCompletedOrders = () => {
                   {order.status}
                 </td>
                 <td className='px-4 py-4'>
-                  <p className='line-clamp-3 text-gray-900'>{order.date}</p>
+                  <p className='line-clamp-3 text-gray-900'>
+         
+                    {formatDate(order.date)}
+                    </p>
                 </td>
               </tr>
             ))}

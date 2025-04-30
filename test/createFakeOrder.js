@@ -1,15 +1,14 @@
 import { faker } from "@faker-js/faker"
-import generateOrderNumber from "./generateOrderNumber.js"
+
 
 const names = ["Double Trouble", "Supreme", "Peperoni Delux", "Cheese Me", "Build Your Own"]
 const statusOptions = ["processing", "completed", "delivered", "archived"]
 
-const orderId = generateOrderNumber()
+
 
 const fakeOrder = () => {
   return {
-    // orderNumber: faker.number.int({ min: 500, max: 99999 }),
-    orderNumber: orderId,
+    orderNumber: faker.number.int({ min: 10000, max: 99999 }),
     Date: faker.date.between({ from: '2025-04-01', to: Date.now() }),
     orderDetails: {
       pizzaName: faker.helpers.arrayElement(names),
@@ -17,7 +16,7 @@ const fakeOrder = () => {
       quantity: faker.number.int({ min: 1, max: 5 }),
     },
     address: {
-      street: "1234 West Main Street",
+      street: faker.location.streetAddress(true),
       city: "Goodyear",
       state: "Arizona",
       zip: faker.number.int({ min: 10000, max: 99999 }),

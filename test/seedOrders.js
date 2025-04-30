@@ -2,7 +2,7 @@ import "dotenv/config"
 import axios from "axios"
 import { createFakeOrder } from "./createFakeOrder.js"
 
-const testOrders = createFakeOrder(1)
+const testOrders = createFakeOrder(5)
 
 testOrders.forEach(async (order) => {
   const addTestOrder = await axios.post(

@@ -1,13 +1,14 @@
 import mongoose from "mongoose"
-// TODO: Combine customer info into its own obj called customer:
+
 // top level is good for small ammounts of data, but if it grows may need to nest the info
 
 const Schema = mongoose.Schema
 
 const orderSchema = new Schema({
   orderNumber: {
-    type: String,
-    default: "",
+    type: Number,
+    required: true,
+    default: 100000,
   },
   date: {
     type: Date,
@@ -62,7 +63,6 @@ const orderSchema = new Schema({
     // Allowable entries
     enum: ["processing", "completed", "delivered", "archived"],
   },
- 
 
   // Remove, is not needed if the status of archived is in the status
   isArchived: {

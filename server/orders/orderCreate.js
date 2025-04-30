@@ -1,10 +1,18 @@
 import orderModel from "./orderModel.js"
-import generateOrderNumber from "./generateOrderNumber.js"
+
 
 const orderCreate = async (req, res) => {
-  const orderId = generateOrderNumber()
+  const generateOrderNumber = async () => {
+    const orderNumberDoc = await OrderNumber.findOneAndUpdate(
+      {},
+      { $inc: { currentOrderNumber: 1 } },
+      { new: true, upsert: true }
+    );
+    return orderNumberDoc.currentOrderNumber;
+  };
+
   const {
-    orderNumber,
+    orderNumber = await generateOrderNumber(),
     date,
     orderDetails,
     address,
@@ -31,7 +39,7 @@ const orderCreate = async (req, res) => {
     res.status(500).json({ message: "ERR: Invalid order information" })
   } else {
     const newOrder = await orderModel.create({
-      orderNumber: orderId,
+      orderNumber,
       date,
       orderDetails,
       address,
