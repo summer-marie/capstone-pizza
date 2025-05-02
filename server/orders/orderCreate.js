@@ -3,7 +3,7 @@ import orderModel from "./orderModel.js"
 
 const orderCreate = async (req, res) => {
   const generateOrderNumber = async () => {
-    const orderNumberDoc = await OrderNumber.findOneAndUpdate(
+    const orderNumberDoc = await orderNumber.findOneAndUpdate(
       {},
       { $inc: { currentOrderNumber: 1 } },
       { new: true, upsert: true }
