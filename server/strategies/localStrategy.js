@@ -30,14 +30,14 @@ export default passport.use(
 
     // search users in db
     try {
-      console.log('local strategy', username, password)
+      // console.log('local strategy', username, password)
 
       const user = await userModel.findOne({ email: username })
 
       // Comparing hashed values of PWs
       const isPasswordCorrect = await argon2.verify(user.password, password)
 
-      console.log('user', user)
+      // console.log('user', user)
       if (!user) {
         // no user found - err
         throw new Error('Invalid credentials')

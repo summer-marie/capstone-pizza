@@ -1,17 +1,13 @@
-import mongoose from 'mongoose'
-import userSchema from './userSchema.js'
+import { Router } from 'express'
+import passport from "passport"
+import userCreate from './userCreate.js'
 
-userSchema.set('toJSON', {
-  transform: (doc, ret, options) => {
-    ret.id = ret._id
-    delete ret._id
-    delete ret.token
-    delete ret.authStrategy
-    delete ret.__v
-    return ret
-  },
-})
+const userRouter = Router()
 
-const userModel = mongoose.model('User', userSchema)
+userRouter.post('/', userCreate)
 
-export default userModel
+export default userRouter
+
+
+
+// passport.authenticate("jwt", { session: false })

@@ -1,18 +1,33 @@
 import mongoose from 'mongoose'
-import userSchema from './userSchema.js'
+import * as argon2 from "argon2"
+import userModel from './userModel.js'
 
-userSchema.set('toJSON', {
-  transform: (doc, ret, options) => {
-    ret.id = ret._id
-    delete ret._id
-    delete ret.token
-    delete ret.authStrategy
-    delete ret.__v
-    return ret
-  },
-})
+const userCreate = async (req, res, done) => {
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    status,
+    role,
+    authStrategy = 'local',
+  } = req.body
+  console.log(firstName, lastName, email, password, status, role, authStrategy)
 
-const userModel = mongoose.model('User', userSchema)
+   // Hash password
+   const hashedPassword = await argon2.hash(password)
 
-export default userModel
-ol
+  const buildUser = await userModel.create({
+    firstName,
+    lastName,
+    email,
+    password: hashedPassword,
+    status,
+    role,
+    authStrategy,
+  })
+  res.status(200).json({ message: 'Working, Yay!!!' })
+}
+
+export default userCreate
+  

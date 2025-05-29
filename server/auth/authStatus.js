@@ -1,5 +1,5 @@
 const authStatus = (req, res, next) => {
-  // console.log('req.user', req.user)
+  console.log('LETS TALK ABOUT STATUS BABY')
   if (!req.user) {
     res.status(401).json({ message: 'Not authenticated' })
   } else {

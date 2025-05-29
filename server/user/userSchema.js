@@ -26,6 +26,9 @@ const userSchema = new Schema({
     type: String,
     default: ""
   },
+  status: String,
+  role: [ String ],
+ 
   authStrategy: {
     type: String,
     default: "local"
@@ -33,6 +36,6 @@ const userSchema = new Schema({
   token: {
     type: [ sessionSchema ]
   }
-})
+})  
 
 export default userSchema
