@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker"
 
 
-const names = ["Double Trouble", "Supreme", "Peperoni Delux", "Cheese Me", "Build Your Own"]
+const names = ["Double Trouble", "Supreme", "Peperoni Deluxe", "Cheese Me", "Build Your Own"]
 const statusOptions = ["processing", "completed", "delivered", "archived"]
 
 
@@ -28,8 +28,8 @@ const fakeOrder = () => {
     // status: faker.helpers.arrayElement(statusOptions),
     // status: "processing",
     // status: "completed",
-    // status: "delivered",
-    status: "archived",
+    status: "delivered",
+    // status: "archived",
 
     isArchived: false,
     // isArchived: faker.helpers.arrayElement([true, false], {
