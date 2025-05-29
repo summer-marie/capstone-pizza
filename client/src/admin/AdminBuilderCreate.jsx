@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import AlertSuccess from "../components/AlertSuccess";
 import { builderCreate } from "../redux/builderSlice";
@@ -75,9 +75,9 @@ const AdminBuilderCreate = () => {
     image: [],
   });
 
-  const [showSuccessAlert, setShowSuccessAlert] = useState(true);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [submitDisabled, setSubmitDisabled] = useState(false);
-  // const { builders } = useSelector((state) => state.builder)
+
 
   const handleSubmit = (e) => {
     e.preventDefault();

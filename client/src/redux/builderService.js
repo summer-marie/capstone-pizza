@@ -14,7 +14,7 @@ const builderService = {
 
   pizzaGetOne: async (id) => {
     return await axios.get(
-      `${import.meta.env.VITE_NODE_SERVER_URL}/builders/pizza-detail/${id}`
+      `${import.meta.env.VITE_API_SERVER_URL}/builders/pizza-detail/${id}`
     );
   },
 
@@ -24,6 +24,11 @@ const builderService = {
       builder
     );
   },
-};
 
+  builderDeleteOne: async (id) => {
+    return await axios.delete(
+      `${import.meta.env.VITE_API_SERVER_URL}/builders/${id}`
+    );
+  },
+};
 export default builderService;
