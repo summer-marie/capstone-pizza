@@ -625,7 +625,20 @@ const AdminBuilderCreate = () => {
         </div>
       </div>
       {showSuccessAlert && (
-        <div className="absolute bottom-0 left-[40%] z-30">
+        <div
+          className="fixed bottom-52 left-1/2  
+        -translate-x-1/2 
+        bg-green-500 
+        text-white  
+        p-4          
+        rounded-lg  
+        shadow-lg   
+        z-50        
+        text-center 
+        text-lg     
+        animate-fade-in-up    
+        "
+        >
           <AlertSuccess
             successMsg={successMsg}
             successDescription={successDescription}
