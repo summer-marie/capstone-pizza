@@ -15,3 +15,4 @@ userSchema.set('toJSON', {
 const userModel = mongoose.model('User', userSchema)
 
 export default userModel
+ol
