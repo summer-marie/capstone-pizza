@@ -15,8 +15,8 @@ import builderIndex from "./builders/builderIndex.js"
 
 console.log(process.env.MONGODB_URL)
 
-const cookieSecret = process.env.COOKIE_SECRET || 'secret'
-const sessionSecret = process.env.SESSION_SECRET || 'secret'
+const cookieSecret = process.env.COOKIE_SECRET
+const sessionSecret = process.env.SESSION_SECRET || 'bubbles'
 
 const app = express()
 app.use(express.json())
@@ -39,7 +39,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/auth", authRouter)
-app.use("/user", userRouter)
+app.use("/users", userRouter)
 
 app.use("/orders", orderIndex)
 app.use("/ingredients", ingredientsIndex)
