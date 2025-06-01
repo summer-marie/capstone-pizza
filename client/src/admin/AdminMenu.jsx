@@ -1,4 +1,3 @@
-// TODO: Confirmation modal for Delete
 // Update button = go to details page of pizza where you can edit the ingredients
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
@@ -21,17 +20,32 @@ const AdminMenu = () => {
   useEffect(() => {
     dispatch(builderGetMany());
   }, [dispatch]);
+  // useEffect(() => {
+  //   if (id) {
+  //     dispatch(pizzaGetOne(id));
+  //   }
+  // }, [dispatch, id]);
 
   const handleCancel = () => {
     setShowAlert(false);
     setDeleteId(null);
   };
+
   const handleConfirm = async () => {
     setShowAlert(false);
+    console.log("delete pizza", deleteId);
+    console.log("Modal confirm clicked");
     // handle delete of pizza
     console.log("delete pizza");
     if (deleteId) {
       dispatch(builderDeleteOne(deleteId));
+      // Reset deleteId after deletion
+      // This will also trigger a re-fetch of the pizza list
+      // to update the UI
+      console.log("Pizza deleted with ID:", deleteId);
+      // Reset deleteId to null
+      // and re-fetch the pizza list
+
       setDeleteId(null);
       dispatch(builderGetMany());
     }
@@ -53,96 +67,104 @@ const AdminMenu = () => {
       <div className="mb-10 mx-auto ml-[20rem] w-full px-6 py-2 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="drop-shadow-lg grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-4 mb-10">
           {/* Cards */}
-          {builders.map((builder, index) => (
-            <div
-              key={builder._id}
-              className="max-w-2xl col-1-4 rounded-lg shadow-2xl bg-zinc-300 border border-gray-200 shadow-green-600"
-            >
-              <div className="relative">
-                <img
-                  className="object-cover w-full rounded-t-lg h-auto rounded-s-lg"
-                  src={new URL("../assets/basePizza.jpg", import.meta.url).href}
-                  alt=""
-                />
-                <button
-                  // onClick={() => navigate(`/admin-update-one/${id}`)}
-                  onClick={() => handleClick(builder._id)}
-                  type="button"
-                  className="absolute mt-2 top-0 right-0 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
+          {builders.length === 0 ? (
+            <p>No pizzas found.</p>
+          ) : (
+            builders.map((builder, index) => (
+              // Card
+              <div
+                key={builder._id || index}
+                // onClick={() => navigate(`/admin-update-one/${id}`)}
+                className="max-w-2xl col-1-4 rounded-lg shadow-2xl bg-zinc-300 border border-gray-200 shadow-green-600"
+              >
+                <div className="relative">
+                  <img
+                    className="object-cover w-full rounded-t-lg h-auto rounded-s-lg"
+                    src={
+                      new URL("../assets/basePizza.jpg", import.meta.url).href
+                    }
+                    alt=""
+                  />
+                  <button
+                    // onClick={() => navigate(`/admin-update-one/${id}`)}
+                    onClick={() => handleClick(builder._id)}
+                    type="button"
+                    className="absolute mt-2 top-0 right-0 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
                 shadow-green-800/80 
                 text-white 
                 from-green-950
                 via-green-500 
                 to-green-600
                 focus:ring-green-800"
-                >
-                  Update Pizza
-                </button>
-                <button
-                  onClick={() => {
-                    setDeleteId(builder._id);
-                    setShowAlert(true);
-                  }}
-                  type="button"
-                  className="absolute mt-2 top-0 left-2 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
+                  >
+                    Update Pizza
+                  </button>
+                  <button
+                  key={builder._id} 
+                    onClick={() => {
+                      setDeleteId(builder._id);
+                      setShowAlert(true);
+                    }}
+                    type="button"
+                    className="absolute mt-2 top-0 left-2 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
                 shadow-red-800/80 
                 text-white 
                 from-black
                 via-red-500 
                 to-red-600
                 focus:ring-red-800"
-                >
-                  Delete Pizza
-                </button>
-              </div>
-              <div className="p-3">
-                <p className="text-gray-900">
-                  <strong>Name: {builder.pizzaName}</strong>
-                </p>
-                <ol className="flex flex-wrap gap-x-2 ">
-                  <strong className="mt-1">Pizza Base: </strong>
-                  {builder.base &&
-                    builder.base.map((base, baseIndex) => (
-                      <li
-                        className="mt-1"
-                        key={`meat-topping-${index}-${baseIndex}`}
-                      >
-                        {base.name}
-                      </li>
-                    ))}
-                  <strong className="mt-1">Meats: </strong>{" "}
-                  {builder.meatTopping &&
-                    builder.meatTopping.map((meatTopping, meatToppingIndex) => (
-                      <li
-                        className="mt-1"
-                        key={`meat-topping-${index}-${meatToppingIndex}`}
-                      >
-                        {meatTopping.name}
-                      </li>
-                    ))}
-                  <strong className="mt-1">Veggies: </strong>
-                  {builder.veggieTopping &&
-                    builder.veggieTopping.map(
-                      (veggieTopping, veggieToppingIndex) => (
-                        <li
-                          className="mt-1"
-                          key={`meat-topping-${index}-${veggieToppingIndex}`}
-                        >
-                          {veggieTopping.name}
+                  >
+                    Delete Pizza
+                  </button>
+                </div>
+                <div className="p-3">
+                  <p className="text-gray-900">
+                    <strong>Name: {builder.pizzaName}</strong>
+                  </p>
+                  <ol className="flex flex-wrap gap-x-2 ">
+                    <strong className="mt-1">Pizza Base: </strong>
+                    {builder.base &&
+                      builder.base.map((base, baseIndex) => (
+                        <li className="mt-1" key={`base-${index}-${baseIndex}`}>
+                          {base.name}
                         </li>
-                      )
-                    )}
-                </ol>
-                <h2 className="font-bold text-lg text-gray-900">
-                  {/* {home.price.toLocaleString("en-US", {
+                      ))}
+                    <strong className="mt-1">Meats: </strong>{" "}
+                    {builder.meatTopping &&
+                      builder.meatTopping.map(
+                        (meatTopping, meatToppingIndex) => (
+                          <li
+                            className="mt-1"
+                            key={`meat-${index}-${meatToppingIndex}`}
+                          >
+                            {meatTopping.name}
+                          </li>
+                        )
+                      )}
+                    <strong className="mt-1">Veggies: </strong>
+                    {builder.veggieTopping &&
+                      builder.veggieTopping.map(
+                        (veggieTopping, veggieToppingIndex) => (
+                          <li
+                            className="mt-1"
+                            key={`veggie-${index}-${veggieToppingIndex}`}
+                          >
+                            {veggieTopping.name}
+                          </li>
+                        )
+                      )}
+                  </ol>
+                  <h2 className="font-bold text-lg text-gray-900">
+                    {/* {home.price.toLocaleString("en-US", {
                   style: "currency",
                   currency: "USD",
                 })} */}
-                  Price $ {builder.pizzaPrice}
-                </h2>
+                    Price $ {builder.pizzaPrice}
+                  </h2>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
           {/* End of card */}
         </div>
       </div>

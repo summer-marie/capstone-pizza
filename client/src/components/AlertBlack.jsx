@@ -2,7 +2,7 @@ import React from "react"
 
 const AlertBlack = ({
   alertMsg,
-  alertDesription,
+  alertDescription,
   handleCancel,
   handleConfirm,
 }) => {
@@ -24,7 +24,7 @@ const AlertBlack = ({
 
         <div>
           <div className='font-bold text-lg'>{alertMsg}</div>
-          <div className='text-base'>{alertDesription}</div>
+          <div className='text-base'>{alertDescription}</div>
         </div>
 
         <div className='flex justify-end bottom-0 right-0 absolute p-2 mt-2'>

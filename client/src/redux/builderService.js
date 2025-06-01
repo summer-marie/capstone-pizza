@@ -26,9 +26,15 @@ const builderService = {
   },
 
   builderDeleteOne: async (id) => {
-    return await axios.delete(
-      `${import.meta.env.VITE_API_SERVER_URL}/builders/${id}`
-    );
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_API_SERVER_URL}/builders/${id}`
+      );
+      return response.data; // Return the data directly
+    } catch (error) {
+      console.error("Error deleting builder:", error);
+      throw error; // Re-throw the error to handle it in the reducer
+    }
   },
 };
 export default builderService;

@@ -10,7 +10,7 @@ import {
 } from "../redux/orderSlice"
 
 const alertMsg = "Are you sure you want to archive this order?"
-const alertDesription = "Click to confirm"
+const alertDescription = "Click to confirm"
 
 const AdminOpenOrders = () => {
   const { orders } = useSelector((state) => state.order)
@@ -259,7 +259,7 @@ const AdminOpenOrders = () => {
         <div className='absolute top-[40%] left-[40%] z-30'>
           <AlertBlack
             alertMsg={alertMsg}
-            alertDesription={alertDesription}
+            alertDescription={alertDescription}
             handleCancel={handleCancel}
             handleConfirm={() => handleConfirm(order._id)}
           />

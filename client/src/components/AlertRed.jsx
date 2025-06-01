@@ -1,4 +1,4 @@
-const AlertRed = ({ alertMsg, alertDesription, handleClose }) => {
+const AlertRed = ({ alertMsg, alertDescription, handleClose }) => {
   return (
     <div className='rounded-lg w-[600px] h-32 bg-red-800/80 text-[#ffffff] mx-auto sticky z-20'>
       <div className='flex flex-row gap-5 justify-center items-center px-5 w-full h-full'>
@@ -23,7 +23,7 @@ const AlertRed = ({ alertMsg, alertDesription, handleClose }) => {
 
         <div>
           <div className='font-bold text-lg'>{alertMsg}</div>
-          <div className=' text-base'>{alertDesription}</div>
+          <div className=' text-base'>{alertDescription}</div>
         </div>
         <div className='flex justify-end top-2 right-2 absolute p-2'>
           <button

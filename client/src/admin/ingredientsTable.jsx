@@ -185,7 +185,7 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
 }
 
 const alertMsg = "Are you sure you want to delete?"
-const alertDesription = "Ingredient will permenitly removed from data set"
+const alertDescription = "Ingredient will permenitly removed from data set"
 
 const IngredientsTable = () => {
   const { ingredients } = useSelector((state) => state.ingredient)
@@ -448,7 +448,7 @@ const IngredientsTable = () => {
         <div className='absolute top-[40%] left-[40%] z-30 min-w-sm'>
           <AlertBlack
             alertMsg={alertMsg}
-            alertDesription={alertDesription}
+            alertDescription={alertDescription}
             handleCancel={handleCancel}
             handleConfirm={handleConfirm}
           />

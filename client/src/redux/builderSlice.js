@@ -146,8 +146,9 @@ export const builderSlice = createSlice({
       })
       .addCase(builderDeleteOne.fulfilled, (state, action) => {
         state.builders = state.builders.filter(
-          (pizza) => pizza._id !== action.payload.id
+          (builder) => builder._id !== action.payload.id
         );
+        state.loading = false;
       })
       .addCase(builderDeleteOne.rejected, (state, action) => {
         console.log("builderSlice builderDeleteOne.rejected", action.payload);

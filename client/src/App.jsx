@@ -22,7 +22,7 @@ function App() {
   return (
     <>
       {/* TODO: Add sidnav to private routes */}
-      {/* <AdminSidenav /> */}
+      <AdminSidenav />
       {/* <Navbar /> */}
       <Routes>
         <Route path='/' element={<About />} />

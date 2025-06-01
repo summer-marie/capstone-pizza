@@ -61,7 +61,7 @@ const successMsg = "Item deleted successfully"
 const successDescription = ""
 
 const alertMsg = "Are you sure you want to delete this order?"
-const alertDesription = "Click to confirm and redirect back to menu"
+const alertDescription = "Click to confirm and redirect back to menu"
 
 const Checkout = () => {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
@@ -295,7 +295,7 @@ const Checkout = () => {
         <div className='absolute top-[40%] left-[40%] z-30 rounded-2xl border-6 border-slate-800'>
           <AlertBlack
             alertMsg={alertMsg}
-            alertDesription={alertDesription}
+            alertDescription={alertDescription}
             handleCancel={handleCancel}
             handleConfirm={handleConfirm}
           />
