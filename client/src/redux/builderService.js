@@ -36,5 +36,12 @@ const builderService = {
       throw error; // Re-throw the error to handle it in the reducer
     }
   },
+
+  builderDeleteOneAlt: async (id) => {
+  const response = await axios.delete(
+    `${import.meta.env.VITE_API_SERVER_URL}/builders/${id}`
+  );
+  return response.data; // { success: true, id: ... }
+},
 };
 export default builderService;

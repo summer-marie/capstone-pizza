@@ -62,6 +62,15 @@ export const builderDeleteOne = createAsyncThunk(
   }
 );
 
+// Alternative Delete
+export const builderDeleteOneAlt = createAsyncThunk(
+  "builder/deleteOneAlt",
+  async (id) => {
+    const response = await builderService.builderDeleteOneAlt(id);
+    return response.id; // Just return the id
+  }
+);
+
 export const builderSlice = createSlice({
   name: "builder",
   initialState,
@@ -153,8 +162,22 @@ export const builderSlice = createSlice({
       .addCase(builderDeleteOne.rejected, (state, action) => {
         console.log("builderSlice builderDeleteOne.rejected", action.payload);
         state.loading = false;
+      })
+
+      // Alternative Delete
+      .addCase(builderDeleteOneAlt.fulfilled, (state, action) => {
+        const index = state.builders.findIndex(
+          (builder) => builder._id === action.payload
+        );
+        if (index !== -1) {
+          state.builders.splice(index, 1);
+        }
+        state.loading = false;
       });
   },
 });
 
 export default builderSlice.reducer;
+
+
+// 

@@ -1,7 +1,7 @@
 // Update button = go to details page of pizza where you can edit the ingredients
 import { useNavigate } from "react-router";
-import { useState, useEffect } from "react";
-import { builderGetMany, builderDeleteOne } from "../redux/builderSlice";
+import { useState, useEffect, useRef } from "react";
+import { builderGetMany, builderDeleteOneAlt } from "../redux/builderSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AlertBlack from "../components/AlertBlack";
 
@@ -11,44 +11,33 @@ const alertDescription = "Click to confirm";
 const AdminMenu = () => {
   const [showAlert, setShowAlert] = useState(false);
   const { builders } = useSelector((state) => state.builder);
-  const [deleteId, setDeleteId] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { id } = useParams();
 
   useEffect(() => {
     dispatch(builderGetMany());
   }, [dispatch]);
-  // useEffect(() => {
-  //   if (id) {
-  //     dispatch(pizzaGetOne(id));
-  //   }
-  // }, [dispatch, id]);
 
-  const handleCancel = () => {
-    setShowAlert(false);
-    setDeleteId(null);
+  // Use a ref to store the ID of the pizza to be deleted
+  const deleteIdRef = useRef(null);
+
+  const handleDeleteClick = (id) => {
+    deleteIdRef.current = id;
+    setShowAlert(true);
   };
 
   const handleConfirm = async () => {
     setShowAlert(false);
-    console.log("delete pizza", deleteId);
-    console.log("Modal confirm clicked");
-    // handle delete of pizza
-    console.log("delete pizza");
-    if (deleteId) {
-      dispatch(builderDeleteOne(deleteId));
-      // Reset deleteId after deletion
-      // This will also trigger a re-fetch of the pizza list
-      // to update the UI
-      console.log("Pizza deleted with ID:", deleteId);
-      // Reset deleteId to null
-      // and re-fetch the pizza list
+    const id = deleteIdRef.current;
+    dispatch(builderDeleteOneAlt(id));
+    deleteIdRef.current = null;
+    dispatch(builderGetMany());
+    console.log("Pizza deleted with ID:", id);
+  };
 
-      setDeleteId(null);
-      dispatch(builderGetMany());
-    }
+  const handleCancel = () => {
+    setShowAlert(false);
   };
 
   const handleClick = (id) => {
@@ -73,7 +62,7 @@ const AdminMenu = () => {
             builders.map((builder, index) => (
               // Card
               <div
-                key={builder._id || index}
+                key={builder.id || index}
                 // onClick={() => navigate(`/admin-update-one/${id}`)}
                 className="max-w-2xl col-1-4 rounded-lg shadow-2xl bg-zinc-300 border border-gray-200 shadow-green-600"
               >
@@ -87,7 +76,7 @@ const AdminMenu = () => {
                   />
                   <button
                     // onClick={() => navigate(`/admin-update-one/${id}`)}
-                    onClick={() => handleClick(builder._id)}
+                    onClick={() => handleClick(builder.id)}
                     type="button"
                     className="absolute mt-2 top-0 right-0 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
                 shadow-green-800/80 
@@ -100,11 +89,8 @@ const AdminMenu = () => {
                     Update Pizza
                   </button>
                   <button
-                  key={builder._id} 
-                    onClick={() => {
-                      setDeleteId(builder._id);
-                      setShowAlert(true);
-                    }}
+                    key={builder.id}
+                    onClick={() => handleDeleteClick(builder.id)}
                     type="button"
                     className="absolute mt-2 top-0 left-2 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
                 shadow-red-800/80 

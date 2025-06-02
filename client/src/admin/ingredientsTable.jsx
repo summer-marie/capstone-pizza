@@ -91,7 +91,7 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
               <div className=' text-gray-400'>
                 <input
                   type='text'
-                  id='discription'
+                  id='description'
                   // value={formData.description}
                   onChange={(e) =>
                     setFormData({ ...formData, description: e.target.value })
@@ -107,7 +107,7 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
                 htmlFor='name'
                 className='block mb-2 text-sm font-medium text-[#111827]'
               >
-                Item Type (Catagory)
+                Item Type (Category)
               </label>
               <div className=' text-gray-400'>
                 <select
@@ -278,7 +278,7 @@ const IngredientsTable = () => {
                   ID
                 </th>
                 <th scope='col' className='px-2 py-4'>
-                  catagory
+                  category
                 </th>
                 <th scope='col' className='px-2 py-4'>
                   name
