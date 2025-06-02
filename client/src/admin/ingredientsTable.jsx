@@ -4,7 +4,6 @@ import {
   createIngredient,
   ingredientGetAll,
   ingredientUpdateOne,
-  ingredientGetOne,
 } from "../redux/ingredientSlice";
 import AlertBlack from "../components/AlertBlack";
 import SpinnerBubbles from "../components/SpinnerBubbles";
@@ -20,18 +19,6 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
 
   const dispatch = useDispatch();
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-
-  //   if (name === "price") {
-  //     setFormData((prevState) => ({
-  //       ...prevState,
-  //       price: parseFloat(value),
-  //       formattedPrice: `${parseFloat(value).toFixed(2)}`,
-  //     }));
-  //   }
-  // };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -40,7 +27,7 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("handle submit");
     const newIngredient = {
@@ -49,7 +36,10 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
       itemType: formData.itemType,
       price: formData.price,
     };
-    dispatch(createIngredient(newIngredient));
+    // dispatch(createIngredient(newIngredient));
+    await dispatch(createIngredient(newIngredient)).unwrap();
+    await dispatch(ingredientGetAll()).unwrap();
+
     /// Show success alert
     setShowModal(false);
   };
@@ -346,9 +336,9 @@ const IngredientsTable = () => {
                         }
                       >
                         <option defaultValue={ingredient.itemType}>
-                          <strong className="text-black text-lg">
+                          {/* <strong className="text-black text-lg"> */}
                             {ingredient.itemType}
-                          </strong>
+                          {/* </strong> */}
                         </option>
                         {/* Only show types that are different from default */}
                         {ingredient.itemType &&
