@@ -69,7 +69,7 @@ const AdminBuilderCreate = () => {
     pizzaName: "",
     pizzaPrice: "",
     base: [...base],
-    sauce: "",
+    sauce: "Signature Red Sauce",
     meatTopping: ["", "", ""], // 3 meat slots
     veggieTopping: ["", "", "", ""], // 4 veggie slots
     image: [],
@@ -77,7 +77,6 @@ const AdminBuilderCreate = () => {
 
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [submitDisabled, setSubmitDisabled] = useState(false);
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -106,6 +105,10 @@ const AdminBuilderCreate = () => {
 
     // Convert pizzaPrice to number
     const pizzaPriceNum = parseFloat(newPizza.pizzaPrice);
+    if (isNaN(pizzaPriceNum)) {
+      alert("Please enter a valid price.");
+      return;
+    }
 
     const pizzaData = {
       pizzaName: newPizza.pizzaName,
@@ -126,7 +129,7 @@ const AdminBuilderCreate = () => {
   // Handler for the pizzaPrice input
   const handlePriceChange = (e) => {
     let inputValue = e.target.value;
-    // 2Remove non-numeric characters (except for the first decimal point)
+    // Remove non-numeric characters (except for the first decimal point)
     inputValue = inputValue.replace(/[^0-9.]/g, "");
     // Handle multiple decimal points
     const parts = inputValue.split(".");

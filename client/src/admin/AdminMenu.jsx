@@ -30,7 +30,7 @@ const AdminMenu = () => {
   const handleConfirm = async () => {
     setShowAlert(false);
     const id = deleteIdRef.current;
-     dispatch(builderDeleteOneAlt(id));
+    dispatch(builderDeleteOneAlt(id));
     deleteIdRef.current = null;
     console.log("Pizza deleted with ID:", id);
   };
@@ -74,7 +74,6 @@ const AdminMenu = () => {
                     alt=""
                   />
                   <button
-                    // onClick={() => navigate(`/admin-update-one/${id}`)}
                     onClick={() => handleClick(builder.id)}
                     type="button"
                     className="absolute mt-2 top-0 right-0 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer

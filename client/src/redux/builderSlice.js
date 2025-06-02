@@ -53,14 +53,6 @@ export const builderUpdateOne = createAsyncThunk(
   }
 );
 
-// Delete
-export const builderDeleteOne = createAsyncThunk(
-  "builder/deleteOne",
-  async (id) => {
-    const response = await builderService.builderDeleteOne(id);
-    return { id, ...response.data };
-  }
-);
 
 // Alternative Delete
 export const builderDeleteOneAlt = createAsyncThunk(
@@ -145,22 +137,6 @@ export const builderSlice = createSlice({
       })
       .addCase(builderUpdateOne.rejected, (state, action) => {
         console.log("builderSlice builderUpdateOne.rejected", action.payload);
-        state.loading = false;
-      })
-
-      // Delete
-      .addCase(builderDeleteOne.pending, (state, action) => {
-        console.log("builderSlice builderDeleteOne.pending", action.payload);
-        state.loading = true;
-      })
-      .addCase(builderDeleteOne.fulfilled, (state, action) => {
-        state.builders = state.builders.filter(
-          (builder) => builder._id !== action.payload.id
-        );
-        state.loading = false;
-      })
-      .addCase(builderDeleteOne.rejected, (state, action) => {
-        console.log("builderSlice builderDeleteOne.rejected", action.payload);
         state.loading = false;
       })
 
