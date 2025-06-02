@@ -30,9 +30,8 @@ const AdminMenu = () => {
   const handleConfirm = async () => {
     setShowAlert(false);
     const id = deleteIdRef.current;
-    dispatch(builderDeleteOneAlt(id));
+     dispatch(builderDeleteOneAlt(id));
     deleteIdRef.current = null;
-    dispatch(builderGetMany());
     console.log("Pizza deleted with ID:", id);
   };
 

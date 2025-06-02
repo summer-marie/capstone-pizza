@@ -167,7 +167,7 @@ export const builderSlice = createSlice({
       // Alternative Delete
       .addCase(builderDeleteOneAlt.fulfilled, (state, action) => {
         const index = state.builders.findIndex(
-          (builder) => builder._id === action.payload
+          (builder) => builder.id === action.payload
         );
         if (index !== -1) {
           state.builders.splice(index, 1);
