@@ -285,9 +285,6 @@ const IngredientsTable = () => {
             >
               <tr>
                 <th scope="col" className="px-2 py-4">
-                  ID
-                </th>
-                <th scope="col" className="px-2 py-4">
                   category
                 </th>
                 <th scope="col" className="px-2 py-4">
@@ -317,13 +314,6 @@ const IngredientsTable = () => {
                   even:bg-gray-300 
                   border-gray-700"
                 >
-                  <th
-                    scope="row"
-                    className="px-2 py-2 font-medium 
-                    text-gray-900"
-                  >
-                    {/* {ingredient.id} */}
-                  </th>
                   <td // itemType
                     className="px-2 py-2"
                   >
@@ -337,7 +327,7 @@ const IngredientsTable = () => {
                       >
                         <option defaultValue={ingredient.itemType}>
                           {/* <strong className="text-black text-lg"> */}
-                            {ingredient.itemType}
+                          {ingredient.itemType}
                           {/* </strong> */}
                         </option>
                         {/* Only show types that are different from default */}
@@ -418,7 +408,7 @@ const IngredientsTable = () => {
                         type="button"
                         className="font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
                         text-cyan-600"
-                        onClick={(e) => handleUpdate()}
+                        onClick={() => handleUpdate()}
                       >
                         Save
                       </button>
@@ -427,7 +417,7 @@ const IngredientsTable = () => {
                         type="button"
                         className="font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
                         text-cyan-600"
-                        onClick={(e) => setEditing({ ...ingredient })}
+                        onClick={() => setEditing({ ...ingredient })}
                       >
                         Edit
                       </button>

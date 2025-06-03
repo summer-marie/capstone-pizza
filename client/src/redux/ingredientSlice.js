@@ -39,7 +39,7 @@ export const ingredientGetOne = createAsyncThunk(
   "ingredient/getOne",
   async (id) => {
     console.log("redux ingredientGetOne order", id);
-    const response = await orderService.ingredientGetOne(id);
+    const response = await ingredientService.ingredientGetOne(id);
     console.log("redux ingredientGetOne order response", response);
     return response.data;
   }

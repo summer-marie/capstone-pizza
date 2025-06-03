@@ -1,5 +1,5 @@
 import axios from "axios"
-import ingredientGetOne from "../../../server/ingredients/ingredientsGetOne";
+
 
 const ingredientService = {
   // Orders
@@ -13,9 +13,9 @@ const ingredientService = {
     return await axios.get(`${import.meta.env.VITE_API_SERVER_URL}/ingredients`)
   },
 
-  ingredientGetOne: async (builder) => {
+  ingredientGetOne: async (ingredient) => {
     return await axios.get(
-      `${import.meta.env.VITE_NODE_SERVER_URL}/ingredient/${builder.id}`
+      `${import.meta.env.VITE_NODE_SERVER_URL}/ingredient/${ingredient.id}`
     );
   },
 
