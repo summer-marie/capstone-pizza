@@ -47,7 +47,3 @@ const authLogin = async (req, res, next) => {
 }
 
 export default authLogin
-
-// const login = (req, res) => {
-//     res.status(200).json({ message: 'Success!! from authIndex' })
-// }

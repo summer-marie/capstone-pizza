@@ -1,6 +1,6 @@
 import "dotenv/config"
 import axios from "axios";
-import { generateFakeUsers } from "./generateFakeUsers.js";
+import { generateFakeUsers } from "./createFakeAdmin.js";
 
 // console.log(process.env.SERVER_URL)
 
