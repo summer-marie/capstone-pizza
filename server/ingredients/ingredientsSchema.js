@@ -1,13 +1,12 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const IngredientsAll = new Schema({
   name: { type: String, required: true },
   description: String,
   itemType: String,
   price: Number,
-  // itemType: String,
-})
+});
 
-export default IngredientsAll
+export default IngredientsAll;
