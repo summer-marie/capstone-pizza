@@ -4,6 +4,7 @@ import {
   createIngredient,
   ingredientGetAll,
   ingredientUpdateOne,
+  ingredientDeleteOne,
 } from "../redux/ingredientSlice";
 import AlertBlack from "../components/AlertBlack";
 import SpinnerBubbles from "../components/SpinnerBubbles";
@@ -240,10 +241,13 @@ const IngredientsTable = () => {
   const handleCancel = () => {
     setShowAlert(false);
   };
-  const handleConfirm = () => {
+
+
+  const handleConfirm = async () => {
     setShowAlert(false);
     if (deleteId) {
-      // dispatch delete thunk here
+      await dispatch(ingredientDeleteOne(deleteId)).unwrap();
+      await dispatch(ingredientGetAll()).unwrap(); // Optional: refetch if you want to be sure
       setDeleteId(null);
     }
     console.log("delete ingredient");
