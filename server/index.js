@@ -2,14 +2,26 @@ import "dotenv/config"
 import express from "express"
 import cors from "cors"
 import mongoose from "mongoose"
+import session from 'express-session'
+import cookieParser from 'cookie-parser'
+import passport from 'passport'
+import './strategies/jwtStrategy.js'
+import "./strategies/localStrategy.js"
+import authRouter from "./auth/authIndex.js"
+import userRouter from './user/userIndex.js'
 import orderIndex from "./orders/orderIndex.js"
 import ingredientsIndex from "./ingredients/ingredientsIndex.js"
 import builderIndex from "./builders/builderIndex.js"
 
 console.log(process.env.MONGODB_URL)
 
+const cookieSecret = process.env.COOKIE_SECRET
+const sessionSecret = process.env.SESSION_SECRET || 'bubbles'
+
 const app = express()
 app.use(express.json())
+
+app.use(cookieParser(cookieSecret))
 // app.use(express.urlencoded({ extended: true }));
 
 app.use(cors())
@@ -19,7 +31,16 @@ app.get("/", (req, res) => {
   res.send("Hello World!")
 })
 
-// app.use("/users", userIndex)
+// Sessions, default
+app.use(session({}))
+
+// Add Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use("/auth", authRouter)
+app.use("/users", userRouter)
+
 app.use("/orders", orderIndex)
 app.use("/ingredients", ingredientsIndex)
 app.use("/builders", builderIndex)
