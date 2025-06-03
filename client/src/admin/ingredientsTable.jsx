@@ -20,6 +20,7 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
 
   const dispatch = useDispatch();
 
+  // Handle inline input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -28,6 +29,7 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
     }));
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("handle submit");
@@ -192,7 +194,7 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
 };
 
 const alertMsg = "Are you sure you want to delete?";
-const alertDescription = "Ingredient will permenitly removed from data set";
+const alertDescription = "Ingredient will permanently removed from data set";
 
 const IngredientsTable = () => {
   const { ingredients } = useSelector((state) => state.ingredient);
@@ -201,6 +203,7 @@ const IngredientsTable = () => {
   const [editing, setEditing] = useState({});
   const [saveBubbles, setSaveBubbles] = useState(false);
   const [loading, setLoading] = useState(false);
+  // State to track which ingredient is being deleted 
   const [deleteId, setDeleteId] = useState(null);
 
   const itemTypesArray = ["Sauce", "Meat Topping", "Veggie Topping"];
@@ -212,6 +215,7 @@ const IngredientsTable = () => {
     dispatch(ingredientGetAll());
   }, [dispatch]);
 
+  // Log editing state to console for debugging
   useEffect(() => {
     console.log(editing);
   }, [editing]);
@@ -224,6 +228,7 @@ const IngredientsTable = () => {
     setShowModal(false);
   };
 
+  // Handle Update Ingredient data
   const handleUpdate = () => {
     console.log("handleUpdate", editing);
     setLoading(true);
@@ -242,12 +247,13 @@ const IngredientsTable = () => {
     setShowAlert(false);
   };
 
-
   const handleConfirm = async () => {
     setShowAlert(false);
     if (deleteId) {
       await dispatch(ingredientDeleteOne(deleteId)).unwrap();
-      await dispatch(ingredientGetAll()).unwrap(); // Optional: refetch if you want to be sure
+      // After deletion, refresh the ingredients list
+      await dispatch(ingredientGetAll()).unwrap();
+      // Reset deleteId to null
       setDeleteId(null);
     }
     console.log("delete ingredient");
