@@ -53,7 +53,6 @@ export const builderUpdateOne = createAsyncThunk(
   }
 );
 
-
 // Alternative Delete
 export const builderDeleteOneAlt = createAsyncThunk(
   "builder/deleteOneAlt",
