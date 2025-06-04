@@ -149,13 +149,14 @@ const AdminBuilderCreate = () => {
 
   return (
     <>
+        <div className="ml-64 px-4">
       <h2 className="berkshireSwashFont mt-5 text-center text-2xl font-bold text-slate-800">
         Pizza Builder for Menu
       </h2>
       <hr className="my-6 sm:mx-auto lg:my-8 border-gray-700 " />
       <div className="h-screen">
         <div className="flex flex-wrap flex-row-reverse justify-center">
-          <form onSubmit={handleSubmit} className="w-1/3 mb-10 min-h-screen">
+          <form onSubmit={handleSubmit} className="w-5/8 mb-10 min-h-screen">
             <div className="border-4 border-green-700 mb-20">
               <div className="border-4 border-white">
                 <div className="border-4 border-red-700 p-5">
@@ -626,6 +627,7 @@ const AdminBuilderCreate = () => {
             </div>
           </form>
         </div>
+      </div>
       </div>
       {showSuccessAlert && (
         <div

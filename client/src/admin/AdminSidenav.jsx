@@ -1,20 +1,40 @@
 /* eslint-disable no-unused-vars */
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/authSlice";
+import { ClipLoader } from "react-spinners"; 
 
 const AdminSidenav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
 
-  let location = useLocation();
   console.log("location", location);
 
-  const handleLogout = () => {
-    console.log("handling logout");
-    dispatch(logout());
+const handleLogout = async () => {
+  setLoading(true);
+  setTimeout(async () => {
+    await dispatch(logout());
     navigate("/");
-  };
+    // No need to setLoading(false) because component will unmount
+  }, 1000); 
+};
+
+  if (loading) {
+    return (
+      <div
+        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50"
+        style={{ minHeight: "100vh" }}
+      >
+        <div className="flex flex-col items-center">
+          <ClipLoader color="#38bdf8" size={60} />
+          <div className="mt-4 text-white text-lg">Logging out...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
