@@ -1,5 +1,7 @@
 import { Routes, Route, useLocation } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setAuthFromStorage } from "./redux/authSlice";
 import PrivateRoute from "./PrivateRoute";
 import Navbar from "./components/Navbar";
 import AdminSidenav from "./admin/AdminSidenav";
@@ -20,8 +22,22 @@ import AdminBuilderCreate from "./admin/AdminBuilderCreate";
 import "./App.css";
 
 function App() {
-  // const authUser = useSelector((state) => state.auth.authUser);
-  // const isAdminLoggedIn = !!authUser && Object.keys(authUser).length > 0;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const tokenString = localStorage.getItem("token");
+    const userString = localStorage.getItem("userOn");
+    // Only parse if not null and not the string "undefined"
+    const token =
+      tokenString && tokenString !== "undefined"
+        ? JSON.parse(tokenString)
+        : null;
+    const user =
+      userString && userString !== "undefined" ? JSON.parse(userString) : null;
+    if (token && user) {
+      dispatch(setAuthFromStorage({ token, user }));
+    }
+  }, [dispatch]);
 
   const token = useSelector((state) => state.auth.token);
   const isAdminLoggedIn = !!token;

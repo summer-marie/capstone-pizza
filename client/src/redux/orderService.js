@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 
 const orderService = {
   // Orders
@@ -6,33 +6,42 @@ const orderService = {
     return await axios.post(
       `${import.meta.env.VITE_API_SERVER_URL}/orders`,
       order
-    )
+    );
   },
 
   // Get all Orders
   orderGetAll: async () => {
-    return await axios.get(`${import.meta.env.VITE_API_SERVER_URL}/orders`)
+    return await axios.get(`${import.meta.env.VITE_API_SERVER_URL}/orders`);
   },
 
   // Get only open orders
   orderGetOpen: async () => {
-    return await axios.get(`${import.meta.env.VITE_API_SERVER_URL}/orders/open`)
+    return await axios.get(
+      `${import.meta.env.VITE_API_SERVER_URL}/orders/open`
+    );
   },
 
   // Get only archived orders
   orderGetArchived: async () => {
     return await axios.get(
       `${import.meta.env.VITE_API_SERVER_URL}/orders/archived`
-    )
+    );
   },
 
   // Update order status
   orderUpdateStatus: async (order) => {
-    const { id, status } = order
+    const { id, status } = order;
     return await axios.put(
       `${import.meta.env.VITE_API_SERVER_URL}/orders/open/${id}`,
       { status: status }
-    )
+    );
+  },
+  // Archive order
+  orderArchiveOne: async (id) => {
+    return await axios.patch(
+      `${import.meta.env.VITE_API_SERVER_URL}/orders/archive/${id}`,
+      { isArchived: true }
+    );
   },
 
   // orderUpdateStatus: async (id, status) => {
@@ -50,6 +59,6 @@ const orderService = {
   //     orderForm
   //   );
   // },
-}
+};
 
-export default orderService
+export default orderService;
