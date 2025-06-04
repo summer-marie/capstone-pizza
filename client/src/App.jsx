@@ -20,8 +20,11 @@ import AdminBuilderCreate from "./admin/AdminBuilderCreate";
 import "./App.css";
 
 function App() {
-  const authUser = useSelector((state) => state.auth.authUser);
-  const isAdminLoggedIn = !!authUser && Object.keys(authUser).length > 0;
+  // const authUser = useSelector((state) => state.auth.authUser);
+  // const isAdminLoggedIn = !!authUser && Object.keys(authUser).length > 0;
+  
+  const token = useSelector((state) => state.auth.token);
+  const isAdminLoggedIn = !!token;
   console.log("isAdminLoggedIn", isAdminLoggedIn);
 
   const location = useLocation();
