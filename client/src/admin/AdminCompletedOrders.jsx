@@ -1,8 +1,7 @@
-// TODO: capstone+ : add funtiion that deletes or archives orders older then 30 days
+// TODO: capstone+ : add functiion that deletes or archives orders older then 30 days
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router";
 import { orderGetArchived } from "../redux/orderSlice";
 
 const AdminCompletedOrders = () => {

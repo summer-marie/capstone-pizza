@@ -17,6 +17,7 @@ const AdminOpenOrders = () => {
   const [saveBubbles, setSaveBubbles] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [savingId, setSavingId] = useState(null);
 
   const statusArray = ["processing", "completed", "delivered"];
 
@@ -32,8 +33,7 @@ const AdminOpenOrders = () => {
   // }, [])
 
   const handleStatusUpdate = (id) => {
-    console.log("id", id);
-    console.log("my status", newStatus);
+    setSavingId(id);
     setLoading(true);
     setSaveBubbles(true);
     // dispatch update of status
@@ -41,6 +41,7 @@ const AdminOpenOrders = () => {
 
     setTimeout(() => {
       setSaveBubbles(false);
+      setSavingId(null);
     }, 1500);
   };
 
@@ -91,37 +92,37 @@ const AdminOpenOrders = () => {
           text-teal-950"
             >
               <tr>
-                <th scope="col" className="px-4 py-4">
+                <th scope="col" className="text-center py-4">
                   {/* **Order ID** */}
                   Order Number
                 </th>
-                <th scope="col" className="px-4 py-4">
+                <th scope="col" className="text-center py-4">
                   {/* **Order Date** */}
                   Date/Time Order
                 </th>
-                <th scope="col" className="px-4 py-4">
+                <th scope="col" className="text-center py-4">
                   {/* **Items in Order (Product Name, Quantity)** */}
                   Order Details/Quantity
                 </th>
-                <th scope="col" className="px-4 py-4">
+                <th scope="col" className="text-center py-4">
                   {/* **Address (Shipping/Delivery Address)** */}
                   Destination
                 </th>
-                <th scope="col" className="px-4 py-4">
+                <th scope="col" className="text-center py-4">
                   {/* **Name (or User Email)** */}
                   Customer Name
                 </th>
-                <th scope="col" className="px-4 py-4">
+                <th scope="col" className="text-center py-4">
                   {/* **Total Price** */}
                   Total $
                 </th>
-                <th scope="col" className="px-4 py-4 text-center">
+                <th scope="col" className="text-center py-4">
                   Status
                 </th>
-                <th scope="col" className="px-4 py-4 text-center">
+                <th scope="col" className="text-center py-4">
                   Update Status
                 </th>
-                <th scope="col" className="px-4 py-4 text-center">
+                <th scope="col" className="text-center py-4">
                   Archive Order
                 </th>
               </tr>
@@ -144,32 +145,27 @@ const AdminOpenOrders = () => {
                   >
                     <p className="">{order.orderNumber}</p>
                   </th>
-                  <td className="px-4 py-4">
-                    <p className="line-clamp-3"> {formatDate(order.date)}</p>
+                  <td className="px-2 py-2 whitespace-nowrap">
+                    <p className=""> {formatDate(order.date)}</p>
                   </td>
-                  <td className="px-4 py-4">
-                    {/* <p className='line-clamp-3'>Pizza 1 x1 Pizza 2 x4</p> */}
+                  <td className="px-2 py-2">
                     <ul>
                       <li>{order.orderDetails.pizzaName} </li>
                       <li>{order.orderDetails.pizzaPrice} </li>
-                      <li>{order.orderDetails.quantity} </li>
+                      <li>QTY: {order.orderDetails.quantity} </li>
                     </ul>
                   </td>
-                  <td className="px-4 py-4">
-                    {/* {" "}
-                  {task.users.length > 0 && (
-                    <>
-                      {task.users[0].firstName} {task.users[0].lastName}
-                    </>
-                  )} */}{" "}
+                  <td className="px-2 py-2 whitespace-nowrap">
                     {order.address.street}
                   </td>
-                  <td className="px-4 py-4">
+                  <td className="px-2 py-2 whitespace-nowrap">
                     {" "}
                     {order.firstName} {order.lastName}
                   </td>
-                  <td className="px-4 py-4">$ {order.orderTotal}</td>
-                  <td className="px-4 py-4 ">
+                  <td className="px-2 py-2 whitespace-nowrap">
+                    $ {order.orderTotal}
+                  </td>
+                  <td className="px-2 py-2 ">
                     {newStatus.id === order._id ? (
                       <select
                         value={newStatus.status}
@@ -233,7 +229,9 @@ const AdminOpenOrders = () => {
                       </button>
                       {/* Spinner  */}
                       <div className="w-full top-0 right-0 ml-5">
-                        {saveBubbles && <SpinnerBubbles loading={loading} />}
+                        {savingId === order._id && (
+                          <SpinnerBubbles loading={loading} />
+                        )}
                       </div>
                     </div>
                   </td>
@@ -241,9 +239,6 @@ const AdminOpenOrders = () => {
                     <div className="relative">
                       <div className="w-full top-0 right-2 "></div>
                       <button
-                        // onClick={() => {
-                        //   setShowAlert(true)
-                        // }}
                         onClick={() => handleConfirm(order._id)}
                         type="submit"
                         className="font-medium text-red-700 w-full h-full border-3 rounded-xl hover:bg-red-700 hover:text-white hover:border-black cursor-pointer"
