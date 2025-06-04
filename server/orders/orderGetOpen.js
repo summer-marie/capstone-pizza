@@ -2,7 +2,7 @@ import orderModel from "./orderModel.js"
 
 const orderGetOpen = async (req, res) => {
   const getOrders = await orderModel.aggregate([
-    { $match: { status: { $ne: "archived" } } },
+    { $match: { isArchived: { $ne: true } } }, 
     { $sort: { date: -1 } }
   ])
 

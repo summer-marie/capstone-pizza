@@ -53,10 +53,12 @@ const AdminOpenOrders = () => {
   };
 
   // When user confirms in the alert
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     console.log("handleConfirm", archiveId);
     if (archiveId) {
-      dispatch(orderArchiveOne(archiveId));
+      await dispatch(orderArchiveOne(archiveId)).unwrap();
+      // Refresh open orders after archiving
+      await dispatch(orderGetOpen()).unwrap();
       setArchiveId(null);
     }
     setShowAlert(false);
