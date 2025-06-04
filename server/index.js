@@ -15,6 +15,8 @@ import builderIndex from "./builders/builderIndex.js";
 
 console.log(process.env.MONGODB_URL);
 
+const port = process.env.PORT || 8010;
+
 const cookieSecret = process.env.COOKIE_SECRET;
 const sessionSecret = process.env.SESSION_SECRET || "bubbles";
 
@@ -24,8 +26,29 @@ app.use(express.json());
 app.use(cookieParser(cookieSecret));
 // app.use(express.urlencoded({ extended: true }));
 
-app.use(cors());
-const port = process.env.PORT || 8010;
+// Express CORS
+// Get whitelisted domains from env
+const whitelist = process.env.WHITELISTED_DOMAINS
+  ? process.env.WHITELISTED_DOMAINS.split(",")
+  : [];
+// Set CORS options
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+};
+// Use CORS
+app.use(cors(corsOptions));
+
+// app.use(cors({
+//   origin: "http://localhost:3005",
+//   credentials: true
+// }));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
