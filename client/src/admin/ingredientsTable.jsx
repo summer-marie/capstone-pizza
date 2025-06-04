@@ -261,144 +261,154 @@ const IngredientsTable = () => {
 
   return (
     <>
-      {/* Centers Button above table */}
-      <div className="flex items-center justify-center w-full">
-        <button onClick={handleOpenModal} className="p-5">
-          <div
-            className="cursor-pointer w-full focus:ring-4 focus:outline-hidden focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow-lg
-                   shadow-cyan-800/80 
+      <div className="ml-64 px-4">
+        {/* Centers Button above table */}
+        <div className="flex items-center justify-center w-full">
+          <button onClick={handleOpenModal} className="p-5">
+            <div
+              className="cursor-pointer w-full focus:ring-4 focus:outline-hidden focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow-lg
+              shadow-cyan-800/80 
               text-[#FFFFFF] 
               bg-cyan-800 
               hover:bg-cyan-600 "
-          >
-            <p className="text-2xl text-gray-300">Add Ingredient</p>
-          </div>
-        </button>
-      </div>
-      <IngredientModal
-        isOpen={showModal}
-        onClose={handleCloseModal}
-        setShowModal={setShowModal}
-      />
+            >
+              <p className="text-2xl text-gray-300">Add Ingredient</p>
+            </div>
+          </button>
+        </div>
+        <IngredientModal
+          isOpen={showModal}
+          onClose={handleCloseModal}
+          setShowModal={setShowModal}
+        />
 
-      {/*  Table container  */}
-      <div className="mt-0">
-        <div name="ingredients-table" className="w-3/4 ml-[20rem] shadow-2xl">
-          <table
-            className="w-full text-sm text-left rtl:text-right rounded-2xl
-            text-gray-500 shadow-lg shadow-cyan-800/80 "
+        {/*  Table container  */}
+        <div className="mt-0">
+          <div
+            name="ingredients-table"
+            className="shadow-2xl  overflow-hidden "
           >
-            <thead
-              className="text-xs uppercase 
+            <table
+              className="w-full text-sm text-left rtl:text-right
+            text-gray-500 shadow-lg shadow-cyan-800/80 border-l-2 border-r-2 border-b-2 border-t-0 border-teal-600 "
+            >
+              <thead
+                className="text-xs uppercase 
               bg-gray-400
               text-teal-950"
-            >
-              <tr>
-                <th scope="col" className="px-2 py-4">
-                  category
-                </th>
-                <th scope="col" className="px-2 py-4">
-                  name
-                </th>
-                <th scope="col" className="px-2 py-4">
-                  description
-                </th>
-                <th scope="col" className="px-2 py-4 text-center">
-                  $ price per serving
-                </th>
-                <th scope="col" className="px-2 py-4 text-center">
-                  Update
-                </th>
-                <th scope="col" className="px-2 py-4 text-center">
-                  delete
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {ingredients.map((ingredient, index) =>
-                savingId === ingredient.id ? (
-                  // Show spinner while saving
-                  <tr key={ingredient.id || index}>
-                    <td colSpan={6} className="py-6 text-center bg-transparent">
-                      <SpinnerBubbles loading={loading} size={14} />
-                    </td>
-                  </tr>
-                ) : (
-                  // Show ingredient row
-                  <tr
-                    key={ingredient.id || index}
-                    ingredient={ingredient}
-                    className=" border-b px-2 py-2
+              >
+                <tr>
+                  <th scope="col" className="px-2 py-4">
+                    category
+                  </th>
+                  <th scope="col" className="px-2 py-4">
+                    name
+                  </th>
+                  <th scope="col" className="px-2 py-4">
+                    description
+                  </th>
+                  <th scope="col" className="px-2 py-4 text-center">
+                    $ price per serving
+                  </th>
+                  <th scope="col" className="px-2 py-4 text-center">
+                    Update
+                  </th>
+                  <th scope="col" className="px-2 py-4 text-center">
+                    delete
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {ingredients.map((ingredient, index) =>
+                  savingId === ingredient.id ? (
+                    // Show spinner while saving
+                    <tr key={ingredient.id || index}>
+                      <td
+                        colSpan={6}
+                        className="py-6 text-center bg-transparent"
+                      >
+                        <SpinnerBubbles loading={loading} size={14} />
+                      </td>
+                    </tr>
+                  ) : (
+                    // Show ingredient row
+                    <tr
+                      key={ingredient.id || index}
+                      ingredient={ingredient}
+                      className=" border-b px-2 py-2
                   odd:bg-stone-200
                   even:bg-gray-300 
                   border-gray-700"
-                  >
-                    <td // itemType
-                      className="px-2 py-2"
                     >
-                      {editing.id === ingredient.id ? (
-                        <select
-                          className="bg-white rounded-2xl p-2 w-full"
-                          value={editing.itemType}
-                          onChange={(e) =>
-                            setEditing({ ...editing, itemType: e.target.value })
-                          }
-                        >
-                          <option defaultValue={ingredient.itemType}>
-                            {/* <strong className="text-black text-lg"> */}
-                            {ingredient.itemType}
-                            {/* </strong> */}
-                          </option>
-                          {/* Only show types that are different from default */}
-                          {ingredient.itemType &&
-                            [...itemTypesArray]
-                              .filter((type) => type !== ingredient.itemType)
-                              .map((type) => (
-                                <option key={type} value={type}>
-                                  {type}
-                                </option>
-                              ))}
-                        </select>
-                      ) : (
-                        ingredient.itemType
-                      )}
-                    </td>
+                      <td // itemType
+                        className="px-2 py-2"
+                      >
+                        {editing.id === ingredient.id ? (
+                          <select
+                            className="bg-white rounded-2xl p-2 w-full"
+                            value={editing.itemType}
+                            onChange={(e) =>
+                              setEditing({
+                                ...editing,
+                                itemType: e.target.value,
+                              })
+                            }
+                          >
+                            <option defaultValue={ingredient.itemType}>
+                              {/* <strong className="text-black text-lg"> */}
+                              {ingredient.itemType}
+                              {/* </strong> */}
+                            </option>
+                            {/* Only show types that are different from default */}
+                            {ingredient.itemType &&
+                              [...itemTypesArray]
+                                .filter((type) => type !== ingredient.itemType)
+                                .map((type) => (
+                                  <option key={type} value={type}>
+                                    {type}
+                                  </option>
+                                ))}
+                          </select>
+                        ) : (
+                          ingredient.itemType
+                        )}
+                      </td>
 
-                    <td // Name
-                      className="px-2 py-2"
-                    >
-                      {editing.id === ingredient.id ? (
-                        <input
-                          className="bg-white rounded-2xl p-2 w-full"
-                          value={editing.name}
-                          onChange={(e) =>
-                            setEditing({ ...editing, name: e.target.value })
-                          }
-                        />
-                      ) : (
-                        ingredient.name
-                      )}
-                    </td>
-                    <td
-                      // description
-                      className="px-2 py-2"
-                    >
-                      {editing.id === ingredient.id ? (
-                        <input
-                          className="bg-white rounded-2xl p-2  w-full"
-                          value={editing.description}
-                          onChange={(e) =>
-                            setEditing({
-                              ...editing,
-                              description: e.target.value,
-                            })
-                          }
-                        />
-                      ) : (
-                        ingredient.description
-                      )}
-                      {/* Spinner  */}
-                      {/* <div
+                      <td // Name
+                        className="px-2 py-2"
+                      >
+                        {editing.id === ingredient.id ? (
+                          <input
+                            className="bg-white rounded-2xl p-2 w-full"
+                            value={editing.name}
+                            onChange={(e) =>
+                              setEditing({ ...editing, name: e.target.value })
+                            }
+                          />
+                        ) : (
+                          ingredient.name
+                        )}
+                      </td>
+                      <td
+                        // description
+                        className="px-2 py-2"
+                      >
+                        {editing.id === ingredient.id ? (
+                          <input
+                            className="bg-white rounded-2xl p-2  w-full"
+                            value={editing.description}
+                            onChange={(e) =>
+                              setEditing({
+                                ...editing,
+                                description: e.target.value,
+                              })
+                            }
+                          />
+                        ) : (
+                          ingredient.description
+                        )}
+                        {/* Spinner  */}
+                        {/* <div
                       className="flex justify-end items-center h-full"
                       style={{ minHeight: 0, minWidth: 0 }}
                     >
@@ -406,65 +416,66 @@ const IngredientsTable = () => {
                         <SpinnerBubbles loading={loading} size={10} />
                       )}
                     </div> */}
-                    </td>
-                    <td // Price
-                      className="px-2 py-2 text-center"
-                    >
-                      $
-                      {editing.id === ingredient.id ? (
-                        <input
-                          className="bg-white rounded-2xl p-2"
-                          value={editing.price}
-                          onChange={(e) =>
-                            setEditing({ ...editing, price: e.target.value })
-                          }
-                        />
-                      ) : (
-                        ingredient.price
-                      )}
-                    </td>
+                      </td>
+                      <td // Price
+                        className="px-2 py-2 text-center"
+                      >
+                        $
+                        {editing.id === ingredient.id ? (
+                          <input
+                            className="bg-white rounded-2xl p-2"
+                            value={editing.price}
+                            onChange={(e) =>
+                              setEditing({ ...editing, price: e.target.value })
+                            }
+                          />
+                        ) : (
+                          ingredient.price
+                        )}
+                      </td>
 
-                    <td className="px-2 py-2">
-                      {editing.id === ingredient.id ? (
-                        <button
-                          type="button"
-                          className="font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
+                      <td className="px-2 py-2">
+                        {editing.id === ingredient.id ? (
+                          <button
+                            type="button"
+                            className="font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
                         text-cyan-600"
-                          onClick={() => handleUpdate()}
-                        >
-                          Save
-                        </button>
-                      ) : (
-                        <button
-                          type="button"
-                          className="font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
+                            onClick={() => handleUpdate()}
+                          >
+                            Save
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            className="font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
                         text-cyan-600"
-                          onClick={() => setEditing({ ...ingredient })}
-                        >
-                          Edit
-                        </button>
-                      )}
-                    </td>
-                    <td className="px-2 py-2">
-                      <button
-                        onClick={() => {
-                          setDeleteId(ingredient.id);
-                          setShowAlert(true);
-                        }}
-                        type="button"
-                        className="font-medium  cursor-pointer
+                            onClick={() => setEditing({ ...ingredient })}
+                          >
+                            Edit
+                          </button>
+                        )}
+                      </td>
+                      <td className="px-2 py-2">
+                        <button
+                          onClick={() => {
+                            setDeleteId(ingredient.id);
+                            setShowAlert(true);
+                          }}
+                          type="button"
+                          className="font-medium  cursor-pointer
                       text-red-700 w-full h-full border-3 rounded-xl hover:bg-red-700 
                       hover:text-white 
                       hover:border-black"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          </table>
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
