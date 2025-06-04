@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router";
+import { useSelector } from "react-redux";
 import PrivateRoute from "./PrivateRoute";
 import Navbar from "./components/Navbar";
 import AdminSidenav from "./admin/AdminSidenav";
@@ -19,18 +20,29 @@ import AdminBuilderCreate from "./admin/AdminBuilderCreate";
 import "./App.css";
 
 function App() {
+
+  const authUser = useSelector((state) => state.auth.authUser);
+  const isAdminLoggedIn = !!authUser && Object.keys(authUser).length > 0;
+  console.log("isAdminLoggedIn", isAdminLoggedIn);
+
   return (
     <>
       {/* TODO: Add sidnav to private routes */}
-      <AdminSidenav />
-      {/* <Navbar /> */}
+      {isAdminLoggedIn && <AdminSidenav />}
+
+       {/* Only show Navbar if NOT admin */}
+      {!isAdminLoggedIn && <Navbar />}
+      
       <Routes>
+        {/* Public routes */}
+        <Navbar />
         <Route path="/" element={<About />} />
         <Route path="/order-menu" element={<OrderMenu />} />
         <Route path="/order-create" element={<BuildYourOwn />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/checkout" element={<Checkout />} />
-        {/* Admin routes TODO: Private Routes */}
+
+        {/* Protected routes */}
         <Route element={<PrivateRoute />}>
           <Route path="/pizza-builder" element={<AdminBuilderCreate />} />
           <Route path="/open-orders" element={<AdminOpenOrders />} />
