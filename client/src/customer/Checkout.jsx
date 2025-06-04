@@ -101,6 +101,13 @@ const Checkout = () => {
     }, 2000);
   };
 
+  // Loops through items
+  // and calculates the total price of all items in the cart
+  // Returns a string with 2 decimal places
+  const calculateTotal = () => {
+  return cartItems.reduce((sum, item) => sum + Number(item.pizzaPrice), 0).toFixed(2);
+};
+
   return (
     <>
       {/* Needs to have a dynamic grid that populates with all the items they selected. Should be on the left side of the screen */}
@@ -158,8 +165,7 @@ const Checkout = () => {
                           Total
                         </dt>
                         <dd className="text-lg text-gray-500 mr-1">
-                          {/* ${order.total} */}
-                          $100.00
+                      ${calculateTotal()}
                         </dd>
                       </div>
                     </div>
