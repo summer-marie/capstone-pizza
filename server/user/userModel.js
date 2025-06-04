@@ -1,17 +1,17 @@
-import mongoose from 'mongoose'
-import userSchema from './userSchema.js'
+import mongoose from "mongoose";
+import userSchema from "./userSchema.js";
 
-userSchema.set('toJSON', {
+userSchema.set("toJSON", {
   transform: (doc, ret, options) => {
-    ret.id = ret._id
-    delete ret._id
-    delete ret.token
-    delete ret.authStrategy
-    delete ret.__v
-    return ret
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.token;
+    delete ret.authStrategy;
+    delete ret.__v;
+    return ret;
   },
-})
+});
 
-const userModel = mongoose.model('User', userSchema)
+const userModel = mongoose.model("User", userSchema);
 
-export default userModel
+export default userModel;

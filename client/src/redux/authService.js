@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const authService = {
-
   login: async ({ email, password }) => {
     console.log("NEW authService login", email, password);
     const response = await axios.post(
@@ -13,7 +12,7 @@ const authService = {
   },
 
   status: async () => {
-    const token = JSON.parse(localStorage.getItem("token"))
+    const token = JSON.parse(localStorage.getItem("token"));
     console.log("NEW authService status token", token);
     const response = await axios.get(
       `${import.meta.env.VITE_API_SERVER_URL}/auth/status`,
@@ -31,31 +30,30 @@ const authService = {
   },
 
   logout: async () => {
-    // Get token
-    const token = JSON.parse(localStorage.getItem("token"))
-    console.log("logout token", token)
+    // Get token from localStorage (parse if stored as JSON)
+    const token = JSON.parse(localStorage.getItem("token"));
+    console.log("authService logout token", token);
 
-    if (token) {
-    console.log("IF token", token)
+    // Make logout request
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_SERVER_URL}/auth/logout/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      }
+    );
 
-        const response = await axios.post(
-            `${import.meta.env.VITE_API_SERVER_URL}/auth/logout`,
-            {},
-            { withCredentials: true, headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }}
-        )
-        // const response = await axios.post(`${import.meta.env.VITE_API_SERVER_URL}/auth/logout`, {})
-        console.log("response", response)
-        return response.data
-    }
-}
+    // Remove token from localStorage after successful logout
+    localStorage.removeItem("token");
+
+    return response.data;
+  },
 };
 
-// export const login = async ({ email, password }) => {
-//     console.log("authService login", email, password)
-//     const response = await axios.post(`${import.meta.env.VITE_API_SERVER_URL}/auth/login`, { email, password })
-//     console.log("response", response.data)
-//     return response.data
-// }
+
 
 // export const status = async (token) => {
 //     console.log("authService status token", token)
