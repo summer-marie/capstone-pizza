@@ -13,7 +13,7 @@ const AdminSidenav = () => {
 
   console.log("location", location);
 
-const handleLogout = () => {
+const handleLogout = async () => {
   setLoading(true);
   setTimeout(async () => {
     await dispatch(logout());

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { useParams, useNavigate } from "react-router"
+// import { useNavigate } from "react-router"
 import AlertBlack from "../components/AlertBlack";
 import SpinnerBubbles from "../components/SpinnerBubbles";
 import { orderGetOpen, orderUpdateStatus } from "../redux/orderSlice";
@@ -12,9 +12,7 @@ const AdminOpenOrders = () => {
   const { orders } = useSelector((state) => state.order);
   const { order } = useSelector((state) => state.order);
   const dispatch = useDispatch();
-
   const [newStatus, setNewStatus] = useState({});
-  const [saveBubbles, setSaveBubbles] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [savingId, setSavingId] = useState(null);
@@ -27,20 +25,12 @@ const AdminOpenOrders = () => {
     console.log("useEffect", orders);
   }, []);
 
-  // useEffect(() => {
-  //   dispatch(orderGetOne(id))
-  //   console.log("useEffect", id)
-  // }, [])
-
   const handleStatusUpdate = (id) => {
     setSavingId(id);
     setLoading(true);
-    setSaveBubbles(true);
     // dispatch update of status
     dispatch(orderUpdateStatus({ id: id, status: newStatus }));
-
     setTimeout(() => {
-      setSaveBubbles(false);
       setSavingId(null);
     }, 1500);
   };
