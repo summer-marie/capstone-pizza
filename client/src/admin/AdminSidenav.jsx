@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/authSlice";
+import { ClipLoader } from "react-spinners"; 
 
 const AdminSidenav = () => {
   const dispatch = useDispatch();
@@ -12,27 +13,25 @@ const AdminSidenav = () => {
 
   console.log("location", location);
 
-  // const handleLogout = () => {
-  //   setLoading(true);
-  //   dispatch(logout());
-  //   navigate("/");
-  //   setLoading(false);
-  // };
-
-  const handleLogout = async () => {
-    setLoading(true);
-    await dispatch(logout()); 
-    setTimeout(() => {
-      setLoading(false);
-      navigate("/");
-    }, 700);
-  };
+const handleLogout = () => {
+  setLoading(true);
+  setTimeout(async () => {
+    await dispatch(logout());
+    navigate("/");
+    // No need to setLoading(false) because component will unmount
+  }, 1000); 
+};
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-emerald-950">
-        <div className="text-white text-lg">Logging out...</div>
-        {/* You can use a spinner here if you have one */}
+      <div
+        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50"
+        style={{ minHeight: "100vh" }}
+      >
+        <div className="flex flex-col items-center">
+          <ClipLoader color="#38bdf8" size={60} />
+          <div className="mt-4 text-white text-lg">Logging out...</div>
+        </div>
       </div>
     );
   }
