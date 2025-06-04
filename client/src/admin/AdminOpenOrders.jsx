@@ -1,21 +1,25 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { useNavigate } from "react-router"
 import AlertBlack from "../components/AlertBlack";
 import SpinnerBubbles from "../components/SpinnerBubbles";
-import { orderGetOpen, orderUpdateStatus } from "../redux/orderSlice";
+import {
+  orderGetOpen,
+  orderUpdateStatus,
+  orderArchiveOne,
+} from "../redux/orderSlice";
 
 const alertMsg = "Are you sure you want to archive this order?";
 const alertDescription = "Click to confirm";
 
 const AdminOpenOrders = () => {
   const { orders } = useSelector((state) => state.order);
-  const { order } = useSelector((state) => state.order);
+  // const { order } = useSelector((state) => state.order);
   const dispatch = useDispatch();
   const [newStatus, setNewStatus] = useState({});
   const [loading, setLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [savingId, setSavingId] = useState(null);
+  const [archiveId, setArchiveId] = useState(null);
 
   const statusArray = ["processing", "completed", "delivered"];
 
@@ -35,20 +39,27 @@ const AdminOpenOrders = () => {
     }, 1500);
   };
 
-  const handleCancel = () => {
-    setShowAlert(false);
+  // When Archive Order button is clicked
+  const handleArchiveClick = (id) => {
+    console.log("first handleArchiveClick", id);
+    setArchiveId(id); // Store the order id to archive
+    setShowAlert(true);
   };
 
-  const handleConfirm = (id) => {
-    console.log("id", id);
+  const handleCancel = () => {
+    console.log("Cancel Clicked");
+    setShowAlert(false);
+    setArchiveId(null);
+  };
 
-    const value = "archived";
-    // send pizza to archived
-    dispatch(orderUpdateStatus({ id: id, status: value }));
-
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 2000);
+  // When user confirms in the alert
+  const handleConfirm = () => {
+    console.log("handleConfirm", archiveId);
+    if (archiveId) {
+      dispatch(orderArchiveOne(archiveId));
+      setArchiveId(null);
+    }
+    setShowAlert(false);
   };
 
   // TODO: need to have another map to map over order details?
@@ -229,7 +240,7 @@ const AdminOpenOrders = () => {
                     <div className="relative">
                       <div className="w-full top-0 right-2 "></div>
                       <button
-                        onClick={() => handleConfirm(order._id)}
+                        onClick={() => handleArchiveClick(order._id)}
                         type="submit"
                         className="font-medium text-red-700 w-full h-full border-3 rounded-xl hover:bg-red-700 hover:text-white hover:border-black cursor-pointer"
                       >
@@ -249,7 +260,7 @@ const AdminOpenOrders = () => {
             alertMsg={alertMsg}
             alertDescription={alertDescription}
             handleCancel={handleCancel}
-            handleConfirm={() => handleConfirm(order._id)}
+            handleConfirm={handleConfirm}
           />
         </div>
       )}

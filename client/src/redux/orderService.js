@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const orderService = {
-  // Orders
+  // Create a new Order
   createOrder: async (order) => {
     return await axios.post(
       `${import.meta.env.VITE_API_SERVER_URL}/orders`,
@@ -9,7 +9,7 @@ const orderService = {
     );
   },
 
-  // Get all Orders
+  // Get all orders
   orderGetAll: async () => {
     return await axios.get(`${import.meta.env.VITE_API_SERVER_URL}/orders`);
   },
@@ -36,17 +36,14 @@ const orderService = {
       { status: status }
     );
   },
+
   // Archive order
   orderArchiveOne: async (id) => {
-    return await axios.patch(
+    return await axios.put(
       `${import.meta.env.VITE_API_SERVER_URL}/orders/archive/${id}`,
       { isArchived: true }
     );
   },
-
-  // orderUpdateStatus: async (id, status) => {
-  //   return await axios.get(`${import.meta.env.VITE_API_SERVER_URL}/orders/open/${id}`, {status});
-  // },
 
   // orderGetOne: async (id) => {
   //   return await axios.get(
