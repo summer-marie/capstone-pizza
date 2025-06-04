@@ -7,15 +7,35 @@ import { logout } from "../redux/authSlice";
 const AdminSidenav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
 
-  let location = useLocation();
   console.log("location", location);
 
-  const handleLogout = () => {
-    console.log("handling logout");
-    dispatch(logout());
-    navigate("/");
+  // const handleLogout = () => {
+  //   setLoading(true);
+  //   dispatch(logout());
+  //   navigate("/");
+  //   setLoading(false);
+  // };
+
+  const handleLogout = async () => {
+    setLoading(true);
+    await dispatch(logout()); 
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/");
+    }, 700);
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-emerald-950">
+        <div className="text-white text-lg">Logging out...</div>
+        {/* You can use a spinner here if you have one */}
+      </div>
+    );
+  }
 
   return (
     <>
