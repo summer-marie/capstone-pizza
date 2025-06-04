@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/authSlice";
 
 const AdminSidenav = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   let location = useLocation();
   console.log("location", location);
@@ -12,6 +13,7 @@ const AdminSidenav = () => {
   const handleLogout = () => {
     console.log("handling logout");
     dispatch(logout());
+    navigate("/");
   };
 
   return (
@@ -37,7 +39,7 @@ const AdminSidenav = () => {
                  ${
                    location.pathname === "/open-orders"
                      ? "bg-lime-300/70"
-                     : "hover:bg-gray-800 text-stone-200"
+                     : "hover:bg-gray-700 text-stone-200"
                  }
                 `}
               >
@@ -72,7 +74,7 @@ const AdminSidenav = () => {
                   ${
                     location.pathname === "/completed-orders"
                       ? "bg-lime-300/70"
-                      : "hover:bg-gray-800 text-stone-200"
+                      : "hover:bg-gray-700 text-stone-200"
                   }
                  `}
               >
@@ -109,7 +111,7 @@ const AdminSidenav = () => {
                   ${
                     location.pathname === "/pizza-builder"
                       ? "bg-lime-300/70"
-                      : "hover:bg-gray-800 text-stone-200"
+                      : "hover:bg-gray-700 text-stone-200"
                   }
                  `}
               >
@@ -147,7 +149,7 @@ const AdminSidenav = () => {
                   ${
                     location.pathname === "/admin-menu"
                       ? "bg-lime-300/70"
-                      : "hover:bg-gray-800 text-stone-200"
+                      : "hover:bg-gray-700 text-stone-200"
                   }
                  `}
               >
@@ -191,7 +193,7 @@ const AdminSidenav = () => {
                   ${
                     location.pathname === "/ingredient-table"
                       ? "bg-lime-300/70"
-                      : "hover:bg-gray-800 text-stone-200"
+                      : "hover:bg-gray-700 text-stone-200"
                   }`}
               >
                 <svg
@@ -233,7 +235,7 @@ const AdminSidenav = () => {
                   ${
                     location.pathname === "/inbox"
                       ? "bg-lime-300/70"
-                      : "hover:bg-gray-800 text-stone-200"
+                      : "hover:bg-gray-700 text-stone-200"
                   }
                  `}
               >
@@ -266,21 +268,10 @@ const AdminSidenav = () => {
               <button
                 type="button"
                 onClick={handleLogout}
-                className={`flex items-center p-2 rounded-lg group 
-                        ${
-                          location.pathname === "/logout"
-                            ? "bg-lime-300/70"
-                            : "hover:bg-gray-800 text-stone-200"
-                        }
-                       `}
+                className="flex items-center p-2 rounded-lg group hover:bg-red-800 text-stone-200 w-full cursor-pointer"
               >
                 <svg
-                  className={`w-6 h-6 transition duration-75 group-hover:text-white ${
-                    location.pathname === "/logout"
-                      ? "text-gray-700"
-                      : "text-gray-400 "
-                  }
-                 `}
+                  className="w-6 h-6 transition duration-75 group-hover:text-white text-gray-400"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -292,8 +283,7 @@ const AdminSidenav = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-
-                <span className="flex-1 ms-3 whitespace-nowrap">Sign Out</span>
+                <span className="flex ms-3 whitespace-nowrap">Sign Out</span>
               </button>
             </li>
             <li>
@@ -303,7 +293,7 @@ const AdminSidenav = () => {
                         ${
                           location.pathname === "/settings"
                             ? "bg-lime-300/70"
-                            : "hover:bg-gray-800 text-stone-200"
+                            : "hover:bg-gray-700 text-stone-200"
                         }
                        `}
               >

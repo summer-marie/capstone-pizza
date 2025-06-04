@@ -42,6 +42,7 @@ const AdminLogin = () => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
+  // Validate form fields
   if (loginForm.email === "" || loginForm.password === "") {
     console.log("Login form error");
   } else {
@@ -50,7 +51,7 @@ const handleSubmit = async (e) => {
     if (login.fulfilled.match(resultAction)) {
       navigate("/open-orders");
     } else {
-      // Optionally handle login error
+      // handle login error
       console.log("Login failed", resultAction);
     }
   }
