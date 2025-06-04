@@ -8,21 +8,21 @@ import {
   orderArchiveOne,
 } from "../redux/orderSlice";
 
-const alertMsg = "Are you sure you want to archive this order?";
-const alertDescription = "Click to confirm";
-
 const AdminOpenOrders = () => {
   const { orders } = useSelector((state) => state.order);
-  // const { order } = useSelector((state) => state.order);
   const dispatch = useDispatch();
   const [newStatus, setNewStatus] = useState({});
   const [loading, setLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [savingId, setSavingId] = useState(null);
-  const [archiveId, setArchiveId] = useState(null);
+  const [archiveOrder, setArchiveOrder] = useState(null);
+
+  const alertMsg = archiveOrder
+    ? `Are you sure you want to archive order #${archiveOrder.orderNumber}?`
+    : "Are you sure you want to archive this order?";
+  const alertDescription = "Click to confirm";
 
   const statusArray = ["processing", "completed", "delivered"];
-
   // Grab open order
   useEffect(() => {
     dispatch(orderGetOpen());
@@ -40,26 +40,23 @@ const AdminOpenOrders = () => {
   };
 
   // When Archive Order button is clicked
-  const handleArchiveClick = (id) => {
-    console.log("first handleArchiveClick", id);
-    setArchiveId(id); // Store the order id to archive
+  const handleArchiveClick = (order) => {
+    setArchiveOrder(order); // Store the order object
     setShowAlert(true);
   };
 
   const handleCancel = () => {
     console.log("Cancel Clicked");
     setShowAlert(false);
-    setArchiveId(null);
+    setArchiveOrder(null); // Clear the archive order
   };
 
   // When user confirms in the alert
   const handleConfirm = async () => {
-    console.log("handleConfirm", archiveId);
-    if (archiveId) {
-      await dispatch(orderArchiveOne(archiveId)).unwrap();
-      // Refresh open orders after archiving
+    if (archiveOrder) {
+      await dispatch(orderArchiveOne(archiveOrder._id)).unwrap();
       await dispatch(orderGetOpen()).unwrap();
-      setArchiveId(null);
+      setArchiveOrder(null);
     }
     setShowAlert(false);
   };
@@ -242,7 +239,7 @@ const AdminOpenOrders = () => {
                     <div className="relative">
                       <div className="w-full top-0 right-2 "></div>
                       <button
-                        onClick={() => handleArchiveClick(order._id)}
+                        onClick={() => handleArchiveClick(order)}
                         type="submit"
                         className="font-medium text-red-700 w-full h-full border-3 rounded-xl hover:bg-red-700 hover:text-white hover:border-black cursor-pointer"
                       >
