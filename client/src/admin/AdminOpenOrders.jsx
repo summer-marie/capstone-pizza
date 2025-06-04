@@ -128,9 +128,9 @@ const AdminOpenOrders = () => {
               </tr>
             </thead>
             <tbody>
-              {orders.map((order, index) => (
+              {orders.map((order) => (
                 <tr
-                  key={index}
+                 key={order._id}
                   order={order}
                   className=" border-b px-4 py-4
               odd:bg-stone-200
