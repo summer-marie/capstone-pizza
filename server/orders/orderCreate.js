@@ -11,8 +11,8 @@ const orderCreate = async (req, res) => {
     return orderNumberDoc.currentOrderNumber;
   };
 
-  const {
-    orderNumber = await generateOrderNumber(),
+  let {
+    orderNumber,
     date,
     orderDetails,
     address,
@@ -23,6 +23,12 @@ const orderCreate = async (req, res) => {
     status,
     isArchived,
   } = req.body
+
+    // Generate order number if not provided
+  if (!orderNumber) {
+    orderNumber = await generateOrderNumber();
+  }
+
   // Validation
   if (
     !orderNumber ||
