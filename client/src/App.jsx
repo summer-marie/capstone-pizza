@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router";
+import { Routes, Route, useLocation } from "react-router";
 import { useSelector } from "react-redux";
 import PrivateRoute from "./PrivateRoute";
 import Navbar from "./components/Navbar";
@@ -20,22 +20,25 @@ import AdminBuilderCreate from "./admin/AdminBuilderCreate";
 import "./App.css";
 
 function App() {
-
   const authUser = useSelector((state) => state.auth.authUser);
   const isAdminLoggedIn = !!authUser && Object.keys(authUser).length > 0;
   console.log("isAdminLoggedIn", isAdminLoggedIn);
 
+  const location = useLocation();
+  // Hide Navbar on /admin-login
+  const hideNavbar = location.pathname === "/admin-login";
+
   return (
     <>
-      {/* TODO: Add sidnav to private routes */}
+      {/* Only show AdminSidenav if admin is logged in */}
       {isAdminLoggedIn && <AdminSidenav />}
 
-       {/* Only show Navbar if NOT admin */}
-      {!isAdminLoggedIn && <Navbar />}
-      
+      {/* Only show Navbar if NOT admin */}
+      {!isAdminLoggedIn && !hideNavbar && <Navbar />}
+
       <Routes>
         {/* Public routes */}
-        <Navbar />
+
         <Route path="/" element={<About />} />
         <Route path="/order-menu" element={<OrderMenu />} />
         <Route path="/order-create" element={<BuildYourOwn />} />
