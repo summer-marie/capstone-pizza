@@ -31,7 +31,12 @@ export const logout = createAsyncThunk("auth/logout", async () => {
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    setAuthFromStorage: (state, action) => {
+      state.token = action.payload.token;
+      state.authUser = action.payload.user;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // auth login
@@ -77,7 +82,6 @@ export const authSlice = createSlice({
         state.token = null;
         localStorage.removeItem("userOn");
         localStorage.removeItem("token");
-
       })
       .addCase(logout.rejected, (state, action) => {
         console.log("LOGOUT rejected authSlice action.payload", action.payload);
@@ -87,3 +91,4 @@ export const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
+export const { setAuthFromStorage } = authSlice.actions;

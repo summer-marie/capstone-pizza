@@ -1,24 +1,28 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { useNavigate } from "react-router"
 import AlertBlack from "../components/AlertBlack";
 import SpinnerBubbles from "../components/SpinnerBubbles";
-import { orderGetOpen, orderUpdateStatus } from "../redux/orderSlice";
-
-const alertMsg = "Are you sure you want to archive this order?";
-const alertDescription = "Click to confirm";
+import {
+  orderGetOpen,
+  orderUpdateStatus,
+  orderArchiveOne,
+} from "../redux/orderSlice";
 
 const AdminOpenOrders = () => {
   const { orders } = useSelector((state) => state.order);
-  const { order } = useSelector((state) => state.order);
   const dispatch = useDispatch();
   const [newStatus, setNewStatus] = useState({});
   const [loading, setLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [savingId, setSavingId] = useState(null);
+  const [archiveOrder, setArchiveOrder] = useState(null);
+
+  const alertMsg = archiveOrder
+    ? `Are you sure you want to archive order #${archiveOrder.orderNumber}?`
+    : "Are you sure you want to archive this order?";
+  const alertDescription = "Click to confirm";
 
   const statusArray = ["processing", "completed", "delivered"];
-
   // Grab open order
   useEffect(() => {
     dispatch(orderGetOpen());
@@ -35,20 +39,26 @@ const AdminOpenOrders = () => {
     }, 1500);
   };
 
-  const handleCancel = () => {
-    setShowAlert(false);
+  // When Archive Order button is clicked
+  const handleArchiveClick = (order) => {
+    setArchiveOrder(order); // Store the order object
+    setShowAlert(true);
   };
 
-  const handleConfirm = (id) => {
-    console.log("id", id);
+  const handleCancel = () => {
+    console.log("Cancel Clicked");
+    setShowAlert(false);
+    setArchiveOrder(null); // Clear the archive order
+  };
 
-    const value = "archived";
-    // send pizza to archived
-    dispatch(orderUpdateStatus({ id: id, status: value }));
-
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 2000);
+  // When user confirms in the alert
+  const handleConfirm = async () => {
+    if (archiveOrder) {
+      await dispatch(orderArchiveOne(archiveOrder._id)).unwrap();
+      await dispatch(orderGetOpen()).unwrap();
+      setArchiveOrder(null);
+    }
+    setShowAlert(false);
   };
 
   // TODO: need to have another map to map over order details?
@@ -118,9 +128,9 @@ const AdminOpenOrders = () => {
               </tr>
             </thead>
             <tbody>
-              {orders.map((order, index) => (
+              {orders.map((order) => (
                 <tr
-                  key={index}
+                 key={order._id}
                   order={order}
                   className=" border-b px-4 py-4
               odd:bg-stone-200
@@ -229,7 +239,7 @@ const AdminOpenOrders = () => {
                     <div className="relative">
                       <div className="w-full top-0 right-2 "></div>
                       <button
-                        onClick={() => handleConfirm(order._id)}
+                        onClick={() => handleArchiveClick(order)}
                         type="submit"
                         className="font-medium text-red-700 w-full h-full border-3 rounded-xl hover:bg-red-700 hover:text-white hover:border-black cursor-pointer"
                       >
@@ -244,13 +254,15 @@ const AdminOpenOrders = () => {
         </div>
       </div>
       {showAlert && (
-        <div className="absolute top-[40%] left-[40%] z-30">
-          <AlertBlack
-            alertMsg={alertMsg}
-            alertDescription={alertDescription}
-            handleCancel={handleCancel}
-            handleConfirm={() => handleConfirm(order._id)}
-          />
+        <div className="fixed inset-0 z-30 flex items-center justify-center bg-opacity-30">
+          <div className="rounded-xl shadow-2xl max-w-md w-full">
+            <AlertBlack
+              alertMsg={alertMsg}
+              alertDescription={alertDescription}
+              handleCancel={handleCancel}
+              handleConfirm={handleConfirm}
+            />
+          </div>
         </div>
       )}
     </>

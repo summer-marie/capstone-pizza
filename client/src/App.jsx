@@ -1,5 +1,7 @@
 import { Routes, Route, useLocation } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setAuthFromStorage } from "./redux/authSlice";
 import PrivateRoute from "./PrivateRoute";
 import Navbar from "./components/Navbar";
 import AdminSidenav from "./admin/AdminSidenav";
@@ -20,12 +22,23 @@ import AdminBuilderCreate from "./admin/AdminBuilderCreate";
 import "./App.css";
 
 function App() {
-  // const authUser = useSelector((state) => state.auth.authUser);
-  // const isAdminLoggedIn = !!authUser && Object.keys(authUser).length > 0;
+  const dispatch = useDispatch();
 
-  const token = useSelector((state) => state.auth.token);
+  useEffect(() => {
+    // Get token and user from localStorage as plain string
+    const token = localStorage.getItem("token");
+    const userString = localStorage.getItem("userOn");
+    // Only parse user if not null and not the string "undefined"
+    const user =
+      userString && userString !== "undefined" ? JSON.parse(userString) : null;
+    if (token && user) {
+      dispatch(setAuthFromStorage({ token, user }));
+    }
+  }, [dispatch]);
+
+  const reduxToken = useSelector((state) => state.auth.token);
+  const token = reduxToken || localStorage.getItem("token");
   const isAdminLoggedIn = !!token;
-  console.log("isAdminLoggedIn", isAdminLoggedIn);
 
   const location = useLocation();
   // Hide Navbar on /admin-login
@@ -42,9 +55,8 @@ function App() {
 
       <Routes>
         {/* Public routes */}
-
-        <Route path="/" element={<About />} />
-        <Route path="/order-menu" element={<OrderMenu />} />
+        <Route path="/" element={<OrderMenu />} />
+        <Route path="/about" element={<About />} />
         <Route path="/order-create" element={<BuildYourOwn />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/checkout" element={<Checkout />} />
@@ -59,7 +71,6 @@ function App() {
           <Route path="/ingredient-table" element={<IngredientsTable />} />
           {/* <Route path='/pizza-update' element={<Update />} /> */}
         </Route>
-
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>

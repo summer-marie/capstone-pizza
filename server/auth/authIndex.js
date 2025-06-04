@@ -6,7 +6,7 @@ import authLogout from './authLogout.js'
 
 const authRouter = Router()
 
-// Hits our strategy then, finds the user (then serializes our user), finally get our response
+
 authRouter.post('/login', passport.authenticate('local'), authLogin)
 
 authRouter.get(
