@@ -22,7 +22,7 @@ import "./App.css";
 function App() {
   // const authUser = useSelector((state) => state.auth.authUser);
   // const isAdminLoggedIn = !!authUser && Object.keys(authUser).length > 0;
-  
+
   const token = useSelector((state) => state.auth.token);
   const isAdminLoggedIn = !!token;
   console.log("isAdminLoggedIn", isAdminLoggedIn);
@@ -38,6 +38,7 @@ function App() {
 
       {/* Only show Navbar if NOT admin */}
       {!isAdminLoggedIn && !hideNavbar && <Navbar />}
+      {!isAdminLoggedIn && <Footer />}
 
       <Routes>
         {/* Public routes */}
@@ -62,7 +63,6 @@ function App() {
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>
-      <Footer />
     </>
   );
 }

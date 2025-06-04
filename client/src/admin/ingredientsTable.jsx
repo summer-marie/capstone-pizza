@@ -200,11 +200,14 @@ const IngredientsTable = () => {
   const { ingredients } = useSelector((state) => state.ingredient);
   const [showModal, setShowModal] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  // State to track which ingredient is being edited
   const [editing, setEditing] = useState({});
-  const [saveBubbles, setSaveBubbles] = useState(false);
+  // State to track loading state for saving changes
   const [loading, setLoading] = useState(false);
-  // State to track which ingredient is being deleted 
+  // State to track which ingredient is being deleted
   const [deleteId, setDeleteId] = useState(null);
+  // State to track which ingredient is being saved
+  const [savingId, setSavingId] = useState(null);
 
   const itemTypesArray = ["Sauce", "Meat Topping", "Veggie Topping"];
 
@@ -228,17 +231,14 @@ const IngredientsTable = () => {
     setShowModal(false);
   };
 
-  // Handle Update Ingredient data
-  const handleUpdate = () => {
-    console.log("handleUpdate", editing);
+  const handleUpdate = async () => {
+    setSavingId(editing.id);
     setLoading(true);
-    setSaveBubbles(true);
-    // Dispatch service
-    dispatch(ingredientUpdateOne(editing));
-    // Reset editing ingredient data
+    await dispatch(ingredientUpdateOne(editing));
     setEditing({});
     setTimeout(() => {
-      setSaveBubbles(false);
+      setSavingId(null);
+      setLoading(false);
     }, 2000);
   };
 
@@ -315,141 +315,154 @@ const IngredientsTable = () => {
               </tr>
             </thead>
             <tbody>
-              {ingredients.map((ingredient, index) => (
-                <tr
-                  key={ingredient.id || index}
-                  ingredient={ingredient}
-                  className=" border-b px-2 py-2
+              {ingredients.map((ingredient, index) =>
+                savingId === ingredient.id ? (
+                  // Show spinner while saving
+                  <tr key={ingredient.id || index}>
+                    <td colSpan={6} className="py-6 text-center bg-transparent">
+                      <SpinnerBubbles loading={loading} size={14} />
+                    </td>
+                  </tr>
+                ) : (
+                  // Show ingredient row
+                  <tr
+                    key={ingredient.id || index}
+                    ingredient={ingredient}
+                    className=" border-b px-2 py-2
                   odd:bg-stone-200
                   even:bg-gray-300 
                   border-gray-700"
-                >
-                  <td // itemType
-                    className="px-2 py-2"
                   >
-                    {editing.id === ingredient.id ? (
-                      <select
-                        className="bg-white rounded-2xl p-2 w-full"
-                        value={editing.itemType}
-                        onChange={(e) =>
-                          setEditing({ ...editing, itemType: e.target.value })
-                        }
-                      >
-                        <option defaultValue={ingredient.itemType}>
-                          {/* <strong className="text-black text-lg"> */}
-                          {ingredient.itemType}
-                          {/* </strong> */}
-                        </option>
-                        {/* Only show types that are different from default */}
-                        {ingredient.itemType &&
-                          [...itemTypesArray]
-                            .filter((type) => type !== ingredient.itemType)
-                            .map((type) => (
-                              <option key={type} value={type}>
-                                {type}
-                              </option>
-                            ))}
-                      </select>
-                    ) : (
-                      ingredient.itemType
-                    )}
-                  </td>
-
-                  <td // Name
-                    className="px-2 py-2"
-                  >
-                    {editing.id === ingredient.id ? (
-                      <input
-                        className="bg-white rounded-2xl p-2 w-full"
-                        value={editing.name}
-                        onChange={(e) =>
-                          setEditing({ ...editing, name: e.target.value })
-                        }
-                      />
-                    ) : (
-                      ingredient.name
-                    )}
-                  </td>
-                  <td
-                    // description
-                    className="px-2 py-2"
-                  >
-                    {editing.id === ingredient.id ? (
-                      <input
-                        className="bg-white rounded-2xl p-2  w-full"
-                        value={editing.description}
-                        onChange={(e) =>
-                          setEditing({
-                            ...editing,
-                            description: e.target.value,
-                          })
-                        }
-                      />
-                    ) : (
-                      ingredient.description
-                    )}
-                    {/* Spinner  */}
-                    <div className="flex justify-end top-0 right-0">
-                      {saveBubbles && editing.id === ingredient._id && (
-                        <SpinnerBubbles loading={loading[ingredient._id]} />
+                    <td // itemType
+                      className="px-2 py-2"
+                    >
+                      {editing.id === ingredient.id ? (
+                        <select
+                          className="bg-white rounded-2xl p-2 w-full"
+                          value={editing.itemType}
+                          onChange={(e) =>
+                            setEditing({ ...editing, itemType: e.target.value })
+                          }
+                        >
+                          <option defaultValue={ingredient.itemType}>
+                            {/* <strong className="text-black text-lg"> */}
+                            {ingredient.itemType}
+                            {/* </strong> */}
+                          </option>
+                          {/* Only show types that are different from default */}
+                          {ingredient.itemType &&
+                            [...itemTypesArray]
+                              .filter((type) => type !== ingredient.itemType)
+                              .map((type) => (
+                                <option key={type} value={type}>
+                                  {type}
+                                </option>
+                              ))}
+                        </select>
+                      ) : (
+                        ingredient.itemType
                       )}
-                    </div>
-                  </td>
-                  <td // Price
-                    className="px-2 py-2 text-center"
-                  >
-                    $
-                    {editing.id === ingredient.id ? (
-                      <input
-                        className="bg-white rounded-2xl p-2"
-                        value={editing.price}
-                        onChange={(e) =>
-                          setEditing({ ...editing, price: e.target.value })
-                        }
-                      />
-                    ) : (
-                      ingredient.price
-                    )}
-                  </td>
+                    </td>
 
-                  <td className="px-2 py-2">
-                    {editing.id === ingredient.id ? (
-                      <button
-                        type="button"
-                        className="font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
+                    <td // Name
+                      className="px-2 py-2"
+                    >
+                      {editing.id === ingredient.id ? (
+                        <input
+                          className="bg-white rounded-2xl p-2 w-full"
+                          value={editing.name}
+                          onChange={(e) =>
+                            setEditing({ ...editing, name: e.target.value })
+                          }
+                        />
+                      ) : (
+                        ingredient.name
+                      )}
+                    </td>
+                    <td
+                      // description
+                      className="px-2 py-2"
+                    >
+                      {editing.id === ingredient.id ? (
+                        <input
+                          className="bg-white rounded-2xl p-2  w-full"
+                          value={editing.description}
+                          onChange={(e) =>
+                            setEditing({
+                              ...editing,
+                              description: e.target.value,
+                            })
+                          }
+                        />
+                      ) : (
+                        ingredient.description
+                      )}
+                      {/* Spinner  */}
+                      {/* <div
+                      className="flex justify-end items-center h-full"
+                      style={{ minHeight: 0, minWidth: 0 }}
+                    >
+                      {savingId === ingredient.id && (
+                        <SpinnerBubbles loading={loading} size={10} />
+                      )}
+                    </div> */}
+                    </td>
+                    <td // Price
+                      className="px-2 py-2 text-center"
+                    >
+                      $
+                      {editing.id === ingredient.id ? (
+                        <input
+                          className="bg-white rounded-2xl p-2"
+                          value={editing.price}
+                          onChange={(e) =>
+                            setEditing({ ...editing, price: e.target.value })
+                          }
+                        />
+                      ) : (
+                        ingredient.price
+                      )}
+                    </td>
+
+                    <td className="px-2 py-2">
+                      {editing.id === ingredient.id ? (
+                        <button
+                          type="button"
+                          className="font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
                         text-cyan-600"
-                        onClick={() => handleUpdate()}
-                      >
-                        Save
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className="font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
+                          onClick={() => handleUpdate()}
+                        >
+                          Save
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
                         text-cyan-600"
-                        onClick={() => setEditing({ ...ingredient })}
-                      >
-                        Edit
-                      </button>
-                    )}
-                  </td>
-                  <td className="px-2 py-2">
-                    <button
-                      onClick={() => {
-                        setDeleteId(ingredient.id);
-                        setShowAlert(true);
-                      }}
-                      type="button"
-                      className="font-medium  cursor-pointer
+                          onClick={() => setEditing({ ...ingredient })}
+                        >
+                          Edit
+                        </button>
+                      )}
+                    </td>
+                    <td className="px-2 py-2">
+                      <button
+                        onClick={() => {
+                          setDeleteId(ingredient.id);
+                          setShowAlert(true);
+                        }}
+                        type="button"
+                        className="font-medium  cursor-pointer
                       text-red-700 w-full h-full border-3 rounded-xl hover:bg-red-700 
                       hover:text-white 
                       hover:border-black"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                )
+              )}
             </tbody>
           </table>
         </div>

@@ -1,12 +1,13 @@
 import BeatLoader from "react-spinners/BeatLoader"
 
-const Spinner = ({ loading }) => {
+const Spinner = ({ loading, size = 10 }) => {
   return (
-    <>
-      <span className='beat-loader'>
-        <BeatLoader color='blue' loading={loading} margin='5px' />
-      </span>
-    </>
+    <span
+      className="inline-block align-middle"
+      style={{ minWidth: "32px", minHeight: "20px", verticalAlign: "middle" }}
+    >
+      <BeatLoader color="teal" loading={loading} size={size} margin={2} />
+    </span>
   )
 }
 
