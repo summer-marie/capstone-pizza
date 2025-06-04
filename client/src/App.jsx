@@ -36,8 +36,11 @@ function App() {
     }
   }, [dispatch]);
 
-  const reduxToken = useSelector((state) => state.auth.token);
-  const token = reduxToken || localStorage.getItem("token");
+  // const reduxToken = useSelector((state) => state.auth.token);
+  // const token = reduxToken || localStorage.getItem("token");
+  // const isAdminLoggedIn = !!token;
+
+  const token = useSelector((state) => state.auth.token);
   const isAdminLoggedIn = !!token;
 
   const location = useLocation();
@@ -55,8 +58,8 @@ function App() {
 
       <Routes>
         {/* Public routes */}
-        <Route path="/" element={<OrderMenu />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/" element={<About />} />
+        <Route path="/order-menu" element={<OrderMenu />} />
         <Route path="/order-create" element={<BuildYourOwn />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/checkout" element={<Checkout />} />

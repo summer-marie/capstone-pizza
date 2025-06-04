@@ -3,6 +3,7 @@ import orderReducer from "./redux/orderSlice";
 import ingredientReducer from "./redux/ingredientSlice";
 import builderReducer from "./redux/builderSlice";
 import authReducer from "./redux/authSlice";
+import cartReducer from "./redux/cartSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     ingredient: ingredientReducer,
     builder: builderReducer,
     auth: authReducer,
+     cart: cartReducer,
   },
 });
