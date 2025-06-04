@@ -257,13 +257,15 @@ const AdminOpenOrders = () => {
         </div>
       </div>
       {showAlert && (
-        <div className="absolute top-[40%] left-[40%] z-30">
-          <AlertBlack
-            alertMsg={alertMsg}
-            alertDescription={alertDescription}
-            handleCancel={handleCancel}
-            handleConfirm={handleConfirm}
-          />
+        <div className="fixed inset-0 z-30 flex items-center justify-center bg-opacity-30">
+          <div className="rounded-xl shadow-2xl max-w-md w-full">
+            <AlertBlack
+              alertMsg={alertMsg}
+              alertDescription={alertDescription}
+              handleCancel={handleCancel}
+              handleConfirm={handleConfirm}
+            />
+          </div>
         </div>
       )}
     </>
