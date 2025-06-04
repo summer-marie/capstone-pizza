@@ -4,16 +4,15 @@ import { useDispatch } from "react-redux";
 import { logout } from "../redux/authSlice";
 
 const AdminSidenav = () => {
-
   const dispatch = useDispatch();
 
   let location = useLocation();
   console.log("location", location);
 
   const handleLogout = () => {
-    console.log("handling logout")
+    console.log("handling logout");
     dispatch(logout());
-  }
+  };
 
   return (
     <>
@@ -266,7 +265,7 @@ const AdminSidenav = () => {
             <li>
               <button
                 type="button"
-                onClick={handleLogout} 
+                onClick={handleLogout}
                 className={`flex items-center p-2 rounded-lg group 
                         ${
                           location.pathname === "/logout"

@@ -1,41 +1,41 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const sessionSchema = new Schema({
   token: {
     type: String,
-    default: ""
-  }
-})
+    default: "",
+  },
+});
 
 const userSchema = new Schema({
   firstName: {
     type: String,
-    default: ""
+    default: "",
   },
   lastName: {
     type: String,
-    default: ""
+    default: "",
   },
   email: {
     type: String,
-    default: ""
+    default: "",
   },
   password: {
     type: String,
-    default: ""
+    default: "",
   },
   status: String,
-  role: [ String ],
- 
+  role: [String],
+
   authStrategy: {
     type: String,
-    default: "local"
+    default: "local",
   },
   token: {
-    type: [ sessionSchema ]
-  }
-})  
+    type: [sessionSchema],
+  },
+});
 
-export default userSchema
+export default userSchema;

@@ -1,5 +1,6 @@
-import { login } from "../redux/authSlice"
+import { login } from "../redux/authSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 import { useState } from "react";
 
 const svgPrint = (
@@ -32,17 +33,28 @@ const svgPrint = (
 
 const AdminLogin = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("handle Submit");
-
-    dispatch(login(loginForm));
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (loginForm.email === "" || loginForm.password === "") {
+    console.log("Login form error");
+  } else {
+    const resultAction = await dispatch(login(loginForm));
+    // Check if login was fulfilled
+    if (login.fulfilled.match(resultAction)) {
+      navigate("/open-orders");
+    } else {
+      // Optionally handle login error
+      console.log("Login failed", resultAction);
+    }
+  }
+};
 
   return (
     <>
