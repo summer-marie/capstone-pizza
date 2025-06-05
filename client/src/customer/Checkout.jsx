@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { clearCart } from "../redux/cartSlice";
+import { clearCart, removeFromCart } from "../redux/cartSlice";
 import AlertSuccess from "../components/AlertSuccess";
 import AlertBlack from "../components/AlertBlack";
 
@@ -81,10 +81,10 @@ const Checkout = () => {
     // setSubmitDisabled(true)
   };
 
-  const handleItemDelete = () => {
+  const handleItemDelete = (id) => {
     console.log("Item delete button works!!!");
     setShowSuccessAlert(true);
-    // Delete item from order
+    dispatch(removeFromCart(id));
     setTimeout(() => {
       setShowSuccessAlert(false);
     }, 2000);
@@ -114,15 +114,6 @@ const Checkout = () => {
 
   return (
     <>
-      {/* Needs to have a dynamic grid that populates with all the items they selected. Should be on the left side of the screen */}
-      {/* need to map over items dynamically */}
-      {/* <div className='grid grid-cols-1 xl:grid-cols-1 gap-9 px-4 py-2.5 ml-[10%] mt-5 mb-20'>
-        <div className='w-150 h-80 bg-gray-400 rounded-xl'></div>
-        <div className='w-150 h-80 bg-gray-400 rounded-xl'></div>
-        <div className='w-150 h-80 bg-gray-400 rounded-xl'></div>
-        <div className='w-150 h-80 bg-gray-400 rounded-xl'></div>
-      </div> */}
-
       <form onSubmit={handleSubmit} className="mt-10 ">
         <div className="min-h-screen mx-auto w-full">
           <div className="flex flex-col sm:flex-row items-start justify-center mx-auto space-y-6 sm:space-y-0 sm:space-x-6 w-2/3 bg-gray-100">
@@ -143,11 +134,11 @@ const Checkout = () => {
                   <div className="space-y-1 w-3/4 relative">
                     {cartItems.map((item, idx) => (
                       <div
-                        key={item._id || idx}
+                        key={item.id || idx}
                         className="flex items-center space-x-4 mt-1 relative"
                       >
                         <button
-                          onClick={handleItemDelete}
+                          onClick={() => handleItemDelete(item.id)}
                           type="button"
                           className="text-sm font-medium text-red-700 border-2 border-red-700 rounded-xl px-3 py-1 hover:bg-red-700 hover:text-white hover:border-black cursor-pointer capitalize"
                         >

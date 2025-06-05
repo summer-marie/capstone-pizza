@@ -135,7 +135,7 @@ const Order = () => {
                   </span>
 
                   <button
-                    onClick={() => dispatch(addToCart(builder))}
+                    onClick={() => dispatch(addToCart({ ...builder, cartItemId: Date.now() + Math.random() }))}
                     type="button"
                     className="font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 top-0 right-0 shadow-lg   me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
                     shadow-green-800/80 hover:text-black
