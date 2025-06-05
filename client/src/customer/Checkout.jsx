@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { clearCart } from "../redux/cartSlice";
 import AlertSuccess from "../components/AlertSuccess";
 import AlertBlack from "../components/AlertBlack";
 
@@ -66,9 +67,10 @@ const alertDescription = "Click to confirm and redirect back to menu";
 
 const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.items);
+
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -93,7 +95,7 @@ const Checkout = () => {
   };
 
   const handleConfirm = () => {
-    // handle delete of order
+    dispatch(clearCart());
     console.log("Order deleted");
     setTimeout(() => {
       setShowAlert(false);
@@ -105,8 +107,10 @@ const Checkout = () => {
   // and calculates the total price of all items in the cart
   // Returns a string with 2 decimal places
   const calculateTotal = () => {
-  return cartItems.reduce((sum, item) => sum + Number(item.pizzaPrice), 0).toFixed(2);
-};
+    return cartItems
+      .reduce((sum, item) => sum + Number(item.pizzaPrice), 0)
+      .toFixed(2);
+  };
 
   return (
     <>
@@ -153,7 +157,7 @@ const Checkout = () => {
                           {item.pizzaName}
                         </span>
                         <span className="text-lg text-gray-500 ml-auto">
-                          ${item.pizzaPrice}
+                          $ {item.pizzaPrice}
                         </span>
                       </div>
                     ))}
@@ -165,7 +169,7 @@ const Checkout = () => {
                           Total
                         </dt>
                         <dd className="text-lg text-gray-500 mr-1">
-                      ${calculateTotal()}
+                          $ {calculateTotal()}
                         </dd>
                       </div>
                     </div>

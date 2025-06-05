@@ -7,11 +7,19 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart: (state, action) => {
+      console.log("cartSlice REDUCER addToCart", action.payload);
       state.items.push(action.payload);
     },
-    // You can add removeFromCart, clearCart, etc. here
+    removeFromCart: (state, action) => {
+      console.log("cartSlice REDUCER removeFromCart", action.payload);
+      state.items = state.items.filter((item) => item.id !== action.payload);
+    },
+    clearCart: (state) => {
+      console.log("cartSlice REDUCER clearCart");
+      state.items = [];
+    },
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
