@@ -130,7 +130,7 @@ const AdminOpenOrders = () => {
             <tbody>
               {orders.map((order) => (
                 <tr
-                 key={order._id}
+                  key={order._id}
                   order={order}
                   className=" border-b px-4 py-4
               odd:bg-stone-200

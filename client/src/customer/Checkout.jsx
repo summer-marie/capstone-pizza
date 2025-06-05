@@ -69,7 +69,7 @@ const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.items);
 
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -87,7 +87,7 @@ const Checkout = () => {
     dispatch(removeFromCart(cartItemId));
     setTimeout(() => {
       setShowSuccessAlert(false);
-    }, 2000);
+    }, 1500);
   };
 
   const handleCancel = () => {
@@ -268,7 +268,7 @@ const Checkout = () => {
       </form>
       {/* Success alert  */}
       {showSuccessAlert && (
-        <div className="absolute top-[50%] left-[40%] z-30 border-6 rounded-2xl border-green-400">
+        <div className="fixed inset-0 z-30 flex items-center justify-center bg-opacity-30 border-green-400">
           <AlertSuccess
             successMsg={successMsg}
             successDescription={successDescription}
@@ -278,7 +278,7 @@ const Checkout = () => {
 
       {/* Delete confirmation alert  */}
       {showAlert && (
-        <div className="absolute top-[40%] left-[40%] z-30 rounded-2xl border-6 border-slate-800">
+        <div className="fixed inset-0 z-30 flex items-center justify-center bg-opacity-30 rounded-2xl border-6 ">
           <AlertBlack
             alertMsg={alertMsg}
             alertDescription={alertDescription}
