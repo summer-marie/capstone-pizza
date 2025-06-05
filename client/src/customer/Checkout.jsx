@@ -81,10 +81,10 @@ const Checkout = () => {
     // setSubmitDisabled(true)
   };
 
-  const handleItemDelete = (id) => {
+  const handleItemDelete = (cartItemId) => {
     console.log("Item delete button works!!!");
     setShowSuccessAlert(true);
-    dispatch(removeFromCart(id));
+    dispatch(removeFromCart(cartItemId));
     setTimeout(() => {
       setShowSuccessAlert(false);
     }, 2000);
@@ -134,11 +134,11 @@ const Checkout = () => {
                   <div className="space-y-1 w-3/4 relative">
                     {cartItems.map((item, idx) => (
                       <div
-                        key={item.id || idx}
+                        key={item.cartItemId || idx}
                         className="flex items-center space-x-4 mt-1 relative"
                       >
                         <button
-                          onClick={() => handleItemDelete(item.id)}
+                          onClick={() => handleItemDelete(item.cartItemId)}
                           type="button"
                           className="text-sm font-medium text-red-700 border-2 border-red-700 rounded-xl px-3 py-1 hover:bg-red-700 hover:text-white hover:border-black cursor-pointer capitalize"
                         >
