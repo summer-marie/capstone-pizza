@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+// TODO: handle this on the back end with redux or context
+
 function OrderNumberGenerator() {
   const [orderId, setOrderId] = useState('');
 

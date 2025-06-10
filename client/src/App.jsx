@@ -5,6 +5,7 @@ import { setAuthFromStorage } from "./redux/authSlice";
 import PrivateRoute from "./PrivateRoute";
 import Navbar from "./components/Navbar";
 import AdminSidenav from "./admin/AdminSidenav";
+import Footer from "./components/Footer";
 import NoMatch from "./components/NoMatch";
 import About from "./customer/About";
 import OrderMenu from "./customer/OrderMenu";
@@ -13,12 +14,12 @@ import Checkout from "./customer/Checkout";
 import AdminOpenOrders from "./admin/AdminOpenOrders";
 import AdminCompletedOrders from "./admin/AdminCompletedOrders";
 import AdminMenu from "./admin/AdminMenu";
-import Footer from "./components/Footer";
 import AdminLogin from "./admin/AdminLogin";
 import BuildYourOwn from "./customer/BuildYourOwn";
 import AdminUpdateOne from "./admin/AdminUpdateOne";
 import IngredientsTable from "./admin/ingredientsTable";
 import AdminBuilderCreate from "./admin/AdminBuilderCreate";
+import OrderSuccess from "./customer/OrderSuccess";
 import "./App.css";
 
 function App() {
@@ -36,8 +37,7 @@ function App() {
     }
   }, [dispatch]);
 
-  const reduxToken = useSelector((state) => state.auth.token);
-  const token = reduxToken || localStorage.getItem("token");
+  const token = useSelector((state) => state.auth.token);
   const isAdminLoggedIn = !!token;
 
   const location = useLocation();
@@ -55,11 +55,12 @@ function App() {
 
       <Routes>
         {/* Public routes */}
-        <Route path="/" element={<OrderMenu />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/" element={<About />} />
+        <Route path="/order-menu" element={<OrderMenu />} />
         <Route path="/order-create" element={<BuildYourOwn />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order-success" element={<OrderSuccess />} />
 
         {/* Protected routes */}
         <Route element={<PrivateRoute />}>

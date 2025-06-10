@@ -48,12 +48,11 @@ const authService = {
 
     // Remove token from localStorage after successful logout
     localStorage.removeItem("token");
+    localStorage.removeItem("userOn");
 
     return response.data;
   },
 };
-
-
 
 // export const status = async (token) => {
 //     console.log("authService status token", token)

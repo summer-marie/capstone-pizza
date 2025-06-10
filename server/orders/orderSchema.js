@@ -1,8 +1,8 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 // top level is good for small ammounts of data, but if it grows may need to nest the info
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
   orderNumber: {
@@ -61,7 +61,8 @@ const orderSchema = new Schema({
   status: {
     type: String,
     // Allowable entries
-    enum: ["processing", "completed", "delivered", "archived"],
+    enum: ["processing", "completed", "delivered", "archived", "cancelled"],
+    default: "processing",
   },
 
   // Remove, is not needed if the status of archived is in the status
@@ -69,6 +70,6 @@ const orderSchema = new Schema({
     type: Boolean,
     default: false,
   },
-})
+});
 
-export default orderSchema
+export default orderSchema;
