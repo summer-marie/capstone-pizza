@@ -66,7 +66,6 @@ const alertMsg = "Are you sure you want to delete this order?";
 const alertDescription = "Click to confirm and redirect back to menu";
 
 const Checkout = () => {
-
   const cartItems = useSelector((state) => state.cart.items);
 
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
@@ -74,11 +73,36 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // User info state
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [street, setStreet] = useState("");
+  const [city, setCity] = useState("");
+  const [stateVal, setStateVal] = useState("");
+  const [zip, setZip] = useState("");
+  const [phone, setPhone] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("handleSubmit");
     // dispatch(createOrder(order))
+    const orderData = {
+      firstName,
+      lastName,
+      address: {
+        street,
+        city,
+        state: stateVal,
+        zip,
+      },
+      phone,
+      orderDetails: cartItems.map((item) => ({
+        pizzaName: item.pizzaName,
+        pizzaPrice: Number(item.pizzaPrice),
+        quantity: item.quantity || 1,
+      })),
+      orderTotal: calculateTotal(),
+    };
     // setShowModal(true)
     // setSubmitDisabled(true)
   };
@@ -167,51 +191,190 @@ const Checkout = () => {
                       </div>
                     </div>
                   </div>
-
+                  {/* User info form */}
                   <div className="space-y-2 w-1/2 mb-5 mr-5">
-                    <label
-                      htmlFor="deliveryAddress"
-                      className="block text-md font-medium text-gray-900"
-                    >
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      id="deliveryAddress"
-                      className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1
+                    {/* Nested flex box */}
+                    <div className="flex space-x-2">
+                      <div className="w-1/2">
+                        <label
+                          htmlFor="firstName"
+                          className="block text-md font-medium text-gray-900"
+                        >
+                          First Name
+                        </label>
+                        <input
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                          type="text"
+                          id="firstName"
+                          className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1
                       border-red-700  "
-                      placeholder="Sally"
-                    />
+                          placeholder="Sally"
+                        />
+                      </div>
+                      <div className="w-1/2">
+                        <label
+                          htmlFor="lastName"
+                          className="block text-md font-medium text-gray-900"
+                        >
+                          Last Name
+                        </label>
+                        <input
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
+                          type="text"
+                          id="lastName"
+                          className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1
+                      border-red-700 "
+                          placeholder="Smith"
+                        />
+                      </div>
+                    </div>
+
                     <label
-                      htmlFor="deliveryAddress"
+                      htmlFor="street"
                       className="block text-md font-medium text-gray-900"
                     >
-                      Last Name
+                      Street
                     </label>
                     <input
+                      value={street}
+                      onChange={(e) => setStreet(e.target.value)}
                       type="text"
-                      id="deliveryAddress"
-                      className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1
-                      border-red-700 "
-                      placeholder="Smith"
+                      id="street"
+                      name="street"
+                      autoComplete="address-line1"
+                      className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1 border-red-700"
+                      placeholder="123 Main St"
                     />
+
                     <label
-                      htmlFor="deliveryAddress"
+                      htmlFor="city"
                       className="block text-md font-medium text-gray-900"
                     >
-                      Delivery Address
+                      City
                     </label>
                     <input
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
                       type="text"
-                      id="deliveryAddress"
-                      className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1 
+                      id="city"
+                      name="city"
+                      autoComplete="address-level2"
+                      className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1 border-red-700"
+                      placeholder="Goodyear"
+                    />
+                    <div className="flex space-x-2">
+                      <div className="w-1/2">
+                        <label
+                          htmlFor="state"
+                          className="block text-md font-medium text-gray-900"
+                        >
+                          State
+                        </label>
+                        <select
+                          value={stateVal}
+                          onChange={(e) => setStateVal(e.target.value)}
+                          type="text"
+                          id="state"
+                          className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1 
                       border-red-700 "
-                      placeholder="Enter delivery address"
+                        >
+                          <option value="">Select a state</option>
+                          <option value="AL">Alabama</option>
+                          <option value="AK">Alaska</option>
+                          <option value="AZ">Arizona</option>
+                          <option value="AR">Arkansas</option>
+                          <option value="CA">California</option>
+                          <option value="CO">Colorado</option>
+                          <option value="CT">Connecticut</option>
+                          <option value="DE">Delaware</option>
+                          <option value="FL">Florida</option>
+                          <option value="GA">Georgia</option>
+                          <option value="HI">Hawaii</option>
+                          <option value="ID">Idaho</option>
+                          <option value="IL">Illinois</option>
+                          <option value="IN">Indiana</option>
+                          <option value="IA">Iowa</option>
+                          <option value="KS">Kansas</option>
+                          <option value="KY">Kentucky</option>
+                          <option value="LA">Louisiana</option>
+                          <option value="ME">Maine</option>
+                          <option value="MD">Maryland</option>
+                          <option value="MA">Massachusetts</option>
+                          <option value="MI">Michigan</option>
+                          <option value="MN">Minnesota</option>
+                          <option value="MS">Mississippi</option>
+                          <option value="MO">Missouri</option>
+                          <option value="MT">Montana</option>
+                          <option value="NE">Nebraska</option>
+                          <option value="NV">Nevada</option>
+                          <option value="NH">New Hampshire</option>
+                          <option value="NJ">New Jersey</option>
+                          <option value="NM">New Mexico</option>
+                          <option value="NY">New York</option>
+                          <option value="NC">North Carolina</option>
+                          <option value="ND">North Dakota</option>
+                          <option value="OH">Ohio</option>
+                          <option value="OK">Oklahoma</option>
+                          <option value="OR">Oregon</option>
+                          <option value="PA">Pennsylvania</option>
+                          <option value="RI">Rhode Island</option>
+                          <option value="SC">South Carolina</option>
+                          <option value="SD">South Dakota</option>
+                          <option value="TN">Tennessee</option>
+                          <option value="TX">Texas</option>
+                          <option value="UT">Utah</option>
+                          <option value="VT">Vermont</option>
+                          <option value="VA">Virginia</option>
+                          <option value="WA">Washington</option>
+                          <option value="WV">West Virginia</option>
+                          <option value="WI">Wisconsin</option>
+                          <option value="WY">Wyoming</option>
+                        </select>
+                      </div>
+                      <div className="w-1/2">
+                        <label
+                          htmlFor="zip"
+                          className="block text-md font-medium text-gray-900"
+                        >
+                          Zipcode
+                        </label>
+                        <input
+                          value={zip}
+                          onChange={(e) => setZip(e.target.value)}
+                          type="text"
+                          id="zip"
+                          name="zip"
+                          pattern="[0-9]{5}(-[0-9]{4})?"
+                          maxLength={10}
+                          autoComplete="postal-code"
+                          className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1 border-red-700 focus:ring-2 focus:ring-red-400 focus:border-red-400"
+                          placeholder="12345"
+                        />
+                      </div>
+                    </div>
+                    <label
+                      htmlFor="phone"
+                      className="block text-md font-medium text-gray-900"
+                    >
+                      Phone
+                    </label>
+                    <input
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                      maxLength={14}
+                      autoComplete="tel"
+                      className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1 border-red-700 focus:ring-2 focus:ring-red-400 focus:border-red-400"
+                      placeholder="555-555-5555"
                     />
                   </div>
                 </div>
               </li>
-0
               <div className="flex justify-center mt-5">
                 <button
                   onClick={() => setShowAlert(true)}
