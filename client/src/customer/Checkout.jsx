@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart, removeFromCart } from "../redux/cartSlice";
+import { createOrder } from "../redux/orderSlice";
 import AlertSuccess from "../components/AlertSuccess";
 import AlertBlack from "../components/AlertBlack";
 
@@ -82,7 +83,7 @@ const Checkout = () => {
   const [zip, setZip] = useState("");
   const [phone, setPhone] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("handleSubmit");
     // dispatch(createOrder(order))
@@ -103,8 +104,12 @@ const Checkout = () => {
       })),
       orderTotal: calculateTotal(),
     };
-    // setShowModal(true)
-    // setSubmitDisabled(true)
+    try {
+      await dispatch(createOrder(orderData)).unwrap();
+      // handle success (e.g., show alert, clear cart, redirect)
+    } catch (error) {
+      console.error("Failed to create order:", error);
+    }
   };
 
   const handleItemDelete = (cartItemId) => {
@@ -392,7 +397,7 @@ const Checkout = () => {
                       type="tel"
                       id="phone"
                       name="phone"
-                      pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                      // pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                       maxLength={14}
                       autoComplete="tel"
                       className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1 border-red-700 focus:ring-2 focus:ring-red-400 focus:border-red-400"
