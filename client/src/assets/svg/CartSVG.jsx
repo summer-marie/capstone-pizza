@@ -1,6 +1,6 @@
 import React from "react"
 
-const CartSVG = () => {
+const CartSVG = ({count}) => {
   return (
     <div>
       <svg
@@ -19,7 +19,7 @@ const CartSVG = () => {
       </svg>
       {/* Bdage */}
       <div className='absolute inline-flex items-center justify-center w-6 h-6 text-xl font-semi text-white border-white rounded-full top-2 -end-1  dark:bg-transparent dark:text-teal-400 '>
-        7
+        {count}
       </div>
       {/*  */}
     </div>

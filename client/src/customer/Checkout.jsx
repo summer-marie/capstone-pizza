@@ -66,12 +66,14 @@ const alertMsg = "Are you sure you want to delete this order?";
 const alertDescription = "Click to confirm and redirect back to menu";
 
 const Checkout = () => {
+
   const cartItems = useSelector((state) => state.cart.items);
 
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [showAlert, setShowAlert] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -209,7 +211,7 @@ const Checkout = () => {
                   </div>
                 </div>
               </li>
-              {/* ))} */}
+0
               <div className="flex justify-center mt-5">
                 <button
                   onClick={() => setShowAlert(true)}
