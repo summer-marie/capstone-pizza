@@ -138,6 +138,30 @@ const Checkout = () => {
       .toFixed(2);
   };
 
+  // Format the phone number as (123) 456-7890
+  const formatPhoneNumber = (value) => {
+    // Remove all non-digit characters
+    const cleaned = value.replace(/\D/g, "");
+    // Match the cleaned value against the phone number pattern
+    const match = cleaned.match(/^(\d{0,3})(\d{0,3})(\d{0,4})$/);
+    if (!match) return "";
+    // Format the matched groups into the desired phone number format
+    let formatted = "";
+    // If the first group is not empty, add parentheses
+    if (match[1]) {
+      formatted = `(${match[1]}`;
+    }
+    // If the second group is not empty, add a space and the second group
+    if (match[2]) {
+      formatted += match[2].length === 3 ? `) ${match[2]}` : match[2];
+    }
+    // If the third group is not empty, add a hyphen and the third group
+    if (match[3]) {
+      formatted += match[3] ? `-${match[3]}` : "";
+    }
+    return formatted;
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit} className="mt-10 ">
@@ -362,7 +386,9 @@ const Checkout = () => {
                     </label>
                     <input
                       value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      onChange={(e) =>
+                        setPhone(formatPhoneNumber(e.target.value))
+                      }
                       type="tel"
                       id="phone"
                       name="phone"
