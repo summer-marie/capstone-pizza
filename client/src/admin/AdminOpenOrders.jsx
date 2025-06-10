@@ -61,7 +61,6 @@ const AdminOpenOrders = () => {
     setShowAlert(false);
   };
 
-  // TODO: need to have another map to map over order details?
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleString("en-US", {
@@ -149,10 +148,24 @@ const AdminOpenOrders = () => {
                     <p className=""> {formatDate(order.date)}</p>
                   </td>
                   <td className="px-2 py-2">
+                    {/* Map over order details to show items in order */}
                     <ul>
-                      <li>{order.orderDetails.pizzaName} </li>
-                      <li>{order.orderDetails.pizzaPrice} </li>
-                      <li>QTY: {order.orderDetails.quantity} </li>
+                      {Array.isArray(order.orderDetails) ? (
+                        order.orderDetails.map((item, idx) => (
+                          <li key={idx}>
+                            {item.pizzaName} - ${item.pizzaPrice} - QTY:{" "}
+                            {item.quantity}
+                          </li>
+                        ))
+                      ) : order.orderDetails ? (
+                        <li>
+                          {order.orderDetails.pizzaName} - $
+                          {order.orderDetails.pizzaPrice} - QTY:{" "}
+                          {order.orderDetails.quantity}
+                        </li>
+                      ) : (
+                        <li>No items</li>
+                      )}
                     </ul>
                   </td>
                   <td className="px-2 py-2 whitespace-nowrap">

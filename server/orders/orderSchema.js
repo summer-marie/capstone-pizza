@@ -14,20 +14,22 @@ const orderSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  orderDetails: {
-    pizzaName: {
-      type: String,
-      default: "",
+  orderDetails: [
+    {
+      pizzaName: {
+        type: String,
+        default: "",
+      },
+      pizzaPrice: {
+        type: Number,
+        default: 0,
+      },
+      quantity: {
+        type: Number,
+        default: 0,
+      },
     },
-    pizzaPrice: {
-      type: Number,
-      default: 0,
-    },
-    quantity: {
-      type: Number,
-      default: 0,
-    },
-  },
+  ],
   address: {
     street: {
       type: String,
