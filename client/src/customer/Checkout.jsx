@@ -110,6 +110,12 @@ const Checkout = () => {
     } catch (error) {
       console.error("Failed to create order:", error);
     }
+
+    setTimeout(() => {
+      setShowSuccessAlert(false);
+      dispatch(clearCart());
+      navigate("/order-success");
+    }, 1500);
   };
 
   const handleItemDelete = (cartItemId) => {
