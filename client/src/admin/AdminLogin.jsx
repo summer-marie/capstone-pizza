@@ -40,22 +40,21 @@ const AdminLogin = () => {
     password: "",
   });
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  // Validate form fields
-  if (loginForm.email === "" || loginForm.password === "") {
-    console.log("Login form error");
-  } else {
-    const resultAction = await dispatch(login(loginForm));
-    // Check if login was fulfilled
-    if (login.fulfilled.match(resultAction)) {
-      navigate("/open-orders");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (loginForm.email === "" || loginForm.password === "") {
+      console.log("Login form error");
     } else {
-      // handle login error
-      console.log("Login failed", resultAction);
+      dispatch(login(loginForm))
+        .unwrap()
+        .then(() => {
+          navigate("/open-orders");
+        })
+        .catch((err) => {
+          console.log("Login failed", err);
+        });
     }
-  }
-};
+  };
 
   return (
     <>

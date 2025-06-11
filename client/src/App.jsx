@@ -64,6 +64,7 @@ function App() {
             {/* <Route path='/pizza-update' element={<Update />} /> */}
           </Route>
         </Route>
+        
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>

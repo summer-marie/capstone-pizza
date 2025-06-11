@@ -611,7 +611,7 @@ const AdminBuilderCreate = () => {
                     // disabled={submitDisabled}
                     // onClick={handleSubmit}
                     type="submit"
-                    className="flex justify-center mx-auto cursor-pointer disabled:cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center  focus:outline-nonehover:bg-gradient-to-br bg-gradient-to-r  focus:ring-4 focus:outline-none
+                    className="flex justify-center mx-auto cursor-pointer disabled:cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center  focus:outline-none hover:bg-gradient-to-br bg-gradient-to-r  focus:ring-4 
                       shadow-green-800/80 
                       hover:text-black
                       text-white 

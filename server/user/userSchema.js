@@ -27,7 +27,7 @@ const userSchema = new Schema({
     default: "",
   },
   status: String,
-  role: [String],
+  role: String,
 
   authStrategy: {
     type: String,

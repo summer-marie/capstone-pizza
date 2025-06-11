@@ -10,7 +10,7 @@ export const login = createAsyncThunk("auth/authUser", async (loginForm) => {
   console.log("authUser THUNK");
   const response = await authService.login(loginForm);
   console.log("authUser THUNK response", response.user);
-  // const tempAuthUser = response.data.user
+
   return response;
 });
 
@@ -45,12 +45,12 @@ export const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(login.fulfilled, (state, action) => {
-        console.log("authSlice action.payload", action.payload);
+        console.log("login.fulfilled payload:", action.payload);
         state.loading = false;
         state.authUser = action.payload.user;
         state.token = action.payload.token;
         localStorage.setItem("userOn", JSON.stringify(action.payload.user));
-        localStorage.setItem("token", JSON.stringify(action.payload.token));
+        localStorage.setItem("token", action.payload.token);
       })
       .addCase(login.rejected, (state, action) => {
         console.log("rejected authSlice action.payload", action.payload);

@@ -97,13 +97,23 @@ const AdminCompletedOrders = () => {
 
                   <td className="px-4 py-4">
                     <ul>
-                      {/* {order.orderDetails.length > 0 && (
-                      <li>{orderDetails.pizzaName}</li>
-                    )} */}
-                      <li>
-                        {order.orderDetails.pizzaName}, : QTY{" "}
-                        {order.orderDetails.quantity}{" "}
-                      </li>
+            
+                         {Array.isArray(order.orderDetails) ? (
+                        order.orderDetails.map((item, idx) => (
+                          <li key={idx}>
+                            {item.pizzaName} - ${item.pizzaPrice} - QTY:{" "}
+                            {item.quantity}
+                          </li>
+                        ))
+                      ) : order.orderDetails ? (
+                        <li>
+                          {order.orderDetails.pizzaName} - $
+                          {order.orderDetails.pizzaPrice} - QTY:{" "}
+                          {order.orderDetails.quantity}
+                        </li>
+                      ) : (
+                        <li>No items</li>
+                      )}
                     </ul>
                   </td>
                   <td className="px-4 py-4 text-gray-900">
