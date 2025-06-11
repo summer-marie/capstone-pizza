@@ -53,7 +53,7 @@ const AdminMenu = () => {
         <hr className="my-6 sm:mx-auto lg:my-8 border-gray-700 " />
         {/* Grid container Responsive */}
         <div className="mb-10 mx-auto w-full px-6 py-2 sm:px-6 lg:max-w-7xl lg:px-8">
-          <div className="drop-shadow-lg grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-4 mb-10">
+          <div className="drop-shadow-lg grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-4 mb-10 pb-12">
             {/* Cards */}
             {builders.length === 0 ? (
               <p>No pizzas found.</p>
@@ -63,7 +63,7 @@ const AdminMenu = () => {
                 <div
                   key={builder.id || index}
                   // onClick={() => navigate(`/admin-update-one/${id}`)}
-                  className="max-w-2xl col-1-4 rounded-lg shadow-2xl bg-zinc-300 border border-gray-200 shadow-green-600"
+                  className="max-w-2xl col-1-4 rounded-lg shadow-2xl bg-zinc-300 border border-gray-200 shadow-green-600 relative"
                 >
                   <div className="relative">
                     <img
@@ -90,7 +90,7 @@ const AdminMenu = () => {
                       key={builder.id}
                       onClick={() => handleDeleteClick(builder.id)}
                       type="button"
-                      className="absolute mt-2 top-0 left-2 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
+                      className="absolute z-10 mt-2 top-0 left-2 font-medium rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
                 shadow-red-800/80 
                 text-white 
                 from-black
@@ -105,47 +105,39 @@ const AdminMenu = () => {
                     <p className="text-gray-900">
                       <strong>Name: {builder.pizzaName}</strong>
                     </p>
-                    <ol className="flex flex-wrap gap-x-2 ">
-                      <strong className="mt-1">Pizza Base: </strong>
-                      {builder.base &&
-                        builder.base.map((base, baseIndex) => (
-                          <li
-                            className="mt-1"
-                            key={`base-${index}-${baseIndex}`}
-                          >
-                            {base.name}
-                          </li>
-                        ))}
-                      <strong className="mt-1">Meats: </strong>{" "}
-                      {builder.meatTopping &&
-                        builder.meatTopping.map(
-                          (meatTopping, meatToppingIndex) => (
-                            <li
-                              className="mt-1"
-                              key={`meat-${index}-${meatToppingIndex}`}
-                            >
-                              {meatTopping.name}
-                            </li>
-                          )
-                        )}
-                      <strong className="mt-1">Veggies: </strong>
-                      {builder.veggieTopping &&
-                        builder.veggieTopping.map(
-                          (veggieTopping, veggieToppingIndex) => (
-                            <li
-                              className="mt-1"
-                              key={`veggie-${index}-${veggieToppingIndex}`}
-                            >
-                              {veggieTopping.name}
-                            </li>
-                          )
-                        )}
-                    </ol>
-                    <h2 className="font-bold text-lg text-gray-900">
-                      {/* {home.price.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                })} */}
+
+                    <div className="space-y-1">
+                      <div>
+                        <strong>Pizza Base:</strong>
+                        <span className="ml-2">
+                          {builder.base &&
+                            builder.base.map((b) => b.name).join(", ")}
+                        </span>
+                      </div>
+                      <div>
+                        <strong>Sauce:</strong>
+                        <span className="ml-2">
+                          {builder.sauce &&
+                            (builder.sauce.name || builder.sauce)}
+                        </span>
+                      </div>
+                      <div>
+                        <strong>Meats:</strong>
+                        <span className="ml-2">
+                          {builder.meatTopping &&
+                            builder.meatTopping.map((m) => m.name).join(", ")}
+                        </span>
+                      </div>
+                      <div>
+                        <strong>Veggies:</strong>
+                        <span className="ml-2">
+                          {builder.veggieTopping &&
+                            builder.veggieTopping.map((v) => v.name).join(", ")}
+                        </span>
+                      </div>
+                    </div>
+
+                    <h2 className="font-bold text-lg text-gray-900 mt-2">
                       Price $ {builder.pizzaPrice}
                     </h2>
                   </div>
@@ -158,7 +150,7 @@ const AdminMenu = () => {
       </div>
 
       {showAlert && (
-        <div className="absolute top-[40%] left-[40%] z-30">
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-30">
           <AlertBlack
             alertMsg={alertMsg}
             alertDescription={alertDescription}

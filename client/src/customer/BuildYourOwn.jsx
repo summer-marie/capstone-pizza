@@ -103,7 +103,6 @@ const BuildYourOwn = () => {
 
     const pizzaData = {
       pizzaName: newPizza.pizzaName, // "Build Your Own"
-      // TODO: convert it to default price of 8.00
       pizzaPrice: newPizza.pizzaPrice, // default price
       base: newPizza.base,
       sauce: sauceObj,

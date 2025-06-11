@@ -7,7 +7,7 @@ const names = [
   "Cheese Me",
   "Build Your Own",
 ]
-const meatNames = ["Pepproni", "Chicken", "Sausage", "Canadian Ham", "Bacon"]
+const meatNames = ["Pepperoni", "Chicken", "Sausage", "Canadian Ham", "Bacon"]
 const vegNames = ["Olives", "Bell Peppers", "Mushrooms", "Pineapple", "Spinach"]
 const amounts = [1, 2, 3]
 
