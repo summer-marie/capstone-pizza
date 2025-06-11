@@ -67,9 +67,6 @@ const AdminLogin = () => {
               Administrator Portal
             </h1>
           </div>
-          <div className="text-sm font-light text-[#6B7280] pb-8 ">
-            Login into your admin account or create one
-          </div>
 
           <form className="flex flex-col" onSubmit={handleSubmit}>
             <div className="pb-2">
@@ -167,15 +164,6 @@ const AdminLogin = () => {
             >
               Login
             </button>
-            <div className="text-sm font-light text-[#6B7280] text-center">
-              Don't have an account yet?{" "}
-              <a
-                href="#"
-                className="font-medium hover:underline text-[#ae0404]"
-              >
-                Sign Up
-              </a>
-            </div>
           </form>
         </div>
       </div>
