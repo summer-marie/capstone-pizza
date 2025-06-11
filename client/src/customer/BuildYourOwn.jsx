@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { addToCart } from "../redux/cartSlice";
+import AlertSuccess2 from "../components/AlertSuccess2";
 
 const sauceOptions = [
   { name: "Signature Red Sauce", description: "Classic red sauce", price: 1.0 },
@@ -56,10 +57,14 @@ const base = [
   },
 ];
 
+const successMsg = "Pizza was added to cart successfully!";
+const successDescription = "Create another pizza or go to checkout.";
+
 const BuildYourOwn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [newPizza, setNewPizza] = useState({
     pizzaPrice: "8.00", // default price
     pizzaName: "Build Your Own",
@@ -73,6 +78,7 @@ const BuildYourOwn = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("handleSubmit");
+    setShowSuccessAlert(true);
 
     // Find the selected sauce object
     const sauceObj = sauceOptions.find((s) => s.name === newPizza.sauce);
@@ -109,9 +115,20 @@ const BuildYourOwn = () => {
 
     dispatch(addToCart(pizzaData));
 
+    setTimeout(() => {
+      setShowSuccessAlert(false);
+    }, 2000);
 
-    // setShowModal(true)
-    // setSubmitDisabled(true)
+    // Reset form fields
+    setNewPizza({
+      pizzaPrice: "8.00",
+      pizzaName: "Build Your Own",
+      base: [...base],
+      sauce: "Signature Red Sauce",
+      meatTopping: ["", "", ""],
+      veggieTopping: ["", "", "", ""],
+      specialRequest: "",
+    });
   };
 
   return (
@@ -589,6 +606,15 @@ const BuildYourOwn = () => {
           </form>
         </div>
       </div>
+
+      {showSuccessAlert && (
+        <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2animate-fade-in-up">
+          <AlertSuccess2
+            successMsg={successMsg}
+            successDescription={successDescription}
+          />
+        </div>
+      )}
     </>
   );
 };
