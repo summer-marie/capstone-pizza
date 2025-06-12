@@ -1,34 +1,32 @@
 // TODO: needed to update pizza from admin menu
 
-import builderModel from "./builderModel.js"
+import builderModel from "./builderModel.js";
 
 const pizzaUpdateOne = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
 
-  const {
+  const { pizzaName, pizzaPrice, sauce, meatTopping, veggieTopping, image } =
+    req.body;
+
+  const updateFields = {
     pizzaName,
     pizzaPrice,
-    base,
     sauce,
     meatTopping,
     veggieTopping,
     image,
-  } = req.body
+  };
 
   const updatedPizza = await builderModel.findOneAndUpdate(
     { _id: id },
     {
-      pizzaName,
-      pizzaPrice,
-      base,
-      sauce,
-      meatTopping,
-      veggieTopping,
-      image,
-    }
-  )
-  console.log("Pizza updated YAYYY!!", updatedPizza)
-  res.status(200).json({ success: true, pizza: updatedPizza })
-}
+      $set: updateFields,
+    },
+    { new: true }
+  );
 
-export default pizzaUpdateOne
+  console.log("Pizza updated YAYYY!!", updatedPizza);
+  res.status(200).json({ success: true, pizza: updatedPizza });
+};
+
+export default pizzaUpdateOne;

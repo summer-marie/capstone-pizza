@@ -639,6 +639,36 @@ const AdminUpdateOne = () => {
                           </select>
                         </div>
                       </div>
+
+                                  <div className="mb-5 w-[95%] mx-auto">
+                    <label
+                      htmlFor="pizzaPrice"
+                      className="block mb-2 text-sm font-medium text-gray-900"
+                    >
+                      Declare Pizza Price $
+                    </label>
+                    <input
+                      value={newPizza.pizzaPrice}
+                      // onChange={(e) =>
+                      //   setNewPizza({ ...newPizza, pizzaPrice: e.target.value })
+                      // }
+                      type="text"
+                      inputMode="decimal" // mobile keyboards
+                      pattern="[0-9]*(\.[0-9]{0,2})?" // Basic HTML5 pattern
+                      placeholder="00.00"
+                      onChange={handlePriceChange}
+                      id="pizzaPrice"
+                      className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
+                      text-black 
+                      placeholder-gray-500 
+                      border-slate-500
+                      bg-gray-200 
+                      focus:bg-gray-100 
+                      focus:border-sky-700
+              "
+                      required
+                    />
+                  </div>
                     </div>
                     <button
                       // disabled={submitDisabled}
