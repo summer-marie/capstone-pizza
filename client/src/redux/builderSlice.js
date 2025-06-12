@@ -3,17 +3,15 @@ import builderService from "./builderService";
 
 const initialState = {
   loading: false,
-  builder: [
-    {
-      pizzaName: "",
-      pizzaPrice: 0,
-      base: [],
-      sauce: {},
-      meatTopping: [],
-      veggieTopping: [],
-      image: [],
-    },
-  ],
+  builder: {
+    pizzaName: "",
+    pizzaPrice: 0,
+    base: [],
+    sauce: {},
+    meatTopping: [],
+    veggieTopping: [],
+    image: [],
+  },
   builders: [],
 };
 
@@ -109,7 +107,8 @@ export const builderSlice = createSlice({
           action.payload.builder
         );
         state.loading = false;
-        state.builder = action.payload.builder;
+        // uses payload directly to set state
+        state.builder = action.payload;
       })
       .addCase(pizzaGetOne.rejected, (state, action) => {
         console.log("builderSlice pizzaGetOne.rejected", action.payload);
@@ -154,5 +153,4 @@ export const builderSlice = createSlice({
 
 export default builderSlice.reducer;
 
-
-// 
+//

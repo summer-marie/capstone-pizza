@@ -1,17 +1,17 @@
-import builderModel from "./builderModel.js"
+import builderModel from "./builderModel.js";
 
 const builderGetOne = async (req, res) => {
-  const { id } = req.params
-  let pizza = []
+  const { id } = req.params;
 
-  pizza = await builderModel.find({ _id: id })
-  console.log("server: pizza get one", pizza)
+  // Use findById to get a single pizza object
+  const pizza = await builderModel.findById(id);
+  console.log("server: pizza get one", pizza);
 
-  if (pizza.length === 0) {
-    return res.status(404).send("Pizza not found")
+  if (!pizza) {
+    return res.status(404).send("Pizza not found");
   }
 
-  res.status(200).json({ success: true, pizza: pizza })
-}
+  res.status(200).json({ success: true, pizza });
+};
 
-export default builderGetOne
+export default builderGetOne;
