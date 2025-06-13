@@ -16,7 +16,7 @@ const AdminBuilderCreate = () => {
   const [newPizza, setNewPizza] = useState({
     pizzaName: "",
     pizzaPrice: "",
-    base: [...base],
+
     sauce: "Signature Red Sauce",
     meatTopping: ["", "", ""], // 3 meat slots
     veggieTopping: ["", "", "", ""], // 4 veggie slots
@@ -46,6 +46,10 @@ const AdminBuilderCreate = () => {
 
     // Find the selected sauce object
     const sauceObj = sauceOptions.find((s) => s.name === newPizza.sauce);
+    if (!sauceObj) {
+      alert("Please select a valid sauce.");
+      return;
+    }
 
     // Build meatTopping array of objects, filter out empty selections
     const meatToppingObjs = newPizza.meatTopping
@@ -76,7 +80,13 @@ const AdminBuilderCreate = () => {
     const formData = new FormData();
     formData.append("pizzaName", newPizza.pizzaName);
     formData.append("pizzaPrice", pizzaPriceNum);
-    formData.append("base", JSON.stringify(newPizza.base));
+    formData.append(
+      "base",
+      JSON.stringify([
+        baseOptions[0] || { name: "No crust found" },
+        baseOptions[1] || { name: "No cheese found" },
+      ])
+    );
     formData.append("sauce", JSON.stringify(sauceObj));
     formData.append("meatTopping", JSON.stringify(meatToppingObjs));
     formData.append("veggieTopping", JSON.stringify(veggieToppingObjs));
@@ -93,23 +103,23 @@ const AdminBuilderCreate = () => {
 
   // Handler for the pizzaPrice input
   const handlePriceChange = (e) => {
-    let inputValue = e.target.value;
-    // Remove non-numeric characters (except for the first decimal point)
-    inputValue = inputValue.replace(/[^0-9.]/g, "");
-    // Handle multiple decimal points
-    const parts = inputValue.split(".");
-    if (parts.length > 2) {
-      inputValue = parts[0] + "." + parts.slice(1).join("");
-    }
-    // Restrict to two decimal places
-    const regex = /^\d*(\.\d{0,2})?$/;
-
-    if (regex.test(inputValue) || inputValue === "" || inputValue === ".") {
+    let input = e.target.value.replace(/\D/g, ""); // Remove all non-digits
+    if (input.length === 0) {
       setNewPizza((prevPizza) => ({
         ...prevPizza,
-        pizzaPrice: inputValue,
+        pizzaPrice: "",
       }));
+      return;
     }
+    // Pad with zeros if needed, then insert decimal
+    while (input.length < 3) input = "0" + input;
+    const dollars = input.slice(0, -2);
+    const cents = input.slice(-2);
+    const formatted = `${parseInt(dollars, 10)}.${cents}`;
+    setNewPizza((prevPizza) => ({
+      ...prevPizza,
+      pizzaPrice: formatted,
+    }));
   };
 
   return (
