@@ -25,7 +25,7 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: name === "price" ? parseFloat(value) : value,
+      [name]: name === "price" ? value.replace(/^0+/, "") : value, // allow empty or numeric string
     }));
   };
 
@@ -34,10 +34,8 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
     e.preventDefault();
     console.log("handle submit");
     const newIngredient = {
-      name: formData.name,
-      description: formData.description,
-      itemType: formData.itemType,
-      price: formData.price,
+      ...formData,
+      price: formData.price === "" ? 0 : parseFloat(formData.price),
     };
     // dispatch(createIngredient(newIngredient));
     await dispatch(createIngredient(newIngredient)).unwrap();
@@ -395,7 +393,6 @@ const IngredientsTable = () => {
                         ) : (
                           ingredient.description
                         )}
-                     
                       </td>
                       <td // Price
                         className="px-2 py-2 text-center"
