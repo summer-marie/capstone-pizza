@@ -1,5 +1,3 @@
-// TODO: needed to update pizza from admin menu
-
 import builderModel from "./builderModel.js";
 
 const pizzaUpdateOne = async (req, res) => {

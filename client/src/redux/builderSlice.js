@@ -36,10 +36,8 @@ export const builderCreate = createAsyncThunk(
 
 // Get One
 export const pizzaGetOne = createAsyncThunk("builder/getOne", async (id) => {
-  console.log("redux pizzaGetOne builder", id);
   const response = await builderService.pizzaGetOne(id);
-  console.log("redux pizzaGetOne builder response", response);
-  return response.data;
+  return response.pizza; // just the pizza object
 });
 
 // Update
@@ -102,13 +100,16 @@ export const builderSlice = createSlice({
         state.loading = true;
       })
       .addCase(pizzaGetOne.fulfilled, (state, action) => {
-        console.log(
-          "builderSlice pizzaGetOne.fulfilled",
-          action.payload.builder
-        );
+        if (!action.payload) {
+          console.error("pizzaGetOne.fulfilled: payload is undefined!", action);
+          state.loading = false;
+          state.builder = null;
+          return;
+        }
+        const builderData = action.payload; // action.payload IS the pizza object
+        console.log("builderSlice pizzaGetOne.fulfilled", builderData);
         state.loading = false;
-        // uses payload directly to set state
-        state.builder = action.payload;
+        state.builder = builderData;
       })
       .addCase(pizzaGetOne.rejected, (state, action) => {
         console.log("builderSlice pizzaGetOne.rejected", action.payload);

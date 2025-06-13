@@ -65,7 +65,7 @@ const AdminUpdateOne = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const builder = useSelector((state) => state.builder.builder);
+  const builder = useSelector((state) => state.builder?.builder);
   const { id } = useParams();
   console.log("pizza", id);
 
@@ -79,7 +79,21 @@ const AdminUpdateOne = () => {
   // Update pizzaForm when builder data changes
   useEffect(() => {
     if (builder) {
-      setPizzaForm({ ...builder });
+      console.log("builder:", builder);
+      console.log("builder.sauce:", builder.sauce);
+      let sauceObj = builder.sauce;
+      if (typeof builder.sauce === "string") {
+        sauceObj =
+          sauceOptions.find((opt) => opt.name === builder.sauce) || null;
+      }
+      let meatTopping = builder.meatTopping?.map((m) =>
+        typeof m === "object" && m !== null ? m.name : m
+      ) || ["", "", ""];
+
+      let veggieTopping = builder.veggieTopping?.map((v) =>
+        typeof v === "object" && v !== null ? v.name : v
+      ) || ["", "", "", ""];
+      setPizzaForm({ ...builder, sauce: sauceObj, meatTopping, veggieTopping });
     }
   }, [builder]);
 
@@ -89,6 +103,10 @@ const AdminUpdateOne = () => {
     setPizzaForm({ ...pizzaForm, [name]: value });
   };
 
+  const handlePriceChange = (e) => {
+    setPizzaForm({ ...pizzaForm, pizzaPrice: e.target.value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(builderUpdateOne({ ...pizzaForm, id })).then(() => {
@@ -96,6 +114,8 @@ const AdminUpdateOne = () => {
       setTimeout(() => navigate("/admin-menu"), 2000);
     });
   };
+
+  console.log("pizzaForm:", pizzaForm);
 
   if (!pizzaForm) return <div>Loading...</div>;
 
@@ -143,28 +163,56 @@ const AdminUpdateOne = () => {
               <div className="border-4 border-green-700 mb-15">
                 <div className="border-4 border-white">
                   <div className="border-4 border-red-700 p-5">
-                    <div className="mb-5">
-                      <label
-                        htmlFor="pizza-name"
-                        className="block mb-2 text-sm font-medium text-gray-900"
-                      >
-                        Pizza Name
-                      </label>
-                      <input
-                        value={pizzaForm.pizzaName}
-                        onChange={handleChange}
-                        type="text"
-                        id="pizza-name"
-                        className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
-                      text-black 
-                        placeholder-gray-500 
-                        border-slate-500
-                        bg-gray-200 
-                        focus:bg-gray-100 focus:border-sky-700
-          "
-                        placeholder="Meat Lovers"
-                        required
-                      />
+                    <div className="flex gap-4 mb-5">
+                      {/* Pizza Name Input */}
+                      <div className="w-1/2">
+                        <label
+                          htmlFor="pizza-name"
+                          className="block mb-2 text-sm font-medium text-gray-900"
+                        >
+                          Pizza Name
+                        </label>
+                        <input
+                          value={pizzaForm.pizzaName}
+                          onChange={handleChange}
+                          type="text"
+                          id="pizza-name"
+                          className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
+                          text-black 
+                          placeholder-gray-500 
+                          border-slate-500
+                          bg-gray-200 
+                          focus:bg-gray-100 focus:border-sky-700"
+                          placeholder="Meat Lovers"
+                          required
+                        />
+                      </div>
+                      {/* Pizza Price Input */}
+                      <div className="w-1/2">
+                        <label
+                          htmlFor="pizzaPrice"
+                          className="block mb-2 text-sm font-medium text-gray-900"
+                        >
+                          Declare Pizza Price $
+                        </label>
+                        <input
+                          value={pizzaForm.pizzaPrice}
+                          type="text"
+                          inputMode="decimal"
+                          pattern="[0-9]*(\.[0-9]{0,2})?"
+                          placeholder="00.00"
+                          onChange={handlePriceChange}
+                          id="pizzaPrice"
+                          className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
+                          text-black 
+                          placeholder-gray-500 
+                          border-slate-500
+                          bg-gray-200 
+                          focus:bg-gray-100 
+                          focus:border-sky-700"
+                          required
+                        />
+                      </div>
                     </div>
                     {/* Upload new Photo */}
                     <div id="imgUploader" className="max-w-lg mx-auto mb-5">
@@ -245,13 +293,20 @@ const AdminUpdateOne = () => {
                         Update Sauce Type
                       </label>
                       <select
-                        value={pizzaForm.sauce}
-                        onChange={(e) =>
+                        value={pizzaForm.sauce?.name || ""}
+                        onChange={(e) => {
+                          const selectedSauce = sauceOptions.find(
+                            (option) => option.name === e.target.value
+                          );
+                          console.log(
+                            "Selected sauce from dropdown:",
+                            selectedSauce
+                          ); // <--- Add this
                           setPizzaForm({
                             ...pizzaForm,
-                            sauce: e.target.value,
-                          })
-                        }
+                            sauce: selectedSauce,
+                          });
+                        }}
                         id="sauce"
                         className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
                       text-black 
@@ -263,13 +318,15 @@ const AdminUpdateOne = () => {
                         focus:border-sky-500"
                         required
                       >
-                        <option value={pizzaForm.sauce} disabled>
-                          {pizzaForm.sauce
-                            ? `Current: ${pizzaForm.sauce}`
-                            : "- - None - -"}
+                        <option value={pizzaForm.sauce?.name || ""} disabled>
+                          {pizzaForm.sauce?.name
+                            ? `Current: ${pizzaForm.sauce.name}`
+                            : ""}
                         </option>
                         {sauceOptions
-                          .filter((option) => option.name !== pizzaForm.sauce)
+                          .filter(
+                            (option) => option.name !== pizzaForm.sauce?.name
+                          )
                           .map((option) => (
                             <option key={option.name} value={option.name}>
                               {option.name}
@@ -295,7 +352,7 @@ const AdminUpdateOne = () => {
                             Update Meat #1
                           </label>
                           <select
-                            value={pizzaForm.meatTopping[0]}
+                            value={pizzaForm.meatTopping[0] || ""}
                             onChange={(e) =>
                               setPizzaForm({
                                 ...pizzaForm,
@@ -316,7 +373,10 @@ const AdminUpdateOne = () => {
                             focus:ring-red-500
                             focus:border-red-500"
                           >
-                            <option value={pizzaForm.meatTopping[0]} disabled>
+                            <option
+                              value={pizzaForm.meatTopping[0] || ""}
+                              disabled
+                            >
                               {pizzaForm.meatTopping[0]
                                 ? `Current: ${pizzaForm.meatTopping[0]}`
                                 : "- - None - -"}
@@ -344,7 +404,7 @@ const AdminUpdateOne = () => {
                             Update Meat #2
                           </label>
                           <select
-                            value={pizzaForm.meatTopping[1]}
+                            value={pizzaForm.meatTopping[1] || ""}
                             onChange={(e) =>
                               setPizzaForm({
                                 ...pizzaForm,
@@ -365,7 +425,10 @@ const AdminUpdateOne = () => {
                             focus:ring-red-500
                             focus:border-red-500"
                           >
-                            <option value={pizzaForm.meatTopping[1]} disabled>
+                            <option
+                              value={pizzaForm.meatTopping[1] || ""}
+                              disabled
+                            >
                               {pizzaForm.meatTopping[1]
                                 ? `Current: ${pizzaForm.meatTopping[1]}`
                                 : "- - None - -"}
@@ -393,7 +456,7 @@ const AdminUpdateOne = () => {
                             Update Meat #3
                           </label>
                           <select
-                            value={pizzaForm.meatTopping[2]}
+                            value={pizzaForm.meatTopping[2] || ""}
                             onChange={(e) =>
                               setPizzaForm({
                                 ...pizzaForm,
@@ -414,7 +477,10 @@ const AdminUpdateOne = () => {
                                   focus:ring-red-500
                                   focus:border-red-500 "
                           >
-                            <option value={pizzaForm.meatTopping[2]} disabled>
+                            <option
+                              value={pizzaForm.meatTopping[2] || ""}
+                              disabled
+                            >
                               {pizzaForm.meatTopping[2]
                                 ? `Current: ${pizzaForm.meatTopping[2]}`
                                 : "- - None - -"}
@@ -453,7 +519,7 @@ const AdminUpdateOne = () => {
                             Update Veggies #1
                           </label>
                           <select
-                            value={pizzaForm.veggieTopping[0]}
+                            value={pizzaForm.veggieTopping[0] || ""}
                             onChange={(e) =>
                               setPizzaForm({
                                 ...pizzaForm,
@@ -475,7 +541,10 @@ const AdminUpdateOne = () => {
                             focus:ring-emerald-100
                             focus:border-emerald-200 "
                           >
-                            <option value={pizzaForm.veggieTopping[0]} disabled>
+                            <option
+                              value={pizzaForm.veggieTopping[0] || ""}
+                              disabled
+                            >
                               {pizzaForm.veggieTopping[0]
                                 ? `Current: ${pizzaForm.veggieTopping[0]}`
                                 : "- - None - -"}
@@ -501,7 +570,7 @@ const AdminUpdateOne = () => {
                             Update Veggies #2
                           </label>
                           <select
-                            value={pizzaForm.veggieTopping[1]}
+                            value={pizzaForm.veggieTopping[1] || ""}
                             onChange={(e) =>
                               setPizzaForm({
                                 ...pizzaForm,
@@ -523,7 +592,10 @@ const AdminUpdateOne = () => {
                           focus:ring-emerald-100
                           focus:border-emerald-200 "
                           >
-                            <option value={pizzaForm.veggieTopping[1]} disabled>
+                            <option
+                              value={pizzaForm.veggieTopping[1] || ""}
+                              disabled
+                            >
                               {pizzaForm.veggieTopping[1]
                                 ? `Current: ${pizzaForm.veggieTopping[1]}`
                                 : "- - None - -"}
@@ -551,7 +623,7 @@ const AdminUpdateOne = () => {
                             Update Veggies #3
                           </label>
                           <select
-                            value={pizzaForm.veggieTopping[2]}
+                            value={pizzaForm.veggieTopping[2] || ""}
                             onChange={(e) =>
                               setPizzaForm({
                                 ...pizzaForm,
@@ -573,7 +645,10 @@ const AdminUpdateOne = () => {
                           focus:ring-emerald-100
                           focus:border-emerald-200 "
                           >
-                            <option value={pizzaForm.veggieTopping[2]} disabled>
+                            <option
+                              value={pizzaForm.veggieTopping[2] || ""}
+                              disabled
+                            >
                               {pizzaForm.veggieTopping[2]
                                 ? `Current: ${pizzaForm.veggieTopping[2]}`
                                 : "- - None - -"}
@@ -599,7 +674,7 @@ const AdminUpdateOne = () => {
                             Update Veggies #4
                           </label>
                           <select
-                            value={pizzaForm.veggieTopping[3]}
+                            value={pizzaForm.veggieTopping[3] || ""}
                             onChange={(e) =>
                               setPizzaForm({
                                 ...pizzaForm,
@@ -621,7 +696,10 @@ const AdminUpdateOne = () => {
                             focus:ring-emerald-100
                             focus:border-emerald-200 "
                           >
-                            <option value={pizzaForm.veggieTopping[3]} disabled>
+                            <option
+                              value={pizzaForm.veggieTopping[3] || ""}
+                              disabled
+                            >
                               {pizzaForm.veggieTopping[3]
                                 ? `Current: ${pizzaForm.veggieTopping[3]}`
                                 : "- - None - -"}
@@ -639,36 +717,6 @@ const AdminUpdateOne = () => {
                           </select>
                         </div>
                       </div>
-
-                                  <div className="mb-5 w-[95%] mx-auto">
-                    <label
-                      htmlFor="pizzaPrice"
-                      className="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                      Declare Pizza Price $
-                    </label>
-                    <input
-                      value={newPizza.pizzaPrice}
-                      // onChange={(e) =>
-                      //   setNewPizza({ ...newPizza, pizzaPrice: e.target.value })
-                      // }
-                      type="text"
-                      inputMode="decimal" // mobile keyboards
-                      pattern="[0-9]*(\.[0-9]{0,2})?" // Basic HTML5 pattern
-                      placeholder="00.00"
-                      onChange={handlePriceChange}
-                      id="pizzaPrice"
-                      className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
-                      text-black 
-                      placeholder-gray-500 
-                      border-slate-500
-                      bg-gray-200 
-                      focus:bg-gray-100 
-                      focus:border-sky-700
-              "
-                      required
-                    />
-                  </div>
                     </div>
                     <button
                       // disabled={submitDisabled}
