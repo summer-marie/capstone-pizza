@@ -74,9 +74,6 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
                   id="name"
                   name="name"
                   value={formData.name}
-                  // onChange={(e) =>
-                  //   setFormData({ ...formData, name: e.target.value })
-                  // }
                   onChange={handleChange}
                   className="pl-5 mb-2 focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden  block w-full p-2.5 rounded-l-lg py-3 px-4
                   bg-gray-50 
@@ -99,9 +96,6 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
-                  // onChange={(e) =>
-                  //   setFormData({ ...formData, description: e.target.value })
-                  // }
                   className="pl-5 mb-2 focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden  block w-full p-2.5 rounded-l-lg py-3 px-4
                   bg-gray-50 
                   text-gray-600 border 
@@ -121,10 +115,6 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
                   name="itemType"
                   value={formData.itemType}
                   onChange={handleChange}
-                  // onChange={(e) =>
-                  //   setFormData({ ...formData, itemType: e.target.value })
-                  // }
-
                   className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2 capitalize
                           text-white 
                           placeholder-gray-400 
@@ -405,15 +395,7 @@ const IngredientsTable = () => {
                         ) : (
                           ingredient.description
                         )}
-                        {/* Spinner  */}
-                        {/* <div
-                      className="flex justify-end items-center h-full"
-                      style={{ minHeight: 0, minWidth: 0 }}
-                    >
-                      {savingId === ingredient.id && (
-                        <SpinnerBubbles loading={loading} size={10} />
-                      )}
-                    </div> */}
+                     
                       </td>
                       <td // Price
                         className="px-2 py-2 text-center"
