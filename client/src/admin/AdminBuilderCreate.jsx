@@ -1,70 +1,18 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import AlertSuccess2 from "../components/AlertSuccess2";
 import { builderCreate } from "../redux/builderSlice";
+import { ingredientGetAll } from "../redux/ingredientSlice";
 
 const successMsg = "Pizza was created successfully!!";
 const successDescription = "navigating you to the admin menu....";
 
-const sauceOptions = [
-  { name: "Signature Red Sauce", description: "Classic red sauce", price: 1.0 },
-  {
-    name: "Signature White Sauce",
-    description: "Creamy white sauce",
-    price: 1.0,
-  },
-];
-
-const meatOptions = [
-  { name: "Pepperoni", description: "Pepperoni", price: 1.0, itemType: "meat" },
-  { name: "Sausage", description: "Sausage", price: 1.0, itemType: "meat" },
-  { name: "Chicken", description: "Chicken", price: 1.0, itemType: "meat" },
-  { name: "Bacon", description: "Bacon", price: 1.0, itemType: "meat" },
-];
-
-const veggieOptions = [
-  {
-    name: "Mushrooms",
-    description: "Mushrooms",
-    price: 0.75,
-    itemType: "veggie",
-  },
-  {
-    name: "Peppers",
-    description: "Bell Peppers",
-    price: 0.75,
-    itemType: "veggie",
-  },
-  { name: "Onions", description: "Onions", price: 0.75, itemType: "veggie" },
-  {
-    name: "Pineapple",
-    description: "Pineapple",
-    price: 0.75,
-    itemType: "veggie",
-  },
-];
-
-const base = [
-  {
-    name: "Italian Blend Cheese",
-    description: "Italian Blend Cheese",
-    itemType: "base",
-    price: "2.00",
-  },
-  {
-    name: "Brick Oven Crust",
-    description: "Brick Oven Crust",
-    itemType: "base",
-    price: "2.00",
-  },
-];
-
 const AdminBuilderCreate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const ingredients = useSelector((state) => state.ingredient.ingredients);
   const [newPizza, setNewPizza] = useState({
     pizzaName: "",
     pizzaPrice: "",
@@ -75,7 +23,18 @@ const AdminBuilderCreate = () => {
   });
   const [selectedFile, setSelectedFile] = useState(null);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [submitDisabled, setSubmitDisabled] = useState(false);
+  // const [submitDisabled, setSubmitDisabled] = useState(false);
+
+  useEffect(() => {
+    dispatch(ingredientGetAll());
+  }, [dispatch]);
+
+  const meatOptions = ingredients.filter((i) => i.itemType === "Meat Topping");
+  const veggieOptions = ingredients.filter(
+    (i) => i.itemType === "Veggie Topping"
+  );
+  const sauceOptions = ingredients.filter((i) => i.itemType === "Sauce");
+  const baseOptions = ingredients.filter((i) => i.itemType === "Base");
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -230,8 +189,8 @@ const AdminBuilderCreate = () => {
                       >
                         Crust and Cheese
                       </label>
+
                       <div
-                        value={base[0].name}
                         type="text"
                         id="crust"
                         className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light cursor-not-allowed
@@ -243,10 +202,12 @@ const AdminBuilderCreate = () => {
                       focus:border-sky-700
               "
                       >
-                        Brick Oven Crust
+                        {baseOptions[0]
+                          ? baseOptions[0].name
+                          : "No crust found"}
                       </div>
+
                       <div
-                        value={base[1].name}
                         type="text"
                         id="cheese"
                         className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light cursor-not-allowed
@@ -258,7 +219,9 @@ const AdminBuilderCreate = () => {
                         focus:border-sky-700
               "
                       >
-                        Italian Blend Cheese
+                        {baseOptions[1]
+                          ? baseOptions[1].name
+                          : "No cheese found"}
                       </div>
                     </div>
 
@@ -285,12 +248,12 @@ const AdminBuilderCreate = () => {
                         focus:border-sky-500"
                         required
                       >
-                        <option value="Signature Red Sauce">
-                          Signature Red Sauce
-                        </option>
-                        <option value="Signature White Sauce">
-                          White Sauce
-                        </option>
+                        <option value="">- - Select Sauce - -</option>
+                        {sauceOptions.map((sauce) => (
+                          <option key={sauce.id} value={sauce.name}>
+                            {sauce.name}
+                          </option>
+                        ))}
                       </select>
                     </div>
                     <h1 className="block text-lg font-medium text-gray-900 text-center"></h1>
@@ -337,11 +300,12 @@ const AdminBuilderCreate = () => {
                           focus:ring-red-500
                           focus:border-red-500"
                           >
-                            <option defaultValue>- - None - - </option>
-                            <option value="Pepperoni">Pepperoni</option>
-                            <option value="Sausage">Sausage</option>
-                            <option value="Chicken">Chicken</option>
-                            <option value="Bacon">Bacon</option>
+                            <option value="">- - None - -</option>
+                            {meatOptions.map((meat) => (
+                              <option key={meat.id} value={meat.name}>
+                                {meat.name}
+                              </option>
+                            ))}
                           </select>
                         </div>
                       </div>
@@ -376,11 +340,12 @@ const AdminBuilderCreate = () => {
                           focus:ring-red-500
                           focus:border-red-500"
                           >
-                            <option defaultValue>- - None - - </option>
-                            <option value="Pepperoni">Pepperoni</option>
-                            <option value="Sausage">Sausage</option>
-                            <option value="Chicken">Chicken</option>
-                            <option value="Bacon">Bacon</option>
+                            <option value="">- - None - -</option>
+                            {meatOptions.map((meat) => (
+                              <option key={meat.id} value={meat.name}>
+                                {meat.name}
+                              </option>
+                            ))}
                           </select>
                         </div>
                       </div>
@@ -415,11 +380,12 @@ const AdminBuilderCreate = () => {
                           focus:ring-red-500
                           focus:border-red-500 "
                           >
-                            <option defaultValue>- - None - - </option>
-                            <option value="Pepperoni">Pepperoni</option>
-                            <option value="Sausage">Sausage</option>
-                            <option value="Chicken">Chicken</option>
-                            <option value="Bacon">Bacon</option>
+                            <option value="">- - None - -</option>
+                            {meatOptions.map((meat) => (
+                              <option key={meat.id} value={meat.name}>
+                                {meat.name}
+                              </option>
+                            ))}
                           </select>
                         </div>
                       </div>
@@ -466,11 +432,12 @@ const AdminBuilderCreate = () => {
                           focus:ring-emerald-100
                           focus:border-emerald-200 "
                           >
-                            <option defaultValue>- - None - - </option>
-                            <option value="Mushrooms">Mushrooms</option>
-                            <option value="Peppers">Bell Peppers</option>
-                            <option value="Onions">Onions</option>
-                            <option value="Pineapple">Pineapple</option>
+                            <option value="">- - None - -</option>
+                            {veggieOptions.map((veggie) => (
+                              <option key={veggie.id} value={veggie.name}>
+                                {veggie.name}
+                              </option>
+                            ))}
                           </select>
                         </div>
 
@@ -504,11 +471,12 @@ const AdminBuilderCreate = () => {
                           focus:ring-emerald-100
                           focus:border-emerald-200 "
                           >
-                            <option defaultValue>- - None - - </option>
-                            <option value="Mushrooms">Mushrooms</option>
-                            <option value="Peppers">Bell Peppers</option>
-                            <option value="Onions">Onions</option>
-                            <option value="Pineapple">Pineapple</option>
+                            <option value="">- - None - -</option>
+                            {veggieOptions.map((veggie) => (
+                              <option key={veggie.id} value={veggie.name}>
+                                {veggie.name}
+                              </option>
+                            ))}
                           </select>
                         </div>
                       </div>
@@ -544,11 +512,12 @@ const AdminBuilderCreate = () => {
                           focus:ring-emerald-100
                           focus:border-emerald-200 "
                           >
-                            <option defaultValue>- - None - - </option>
-                            <option value="Mushrooms">Mushrooms</option>
-                            <option value="Peppers">Bell Peppers</option>
-                            <option value="Onions">Onions</option>
-                            <option value="Pineapple">Pineapple</option>
+                            <option value="">- - None - -</option>
+                            {veggieOptions.map((veggie) => (
+                              <option key={veggie.id} value={veggie.name}>
+                                {veggie.name}
+                              </option>
+                            ))}
                           </select>
                         </div>
 
@@ -582,11 +551,12 @@ const AdminBuilderCreate = () => {
                             focus:ring-emerald-100
                             focus:border-emerald-200 "
                           >
-                            <option defaultValue>- - None - - </option>
-                            <option value="Mushrooms">Mushrooms</option>
-                            <option value="Peppers">Bell Peppers</option>
-                            <option value="Onions">Onions</option>
-                            <option value="Pineapple">Pineapple</option>
+                            <option value="">- - None - -</option>
+                            {veggieOptions.map((veggie) => (
+                              <option key={veggie.id} value={veggie.name}>
+                                {veggie.name}
+                              </option>
+                            ))}
                           </select>
                         </div>
                       </div>
@@ -600,14 +570,11 @@ const AdminBuilderCreate = () => {
                       </label>
                       <input
                         value={newPizza.pizzaPrice}
-                        // onChange={(e) =>
-                        //   setNewPizza({ ...newPizza, pizzaPrice: e.target.value })
-                        // }
+                        onChange={handlePriceChange}
                         type="text"
                         inputMode="decimal" // mobile keyboards
                         pattern="[0-9]*(\.[0-9]{0,2})?" // Basic HTML5 pattern
                         placeholder="00.00"
-                        onChange={handlePriceChange}
                         id="pizzaPrice"
                         className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
                       text-black 

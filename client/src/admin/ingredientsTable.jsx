@@ -471,14 +471,3 @@ const IngredientsTable = () => {
 };
 
 export default IngredientsTable;
-
-{
-  /* <button
-type='button'
-className='font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
-text-cyan-600'
-onClick={() => saveChanges(index)}
->
-Save
-</button> */
-}
