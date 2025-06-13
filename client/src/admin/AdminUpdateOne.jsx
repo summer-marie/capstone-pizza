@@ -19,9 +19,9 @@ const AdminUpdateOne = () => {
 
   // Options for sauce, meat, and veggie toppings - dropdowns
   const sauceOptions = ingredients.filter((i) => i.itemType === "Sauce");
-  const meatOptions = ingredients.filter((i) => i.itemType === "meat");
-  const veggieOptions = ingredients.filter((i) => i.itemType === "veggie");
-  const base = ingredients.filter((i) => i.itemType === "base");
+  const meatOptions = ingredients.filter((i) => i.itemType === "Meat Topping");
+  const veggieOptions = ingredients.filter((i) => i.itemType === "Veggie Topping");
+  // const baseOptions = ingredients.filter((i) => i.itemType === "Base");
 
   // Initialize pizzaForm with builder data
   useEffect(() => {
@@ -234,7 +234,6 @@ const AdminUpdateOne = () => {
                         Crust and Cheese
                       </label>
                       <div
-                        value={base[0].name}
                         type="text"
                         id="crust"
                         className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light cursor-not-allowed
@@ -247,12 +246,16 @@ const AdminUpdateOne = () => {
                         required
                       >
                         {/* checks crust info */}
-                        {pizzaForm && pizzaForm.base && pizzaForm.base[0]
+                        {pizzaForm &&
+                        pizzaForm.base &&
+                        Array.isArray(pizzaForm.base) &&
+                        pizzaForm.base[0] &&
+                        pizzaForm.base[0].name
                           ? pizzaForm.base[0].name
-                          : "No crust info"}{" "}
+                          : "No crust info"}
                       </div>
                       <div
-                        value={base[1].name}
+              
                         type="text"
                         id="cheese"
                         className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light cursor-not-allowed
@@ -265,7 +268,11 @@ const AdminUpdateOne = () => {
                         required
                       >
                         {/* checks cheese info */}
-                        {pizzaForm && pizzaForm.base && pizzaForm.base[1]
+                        {pizzaForm &&
+                        pizzaForm.base &&
+                        Array.isArray(pizzaForm.base) &&
+                        pizzaForm.base[1] &&
+                        pizzaForm.base[1].name
                           ? pizzaForm.base[1].name
                           : "No cheese info"}
                       </div>
