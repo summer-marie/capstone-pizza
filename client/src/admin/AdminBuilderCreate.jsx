@@ -217,7 +217,7 @@ const AdminBuilderCreate = () => {
                   <hr className="mb-5" />
                   <div className="mb-5">
                     <label
-                      htmlFor="pizza-name"
+                      htmlFor="pizza-base"
                       className="block mb-2 text-sm font-medium text-gray-900 "
                     >
                       Crust and Cheese
@@ -256,7 +256,7 @@ const AdminBuilderCreate = () => {
 
                   <div className="mb-5">
                     <label
-                      htmlFor="veggie-topping"
+                      htmlFor="sauce"
                       className="block mb-2 text-sm font-medium text-gray-900"
                     >
                       Select Sauce Type
