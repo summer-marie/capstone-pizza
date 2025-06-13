@@ -64,7 +64,7 @@ const base = [
 const AdminUpdateOne = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [showSuccessAlert, setShowSuccessAlert] = useState(true);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const builder = useSelector((state) => state.builder?.builder);
   const [pizzaForm, setPizzaForm] = useState(null);
   const { id } = useParams();
@@ -757,10 +757,7 @@ const AdminUpdateOne = () => {
         </div>
       </div>
       {showSuccessAlert && (
-        <div
-          className="fixed inset-0 flex items-center justify-center z-50   
-      animate-fade-in-up"
-        >
+        <div className="fixed inset-0 flex items-center justify-center z-50 animate-fade-in-up">
           <AlertSuccess2
             successMsg={successMsg}
             successDescription={successDescription}
