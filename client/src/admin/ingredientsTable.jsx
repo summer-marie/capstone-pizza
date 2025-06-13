@@ -11,13 +11,13 @@ import SpinnerBubbles from "../components/SpinnerBubbles";
 
 // Add new ingredient modal
 const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
-  const [formData, setFormData] = useState({
+  const initialFormState = {
     name: "",
     description: "",
     itemType: "",
     price: 0,
-  });
-
+  };
+  const [formData, setFormData] = useState(initialFormState);
   const dispatch = useDispatch();
 
   // Handle inline input changes
@@ -43,7 +43,7 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
     await dispatch(createIngredient(newIngredient)).unwrap();
     await dispatch(ingredientGetAll()).unwrap();
 
-    /// Show success alert
+    setFormData(initialFormState);
     setShowModal(false);
   };
 
@@ -355,9 +355,7 @@ const IngredientsTable = () => {
                             }
                           >
                             <option defaultValue={ingredient.itemType}>
-                              {/* <strong className="text-black text-lg"> */}
                               {ingredient.itemType}
-                              {/* </strong> */}
                             </option>
                             {/* Only show types that are different from default */}
                             {ingredient.itemType &&

@@ -16,10 +16,8 @@ const initialState = {
 export const createIngredient = createAsyncThunk(
   "ingredient/create",
   async (ingredient) => {
-    console.log("redux createIngredient ingredient", ingredient);
     const response = await ingredientService.createIngredient(ingredient);
-    console.log(response);
-    return response.data.id;
+    return response.data.ingredient; // Return the full ingredient object
   }
 );
 

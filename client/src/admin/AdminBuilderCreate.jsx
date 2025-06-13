@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import AlertSuccess from "../components/AlertSuccess";
+import AlertSuccess2 from "../components/AlertSuccess2";
 import { builderCreate } from "../redux/builderSlice";
 
 const successMsg = "Pizza was created successfully!!";
@@ -645,10 +645,10 @@ const AdminBuilderCreate = () => {
       {showSuccessAlert && (
         <div
           className="fixed bottom-52 left-1/2  
-        -translate-x-1/2 
-        bg-green-500 
+        -translate-x-1/2 ml-30
+        bg-green-400
         text-white  
-        p-4          
+        p-2         
         rounded-lg  
         shadow-lg   
         z-50        
@@ -657,7 +657,7 @@ const AdminBuilderCreate = () => {
         animate-fade-in-up    
         "
         >
-          <AlertSuccess
+          <AlertSuccess2
             successMsg={successMsg}
             successDescription={successDescription}
           />
