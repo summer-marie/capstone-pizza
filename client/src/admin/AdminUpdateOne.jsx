@@ -7,68 +7,21 @@ import { pizzaGetOne, builderUpdateOne } from "../redux/builderSlice";
 const successMsg = "Pizza was updated successfully";
 const successDescription = "navigating you back to the admin menu....";
 
-// Options for sauce, meat, and veggie toppings - dropdowns
-const sauceOptions = [
-  { name: "Signature Red Sauce", description: "Classic red sauce", price: 1.0 },
-  {
-    name: "Signature White Sauce",
-    description: "Creamy white sauce",
-    price: 1.0,
-  },
-];
-
-const meatOptions = [
-  { name: "Pepperoni", description: "Pepperoni", price: 1.0, itemType: "meat" },
-  { name: "Sausage", description: "Sausage", price: 1.0, itemType: "meat" },
-  { name: "Chicken", description: "Chicken", price: 1.0, itemType: "meat" },
-  { name: "Bacon", description: "Bacon", price: 1.0, itemType: "meat" },
-];
-
-const veggieOptions = [
-  {
-    name: "Mushrooms",
-    description: "Mushrooms",
-    price: 0.75,
-    itemType: "veggie",
-  },
-  {
-    name: "Peppers",
-    description: "Bell Peppers",
-    price: 0.75,
-    itemType: "veggie",
-  },
-  { name: "Onions", description: "Onions", price: 0.75, itemType: "veggie" },
-  {
-    name: "Pineapple",
-    description: "Pineapple",
-    price: 0.75,
-    itemType: "veggie",
-  },
-];
-
-const base = [
-  {
-    name: "Italian Blend Cheese",
-    description: "Italian Blend Cheese",
-    itemType: "base",
-    price: "2.00",
-  },
-  {
-    name: "Brick Oven Crust",
-    description: "Brick Oven Crust",
-    itemType: "base",
-    price: "2.00",
-  },
-];
-
 const AdminUpdateOne = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const builder = useSelector((state) => state.builder?.builder);
+  const ingredients = useSelector((state) => state.ingredient.ingredients);
   const [pizzaForm, setPizzaForm] = useState(null);
   const { id } = useParams();
   console.log("USE PARAMS", id);
+
+  // Options for sauce, meat, and veggie toppings - dropdowns
+  const sauceOptions = ingredients.filter((i) => i.itemType === "Sauce");
+  const meatOptions = ingredients.filter((i) => i.itemType === "meat");
+  const veggieOptions = ingredients.filter((i) => i.itemType === "veggie");
+  const base = ingredients.filter((i) => i.itemType === "base");
 
   // Initialize pizzaForm with builder data
   useEffect(() => {
@@ -121,12 +74,15 @@ const AdminUpdateOne = () => {
 
     // Find the full sauce, meat, and veggie objects based on selected names
     const sauceObj = sauceOptions.find((opt) => opt.name === pizzaForm.sauce);
-    const meatTopping = pizzaForm.meatTopping.map(
-      (name) => meatOptions.find((opt) => opt.name === name) || {}
-    );
-    const veggieTopping = pizzaForm.veggieTopping.map(
-      (name) => veggieOptions.find((opt) => opt.name === name) || {}
-    );
+
+    // Use .filter(Boolean) to remove empty/undefined toppings
+    const meatTopping = pizzaForm.meatTopping
+      .map((name) => meatOptions.find((opt) => opt.name === name))
+      .filter(Boolean);
+
+    const veggieTopping = pizzaForm.veggieTopping
+      .map((name) => veggieOptions.find((opt) => opt.name === name))
+      .filter(Boolean);
 
     // Construct payload with full objects
     const payload = {
