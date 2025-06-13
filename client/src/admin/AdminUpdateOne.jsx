@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import AlertSuccess from "../components/AlertSuccess";
+import AlertSuccess2 from "../components/AlertSuccess2";
 import { pizzaGetOne, builderUpdateOne } from "../redux/builderSlice";
 
 const successMsg = "Pizza was updated successfully";
@@ -64,7 +64,7 @@ const base = [
 const AdminUpdateOne = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(true);
   const builder = useSelector((state) => state.builder?.builder);
   const [pizzaForm, setPizzaForm] = useState(null);
   const { id } = useParams();
@@ -84,15 +84,15 @@ const AdminUpdateOne = () => {
   // Update pizzaForm when builder data changes
   useEffect(() => {
     if (builder) {
-      let sauceObj =
-        typeof builder.sauce === "string"
-          ? sauceOptions.find((opt) => opt.name === builder.sauce) || null
-          : builder.sauce;
+      let sauce =
+        typeof builder.sauce === "object" && builder.sauce !== null
+          ? builder.sauce.name
+          : builder.sauce || "";
 
       let meatTopping = normalizeArray(builder.meatTopping, 3);
       let veggieTopping = normalizeArray(builder.veggieTopping, 4);
 
-      setPizzaForm({ ...builder, sauce: sauceObj, meatTopping, veggieTopping });
+      setPizzaForm({ ...builder, sauce, meatTopping, veggieTopping });
     }
   }, [builder]);
 
@@ -115,29 +115,30 @@ const AdminUpdateOne = () => {
     const formatted = `${parseInt(dollars, 10)}.${cents}`;
     setPizzaForm({ ...pizzaForm, pizzaPrice: formatted });
   };
-  //   const handlePriceChange = (e) => {
-  //   let inputValue = e.target.value;
-  //   // Remove non-numeric characters (except for the first decimal point)
-  //   inputValue = inputValue.replace(/[^0-9.]/g, "");
-  //   // Handle multiple decimal points
-  //   const parts = inputValue.split(".");
-  //   if (parts.length > 2) {
-  //     inputValue = parts[0] + "." + parts.slice(1).join("");
-  //   }
-  //   // Restrict to two decimal places
-  //   const regex = /^\d*(\.\d{0,2})?$/;
-
-  //   if (regex.test(inputValue) || inputValue === "" || inputValue === ".") {
-  //     setNewPizza((prevPizza) => ({
-  //       ...prevPizza,
-  //       pizzaPrice: inputValue,
-  //     }));
-  //   }
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(builderUpdateOne({ ...pizzaForm, id })).then(() => {
+
+    // Find the full sauce, meat, and veggie objects based on selected names
+    const sauceObj = sauceOptions.find((opt) => opt.name === pizzaForm.sauce);
+    const meatTopping = pizzaForm.meatTopping.map(
+      (name) => meatOptions.find((opt) => opt.name === name) || {}
+    );
+    const veggieTopping = pizzaForm.veggieTopping.map(
+      (name) => veggieOptions.find((opt) => opt.name === name) || {}
+    );
+
+    // Construct payload with full objects
+    const payload = {
+      ...pizzaForm,
+      id,
+      sauce: sauceObj || {},
+      meatTopping,
+      veggieTopping,
+    };
+
+    console.log("Submitting payload:", payload);
+    dispatch(builderUpdateOne(payload)).then(() => {
       setShowSuccessAlert(true);
       setTimeout(() => navigate("/admin-menu"), 2000);
     });
@@ -322,20 +323,10 @@ const AdminUpdateOne = () => {
                         Update Sauce Type
                       </label>
                       <select
-                        value={pizzaForm.sauce?.name || ""}
-                        onChange={(e) => {
-                          const selectedSauce = sauceOptions.find(
-                            (option) => option.name === e.target.value
-                          );
-                          console.log(
-                            "Selected sauce from dropdown:",
-                            selectedSauce
-                          ); // <--- Add this
-                          setPizzaForm({
-                            ...pizzaForm,
-                            sauce: selectedSauce,
-                          });
-                        }}
+                        value={pizzaForm.sauce || ""}
+                        onChange={(e) =>
+                          setPizzaForm({ ...pizzaForm, sauce: e.target.value })
+                        }
                         id="sauce"
                         className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
                       text-black 
@@ -347,15 +338,11 @@ const AdminUpdateOne = () => {
                         focus:border-sky-500"
                         required
                       >
-                        <option value={pizzaForm.sauce?.name || ""} disabled>
-                          {pizzaForm.sauce?.name
-                            ? `Current: ${pizzaForm.sauce.name}`
-                            : ""}
+                        <option value={pizzaForm.sauce || ""} disabled>
+                          {pizzaForm.sauce ? `Current: ${pizzaForm.sauce}` : ""}
                         </option>
                         {sauceOptions
-                          .filter(
-                            (option) => option.name !== pizzaForm.sauce?.name
-                          )
+                          .filter((option) => option.name !== pizzaForm.sauce)
                           .map((option) => (
                             <option key={option.name} value={option.name}>
                               {option.name}
@@ -771,19 +758,10 @@ const AdminUpdateOne = () => {
       </div>
       {showSuccessAlert && (
         <div
-          className="fixed bottom-52 left-1/2
-      -translate-x-1/2 
-      bg-green-500 
-      text-white  
-      p-4          
-      rounded-lg  
-      shadow-lg   
-      z-50        
-      text-center 
-      text-lg     
+          className="fixed inset-0 flex items-center justify-center z-50   
       animate-fade-in-up"
         >
-          <AlertSuccess
+          <AlertSuccess2
             successMsg={successMsg}
             successDescription={successDescription}
           />
