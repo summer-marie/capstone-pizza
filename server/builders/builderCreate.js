@@ -1,4 +1,4 @@
-import builderModel from "./builderModel.js"
+import builderModel from "./builderModel.js";
 
 // TODO: Add price to validation???
 
@@ -10,12 +10,11 @@ const builderCreate = async (req, res) => {
     sauce,
     meatTopping,
     veggieTopping,
-    image,
-  } = req.body
+  } = req.body;
 
   // Validation
   if (!pizzaName || pizzaName == "") {
-    res.status(500).json({ message: "ERR 500 MESG: Validation issue" })
+    res.status(500).json({ message: "ERR 500 MESG: Validation issue" });
   } else {
     const newPizza = await builderModel.create({
       pizzaName,
@@ -24,15 +23,23 @@ const builderCreate = async (req, res) => {
       sauce,
       meatTopping,
       veggieTopping,
-      image,
-    })
-    console.log("newPizza", newPizza)
+      image: req.file
+        ? {
+            filename: req.file.filename,
+            originalname: req.file.originalname,
+            mimetype: req.file.mimetype,
+            path: req.file.path,
+            size: req.file.size,
+          }
+        : null,
+    });
+    console.log("newPizza", newPizza);
 
     res.status(200).json({
       success: true,
       message: "Congrats, it worked!!",
-    })
+    });
   }
-}
+};
 
-export default builderCreate
+export default builderCreate;

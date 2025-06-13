@@ -12,6 +12,7 @@ import userRouter from "./user/userIndex.js";
 import orderIndex from "./orders/orderIndex.js";
 import ingredientsIndex from "./ingredients/ingredientsIndex.js";
 import builderIndex from "./builders/builderIndex.js";
+import multer from "multer";
 
 console.log(process.env.MONGODB_URL);
 
@@ -22,6 +23,8 @@ const sessionSecret = process.env.SESSION_SECRET || "bubbles";
 
 const app = express();
 app.use(express.json());
+
+const upload = multer({ dest: "uploads/" });
 
 app.use(cookieParser(cookieSecret));
 // app.use(express.urlencoded({ extended: true }));
@@ -68,6 +71,11 @@ app.use("/orders", orderIndex);
 app.use("/ingredients", ingredientsIndex);
 app.use("/builders", builderIndex);
 
+app.post("/upload", upload.single("image"), (req, res) => {
+  console.log(req.file); // This will log the uploaded file info
+  res.json({ message: "Upload received successfully!", file: req.file });
+});
+
 // 404
 app.all("/", (req, res) => {
   res.status(404).json({
@@ -89,3 +97,16 @@ try {
 } catch (err) {
   console.log(err);
 }
+
+
+
+// import multer from "multer";
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "uploads/");
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, Date.now() + "-" + file.originalname);
+//   },
+// });
+// const upload = multer({ storage });

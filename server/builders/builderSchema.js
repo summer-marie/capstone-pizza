@@ -1,6 +1,6 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const builderSchema = new Schema({
   pizzaName: {
@@ -46,7 +46,13 @@ const builderSchema = new Schema({
   ],
 
   //  image: { data: Buffer, contentType: String }, // for binary images
-  image: [],
-})
+  image: {
+    filename: String,
+    originalname: String,
+    mimetype: String,
+    path: String,
+    size: Number,
+  },
+});
 
-export default builderSchema
+export default builderSchema;
