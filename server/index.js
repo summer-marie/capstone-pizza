@@ -57,12 +57,14 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-// Sessions, default
-app.use(session({}));
 
 // Add Passport
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(session({
+  secret: sessionSecret,
+  resave: false,
+  saveUninitialized: false,
+}));
 
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
