@@ -72,11 +72,14 @@ const AdminBuilderCreate = () => {
     sauce: "Signature Red Sauce",
     meatTopping: ["", "", ""], // 3 meat slots
     veggieTopping: ["", "", "", ""], // 4 veggie slots
-    image: [],
   });
-
+  const [selectedFile, setSelectedFile] = useState(null);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [submitDisabled, setSubmitDisabled] = useState(false);
+
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -110,16 +113,19 @@ const AdminBuilderCreate = () => {
       return;
     }
 
-    const pizzaData = {
-      pizzaName: newPizza.pizzaName,
-      pizzaPrice: pizzaPriceNum,
-      base: newPizza.base, // already correct
-      sauce: sauceObj,
-      meatTopping: meatToppingObjs,
-      veggieTopping: veggieToppingObjs,
-    };
+    // Use FormData for file upload
+    const formData = new FormData();
+    formData.append("pizzaName", newPizza.pizzaName);
+    formData.append("pizzaPrice", pizzaPriceNum);
+    formData.append("base", JSON.stringify(newPizza.base));
+    formData.append("sauce", JSON.stringify(sauceObj));
+    formData.append("meatTopping", JSON.stringify(meatToppingObjs));
+    formData.append("veggieTopping", JSON.stringify(veggieToppingObjs));
+    if (selectedFile) {
+      formData.append("image", selectedFile);
+    }
 
-    dispatch(builderCreate(pizzaData));
+    dispatch(builderCreate(formData));
 
     setTimeout(() => {
       navigate("/admin-menu");
@@ -149,35 +155,35 @@ const AdminBuilderCreate = () => {
 
   return (
     <>
-        <div className="ml-64 px-4">
-      <h2 className="berkshireSwashFont mt-5 text-center text-2xl font-bold text-slate-800">
-        Pizza Builder for Menu
-      </h2>
-      <hr className="my-6 sm:mx-auto lg:my-8 border-gray-700 " />
-      <div className="h-screen">
-        <div className="flex flex-wrap flex-row-reverse justify-center">
-          <form onSubmit={handleSubmit} className="w-5/8 mb-10 min-h-screen">
-            <div className="border-4 border-green-700 mb-20">
-              <div className="border-4 border-white">
-                <div className="border-4 border-red-700 p-5">
-                  <div className="mb-5">
-                    <label
-                      htmlFor="pizza-name"
-                      className="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                      Create Pizza Name
-                    </label>
-                    <input
-                      value={newPizza.pizzaName}
-                      onChange={(e) =>
-                        setNewPizza({
-                          ...newPizza,
-                          pizzaName: e.target.value,
-                        })
-                      }
-                      type="text"
-                      id="pizza-name"
-                      className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
+      <div className="ml-64 px-4">
+        <h2 className="berkshireSwashFont mt-5 text-center text-2xl font-bold text-slate-800">
+          Pizza Builder for Menu
+        </h2>
+        <hr className="my-6 sm:mx-auto lg:my-8 border-gray-700 " />
+        <div className="h-screen">
+          <div className="flex flex-wrap flex-row-reverse justify-center">
+            <form onSubmit={handleSubmit} className="w-5/8 mb-10 min-h-screen">
+              <div className="border-4 border-green-700 mb-20">
+                <div className="border-4 border-white">
+                  <div className="border-4 border-red-700 p-5">
+                    <div className="mb-5">
+                      <label
+                        htmlFor="pizza-name"
+                        className="block mb-2 text-sm font-medium text-gray-900"
+                      >
+                        Create Pizza Name
+                      </label>
+                      <input
+                        value={newPizza.pizzaName}
+                        onChange={(e) =>
+                          setNewPizza({
+                            ...newPizza,
+                            pizzaName: e.target.value,
+                          })
+                        }
+                        type="text"
+                        id="pizza-name"
+                        className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
                       text-black 
                       placeholder-gray-500 
                       border-slate-500
@@ -185,48 +191,50 @@ const AdminBuilderCreate = () => {
                       focus:bg-gray-100 
                       focus:border-sky-700
               "
-                      placeholder="Meat Lovers"
-                      required
-                    />
-                  </div>
-
-                  {/* Upload new Photo */}
-                  <div id="imgUploader" className="max-w-lg mx-auto mb-5">
-                    <label
-                      className="block mb-2 text-sm font-medium pl-2 text-gray-900 capitalize"
-                      htmlFor="pizza_photo"
-                    >
-                      Upload photo
-                    </label>
-                    <input
-                      className="block w-full text-lg focus:outline-none p-2 text-gray-800 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 "
-                      id="pizza_photo"
-                      type="file"
-                      accept="image/*"
-                    />
-                    <div
-                      className="mt-1 text-sm text-gray-500"
-                      id="pizza_photo_help"
-                    >
-                      Add image of desired pizza
+                        placeholder="Meat Lovers"
+                        required
+                      />
                     </div>
-                  </div>
-                  <h1 className="block mb-2 text-lg font-medium text-gray-900 text-center">
-                    Pizza Base
-                  </h1>
-                  <hr className="mb-5" />
-                  <div className="mb-5">
-                    <label
-                      htmlFor="pizza-base"
-                      className="block mb-2 text-sm font-medium text-gray-900 "
-                    >
-                      Crust and Cheese
-                    </label>
-                    <div
-                      value={base[0].name}
-                      type="text"
-                      id="crust"
-                      className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light cursor-not-allowed
+
+                    {/* Upload new Photo */}
+                    <div id="imgUploader" className="max-w-lg mx-auto mb-5">
+                      <label
+                        className="block mb-2 text-sm font-medium pl-2 text-gray-900 capitalize"
+                        htmlFor="pizza_photo"
+                      >
+                        Upload photo
+                      </label>
+                      <input
+                        id="pizza_photo"
+                        type="file"
+                        name="image"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className="block w-full text-lg focus:outline-none p-2 text-gray-800 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 "
+                      />
+                      <div
+                        className="mt-1 text-sm text-gray-500"
+                        id="pizza_photo_help"
+                      >
+                        Add image of desired pizza
+                      </div>
+                    </div>
+                    <h1 className="block mb-2 text-lg font-medium text-gray-900 text-center">
+                      Pizza Base
+                    </h1>
+                    <hr className="mb-5" />
+                    <div className="mb-5">
+                      <label
+                        htmlFor="pizza-base"
+                        className="block mb-2 text-sm font-medium text-gray-900 "
+                      >
+                        Crust and Cheese
+                      </label>
+                      <div
+                        value={base[0].name}
+                        type="text"
+                        id="crust"
+                        className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light cursor-not-allowed
                       text-black 
                       placeholder-gray-500 
                       border-slate-500
@@ -234,14 +242,14 @@ const AdminBuilderCreate = () => {
                       focus:bg-sky-200 
                       focus:border-sky-700
               "
-                    >
-                      Brick Oven Crust
-                    </div>
-                    <div
-                      value={base[1].name}
-                      type="text"
-                      id="cheese"
-                      className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light cursor-not-allowed
+                      >
+                        Brick Oven Crust
+                      </div>
+                      <div
+                        value={base[1].name}
+                        type="text"
+                        id="cheese"
+                        className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light cursor-not-allowed
                       text-black 
                         placeholder-gray-500 
                         border-slate-500
@@ -249,25 +257,25 @@ const AdminBuilderCreate = () => {
                         focus:bg-sky-200 
                         focus:border-sky-700
               "
-                    >
-                      Italian Blend Cheese
+                      >
+                        Italian Blend Cheese
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="mb-5">
-                    <label
-                      htmlFor="sauce"
-                      className="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                      Select Sauce Type
-                    </label>
-                    <select
-                      value={newPizza.sauce}
-                      onChange={(e) =>
-                        setNewPizza({ ...newPizza, sauce: e.target.value })
-                      }
-                      id="sauce"
-                      className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
+                    <div className="mb-5">
+                      <label
+                        htmlFor="sauce"
+                        className="block mb-2 text-sm font-medium text-gray-900"
+                      >
+                        Select Sauce Type
+                      </label>
+                      <select
+                        value={newPizza.sauce}
+                        onChange={(e) =>
+                          setNewPizza({ ...newPizza, sauce: e.target.value })
+                        }
+                        id="sauce"
+                        className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
                       text-black 
                         placeholder-gray-500 
                         border-slate-500
@@ -275,47 +283,52 @@ const AdminBuilderCreate = () => {
                         focus:bg-gray-300 
                         focus:ring-white
                         focus:border-sky-500"
-                      required
+                        required
+                      >
+                        <option value="Signature Red Sauce">
+                          Signature Red Sauce
+                        </option>
+                        <option value="Signature White Sauce">
+                          White Sauce
+                        </option>
+                      </select>
+                    </div>
+                    <h1 className="block text-lg font-medium text-gray-900 text-center"></h1>
+                    <p className="tex-md mb-2 p-1 text-center">
+                      *Each topping has base value of quantity 1, if you want
+                      extra just select it twice
+                    </p>
+                    <hr className="mb-5" />
+                    <h1 className="block mb-5 text-lg font-medium text-gray-900 text-left">
+                      Meat Options:
+                    </h1>
+
+                    <div
+                      id="nested-flex-container"
+                      className="nested-flex-meat"
                     >
-                      <option value="Signature Red Sauce">
-                        Signature Red Sauce
-                      </option>
-                      <option value="Signature White Sauce">White Sauce</option>
-                    </select>
-                  </div>
-                  <h1 className="block text-lg font-medium text-gray-900 text-center"></h1>
-                  <p className="tex-md mb-2 p-1 text-center">
-                    *Each topping has base value of quantity 1, if you want
-                    extra just select it twice
-                  </p>
-                  <hr className="mb-5" />
-                  <h1 className="block mb-5 text-lg font-medium text-gray-900 text-left">
-                    Meat Options:
-                  </h1>
-
-                  <div id="nested-flex-container" className="nested-flex-meat">
-                    <div id="nested-col-1" className="px-2">
-                      <div className="mb-5">
-                        <label
-                          htmlFor="meat-topping"
-                          className="block mb-2 text-sm font-medium text-gray-900"
-                        >
-                          Select Meat #1
-                        </label>
-                        <select
-                          value={newPizza.meatTopping[0]}
-                          onChange={(e) =>
-                            setNewPizza({
-                              ...newPizza,
-                              meatTopping: [
-                                e.target.value,
-                                newPizza.meatTopping[1],
-                                newPizza.meatTopping[2],
-                              ],
-                            })
-                          }
-                          id="meat-type"
-                          className="text-sm rounded-lg block w-full p-2.5 shadow-sm-light border-2
+                      <div id="nested-col-1" className="px-2">
+                        <div className="mb-5">
+                          <label
+                            htmlFor="meat-topping"
+                            className="block mb-2 text-sm font-medium text-gray-900"
+                          >
+                            Select Meat #1
+                          </label>
+                          <select
+                            value={newPizza.meatTopping[0]}
+                            onChange={(e) =>
+                              setNewPizza({
+                                ...newPizza,
+                                meatTopping: [
+                                  e.target.value,
+                                  newPizza.meatTopping[1],
+                                  newPizza.meatTopping[2],
+                                ],
+                              })
+                            }
+                            id="meat-type"
+                            className="text-sm rounded-lg block w-full p-2.5 shadow-sm-light border-2
                           text-white 
                           placeholder-gray-400 
                           border-red-950
@@ -323,38 +336,38 @@ const AdminBuilderCreate = () => {
                           focus:bg-red-950 
                           focus:ring-red-500
                           focus:border-red-500"
-                        >
-                          <option defaultValue>- - None - - </option>
-                          <option value="Pepperoni">Pepperoni</option>
-                          <option value="Sausage">Sausage</option>
-                          <option value="Chicken">Chicken</option>
-                          <option value="Bacon">Bacon</option>
-                        </select>
+                          >
+                            <option defaultValue>- - None - - </option>
+                            <option value="Pepperoni">Pepperoni</option>
+                            <option value="Sausage">Sausage</option>
+                            <option value="Chicken">Chicken</option>
+                            <option value="Bacon">Bacon</option>
+                          </select>
+                        </div>
                       </div>
-                    </div>
 
-                    <div id="nested-col-2" className="px-2">
-                      <div className="mb-5">
-                        <label
-                          htmlFor="meat-topping"
-                          className="block mb-2 text-sm font-medium text-gray-900"
-                        >
-                          Select Meat #2
-                        </label>
-                        <select
-                          value={newPizza.meatTopping[1]}
-                          onChange={(e) =>
-                            setNewPizza({
-                              ...newPizza,
-                              meatTopping: [
-                                newPizza.meatTopping[0],
-                                e.target.value,
-                                newPizza.meatTopping[2],
-                              ],
-                            })
-                          }
-                          id="meat-type"
-                          className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
+                      <div id="nested-col-2" className="px-2">
+                        <div className="mb-5">
+                          <label
+                            htmlFor="meat-topping"
+                            className="block mb-2 text-sm font-medium text-gray-900"
+                          >
+                            Select Meat #2
+                          </label>
+                          <select
+                            value={newPizza.meatTopping[1]}
+                            onChange={(e) =>
+                              setNewPizza({
+                                ...newPizza,
+                                meatTopping: [
+                                  newPizza.meatTopping[0],
+                                  e.target.value,
+                                  newPizza.meatTopping[2],
+                                ],
+                              })
+                            }
+                            id="meat-type"
+                            className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
                           text-white 
                           placeholder-gray-400 
                           border-red-950
@@ -362,38 +375,38 @@ const AdminBuilderCreate = () => {
                           focus:bg-red-950 
                           focus:ring-red-500
                           focus:border-red-500"
-                        >
-                          <option defaultValue>- - None - - </option>
-                          <option value="Pepperoni">Pepperoni</option>
-                          <option value="Sausage">Sausage</option>
-                          <option value="Chicken">Chicken</option>
-                          <option value="Bacon">Bacon</option>
-                        </select>
+                          >
+                            <option defaultValue>- - None - - </option>
+                            <option value="Pepperoni">Pepperoni</option>
+                            <option value="Sausage">Sausage</option>
+                            <option value="Chicken">Chicken</option>
+                            <option value="Bacon">Bacon</option>
+                          </select>
+                        </div>
                       </div>
-                    </div>
 
-                    <div id="nested-col-3" className="px-2">
-                      <div className="mb-5">
-                        <label
-                          htmlFor="meat-topping"
-                          className="block mb-2 text-sm font-medium text-gray-900"
-                        >
-                          Select Meat #3
-                        </label>
-                        <select
-                          value={newPizza.meatTopping[2]}
-                          onChange={(e) =>
-                            setNewPizza({
-                              ...newPizza,
-                              meatTopping: [
-                                newPizza.meatTopping[0],
-                                newPizza.meatTopping[1],
-                                e.target.value,
-                              ],
-                            })
-                          }
-                          id="meat-type"
-                          className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
+                      <div id="nested-col-3" className="px-2">
+                        <div className="mb-5">
+                          <label
+                            htmlFor="meat-topping"
+                            className="block mb-2 text-sm font-medium text-gray-900"
+                          >
+                            Select Meat #3
+                          </label>
+                          <select
+                            value={newPizza.meatTopping[2]}
+                            onChange={(e) =>
+                              setNewPizza({
+                                ...newPizza,
+                                meatTopping: [
+                                  newPizza.meatTopping[0],
+                                  newPizza.meatTopping[1],
+                                  e.target.value,
+                                ],
+                              })
+                            }
+                            id="meat-type"
+                            className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
                           text-white 
                           placeholder-gray-400 
                           border-red-950
@@ -401,50 +414,50 @@ const AdminBuilderCreate = () => {
                           focus:bg-red-950 
                           focus:ring-red-500
                           focus:border-red-500 "
-                        >
-                          <option defaultValue>- - None - - </option>
-                          <option value="Pepperoni">Pepperoni</option>
-                          <option value="Sausage">Sausage</option>
-                          <option value="Chicken">Chicken</option>
-                          <option value="Bacon">Bacon</option>
-                        </select>
+                          >
+                            <option defaultValue>- - None - - </option>
+                            <option value="Pepperoni">Pepperoni</option>
+                            <option value="Sausage">Sausage</option>
+                            <option value="Chicken">Chicken</option>
+                            <option value="Bacon">Bacon</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Nested flex with 2 cols */}
-                  <h1 className="block mb-5 text-lg font-medium text-gray-900 text-left">
-                    Veggie Options:
-                  </h1>
+                    {/* Nested flex with 2 cols */}
+                    <h1 className="block mb-5 text-lg font-medium text-gray-900 text-left">
+                      Veggie Options:
+                    </h1>
 
-                  <div
-                    id="nested-flex-container"
-                    className="nested-flex-veggie"
-                  >
-                    {/* Nested col 1 */}
-                    <div id="nested-col-1" className="px-2">
-                      <div className="mb-5 ">
-                        <label
-                          htmlFor="veggie-topping"
-                          className="block mb-2 text-sm font-medium text-gray-900"
-                        >
-                          Select Veggies #1
-                        </label>
-                        <select
-                          value={newPizza.veggieTopping[0]}
-                          onChange={(e) =>
-                            setNewPizza({
-                              ...newPizza,
-                              veggieTopping: [
-                                e.target.value,
-                                newPizza.veggieTopping[1],
-                                newPizza.veggieTopping[2],
-                                newPizza.veggieTopping[3],
-                              ],
-                            })
-                          }
-                          id="veggie-type"
-                          className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
+                    <div
+                      id="nested-flex-container"
+                      className="nested-flex-veggie"
+                    >
+                      {/* Nested col 1 */}
+                      <div id="nested-col-1" className="px-2">
+                        <div className="mb-5 ">
+                          <label
+                            htmlFor="veggie-topping"
+                            className="block mb-2 text-sm font-medium text-gray-900"
+                          >
+                            Select Veggies #1
+                          </label>
+                          <select
+                            value={newPizza.veggieTopping[0]}
+                            onChange={(e) =>
+                              setNewPizza({
+                                ...newPizza,
+                                veggieTopping: [
+                                  e.target.value,
+                                  newPizza.veggieTopping[1],
+                                  newPizza.veggieTopping[2],
+                                  newPizza.veggieTopping[3],
+                                ],
+                              })
+                            }
+                            id="veggie-type"
+                            className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
                           text-white 
                           placeholder-gray-400 
                           border-green-800
@@ -452,37 +465,37 @@ const AdminBuilderCreate = () => {
                           focus:bg-emerald-800
                           focus:ring-emerald-100
                           focus:border-emerald-200 "
-                        >
-                          <option defaultValue>- - None - - </option>
-                          <option value="Mushrooms">Mushrooms</option>
-                          <option value="Peppers">Bell Peppers</option>
-                          <option value="Onions">Onions</option>
-                          <option value="Pineapple">Pineapple</option>
-                        </select>
-                      </div>
+                          >
+                            <option defaultValue>- - None - - </option>
+                            <option value="Mushrooms">Mushrooms</option>
+                            <option value="Peppers">Bell Peppers</option>
+                            <option value="Onions">Onions</option>
+                            <option value="Pineapple">Pineapple</option>
+                          </select>
+                        </div>
 
-                      <div className="mb-5">
-                        <label
-                          htmlFor="veggie-topping"
-                          className="block mb-2 text-sm font-medium text-gray-900"
-                        >
-                          Select Veggies #2
-                        </label>
-                        <select
-                          value={newPizza.veggieTopping[1]}
-                          onChange={(e) =>
-                            setNewPizza({
-                              ...newPizza,
-                              veggieTopping: [
-                                newPizza.veggieTopping[0],
-                                e.target.value,
-                                newPizza.veggieTopping[2],
-                                newPizza.veggieTopping[3],
-                              ],
-                            })
-                          }
-                          id="veggie-type"
-                          className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
+                        <div className="mb-5">
+                          <label
+                            htmlFor="veggie-topping"
+                            className="block mb-2 text-sm font-medium text-gray-900"
+                          >
+                            Select Veggies #2
+                          </label>
+                          <select
+                            value={newPizza.veggieTopping[1]}
+                            onChange={(e) =>
+                              setNewPizza({
+                                ...newPizza,
+                                veggieTopping: [
+                                  newPizza.veggieTopping[0],
+                                  e.target.value,
+                                  newPizza.veggieTopping[2],
+                                  newPizza.veggieTopping[3],
+                                ],
+                              })
+                            }
+                            id="veggie-type"
+                            className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
                           text-white 
                           placeholder-gray-400 
                           border-green-800
@@ -490,39 +503,39 @@ const AdminBuilderCreate = () => {
                           focus:bg-emerald-800
                           focus:ring-emerald-100
                           focus:border-emerald-200 "
-                        >
-                          <option defaultValue>- - None - - </option>
-                          <option value="Mushrooms">Mushrooms</option>
-                          <option value="Peppers">Bell Peppers</option>
-                          <option value="Onions">Onions</option>
-                          <option value="Pineapple">Pineapple</option>
-                        </select>
+                          >
+                            <option defaultValue>- - None - - </option>
+                            <option value="Mushrooms">Mushrooms</option>
+                            <option value="Peppers">Bell Peppers</option>
+                            <option value="Onions">Onions</option>
+                            <option value="Pineapple">Pineapple</option>
+                          </select>
+                        </div>
                       </div>
-                    </div>
-                    {/* Nested col 2 */}
-                    <div id="nested-col-2" className="px-2">
-                      <div className="mb-5">
-                        <label
-                          htmlFor="veggie-topping"
-                          className="block mb-2 text-sm font-medium text-gray-900"
-                        >
-                          Select Veggies #3
-                        </label>
-                        <select
-                          value={newPizza.veggieTopping[2]}
-                          onChange={(e) =>
-                            setNewPizza({
-                              ...newPizza,
-                              veggieTopping: [
-                                newPizza.veggieTopping[0],
-                                newPizza.veggieTopping[1],
-                                e.target.value,
-                                newPizza.veggieTopping[3],
-                              ],
-                            })
-                          }
-                          id="veggie-type"
-                          className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
+                      {/* Nested col 2 */}
+                      <div id="nested-col-2" className="px-2">
+                        <div className="mb-5">
+                          <label
+                            htmlFor="veggie-topping"
+                            className="block mb-2 text-sm font-medium text-gray-900"
+                          >
+                            Select Veggies #3
+                          </label>
+                          <select
+                            value={newPizza.veggieTopping[2]}
+                            onChange={(e) =>
+                              setNewPizza({
+                                ...newPizza,
+                                veggieTopping: [
+                                  newPizza.veggieTopping[0],
+                                  newPizza.veggieTopping[1],
+                                  e.target.value,
+                                  newPizza.veggieTopping[3],
+                                ],
+                              })
+                            }
+                            id="veggie-type"
+                            className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
                           text-white 
                           placeholder-gray-400 
                           border-green-800
@@ -530,37 +543,37 @@ const AdminBuilderCreate = () => {
                           focus:bg-emerald-800
                           focus:ring-emerald-100
                           focus:border-emerald-200 "
-                        >
-                          <option defaultValue>- - None - - </option>
-                          <option value="Mushrooms">Mushrooms</option>
-                          <option value="Peppers">Bell Peppers</option>
-                          <option value="Onions">Onions</option>
-                          <option value="Pineapple">Pineapple</option>
-                        </select>
-                      </div>
+                          >
+                            <option defaultValue>- - None - - </option>
+                            <option value="Mushrooms">Mushrooms</option>
+                            <option value="Peppers">Bell Peppers</option>
+                            <option value="Onions">Onions</option>
+                            <option value="Pineapple">Pineapple</option>
+                          </select>
+                        </div>
 
-                      <div className="mb-5">
-                        <label
-                          htmlFor="veggie-topping"
-                          className="block mb-2 text-sm font-medium text-gray-900"
-                        >
-                          Select Veggies #4
-                        </label>
-                        <select
-                          value={newPizza.veggieTopping[3]}
-                          onChange={(e) =>
-                            setNewPizza({
-                              ...newPizza,
-                              veggieTopping: [
-                                newPizza.veggieTopping[0],
-                                newPizza.veggieTopping[1],
-                                newPizza.veggieTopping[2],
-                                e.target.value,
-                              ],
-                            })
-                          }
-                          id="veggie-type"
-                          className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2 
+                        <div className="mb-5">
+                          <label
+                            htmlFor="veggie-topping"
+                            className="block mb-2 text-sm font-medium text-gray-900"
+                          >
+                            Select Veggies #4
+                          </label>
+                          <select
+                            value={newPizza.veggieTopping[3]}
+                            onChange={(e) =>
+                              setNewPizza({
+                                ...newPizza,
+                                veggieTopping: [
+                                  newPizza.veggieTopping[0],
+                                  newPizza.veggieTopping[1],
+                                  newPizza.veggieTopping[2],
+                                  e.target.value,
+                                ],
+                              })
+                            }
+                            id="veggie-type"
+                            className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2 
                             text-white 
                             placeholder-gray-400 
                             border-green-800
@@ -568,35 +581,35 @@ const AdminBuilderCreate = () => {
                             focus:bg-emerald-800
                             focus:ring-emerald-100
                             focus:border-emerald-200 "
-                        >
-                          <option defaultValue>- - None - - </option>
-                          <option value="Mushrooms">Mushrooms</option>
-                          <option value="Peppers">Bell Peppers</option>
-                          <option value="Onions">Onions</option>
-                          <option value="Pineapple">Pineapple</option>
-                        </select>
+                          >
+                            <option defaultValue>- - None - - </option>
+                            <option value="Mushrooms">Mushrooms</option>
+                            <option value="Peppers">Bell Peppers</option>
+                            <option value="Onions">Onions</option>
+                            <option value="Pineapple">Pineapple</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="mb-5 w-[95%] mx-auto">
-                    <label
-                      htmlFor="pizzaPrice"
-                      className="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                      Declare Pizza Price $
-                    </label>
-                    <input
-                      value={newPizza.pizzaPrice}
-                      // onChange={(e) =>
-                      //   setNewPizza({ ...newPizza, pizzaPrice: e.target.value })
-                      // }
-                      type="text"
-                      inputMode="decimal" // mobile keyboards
-                      pattern="[0-9]*(\.[0-9]{0,2})?" // Basic HTML5 pattern
-                      placeholder="00.00"
-                      onChange={handlePriceChange}
-                      id="pizzaPrice"
-                      className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
+                    <div className="mb-5 w-[95%] mx-auto">
+                      <label
+                        htmlFor="pizzaPrice"
+                        className="block mb-2 text-sm font-medium text-gray-900"
+                      >
+                        Declare Pizza Price $
+                      </label>
+                      <input
+                        value={newPizza.pizzaPrice}
+                        // onChange={(e) =>
+                        //   setNewPizza({ ...newPizza, pizzaPrice: e.target.value })
+                        // }
+                        type="text"
+                        inputMode="decimal" // mobile keyboards
+                        pattern="[0-9]*(\.[0-9]{0,2})?" // Basic HTML5 pattern
+                        placeholder="00.00"
+                        onChange={handlePriceChange}
+                        id="pizzaPrice"
+                        className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
                       text-black 
                       placeholder-gray-500 
                       border-slate-500
@@ -604,14 +617,14 @@ const AdminBuilderCreate = () => {
                       focus:bg-gray-100 
                       focus:border-sky-700
               "
-                      required
-                    />
-                  </div>
-                  <button
-                    // disabled={submitDisabled}
-                    // onClick={handleSubmit}
-                    type="submit"
-                    className="flex justify-center mx-auto cursor-pointer disabled:cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center  focus:outline-none hover:bg-gradient-to-br bg-gradient-to-r  focus:ring-4 
+                        required
+                      />
+                    </div>
+                    <button
+                      // disabled={submitDisabled}
+                      // onClick={handleSubmit}
+                      type="submit"
+                      className="flex justify-center mx-auto cursor-pointer disabled:cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center  focus:outline-none hover:bg-gradient-to-br bg-gradient-to-r  focus:ring-4 
                       shadow-green-800/80 
                       hover:text-black
                       text-white 
@@ -619,15 +632,15 @@ const AdminBuilderCreate = () => {
                       via-blue-700 
                       to-cyan-600
                       focus:ring-blue-800"
-                  >
-                    Submit New Pizza
-                  </button>
+                    >
+                      Submit New Pizza
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
       </div>
       {showSuccessAlert && (
         <div

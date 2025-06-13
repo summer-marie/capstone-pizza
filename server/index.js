@@ -27,7 +27,6 @@ app.use(express.json());
 const upload = multer({ dest: "uploads/" });
 
 app.use(cookieParser(cookieSecret));
-// app.use(express.urlencoded({ extended: true }));
 
 // Express CORS
 // Get whitelisted domains from env
@@ -48,23 +47,19 @@ const corsOptions = {
 // Use CORS
 app.use(cors(corsOptions));
 
-// app.use(cors({
-//   origin: "http://localhost:3005",
-//   credentials: true
-// }));
-
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-
 // Add Passport
 app.use(passport.initialize());
-app.use(session({
-  secret: sessionSecret,
-  resave: false,
-  saveUninitialized: false,
-}));
+app.use(
+  session({
+    secret: sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
@@ -99,8 +94,6 @@ try {
 } catch (err) {
   console.log(err);
 }
-
-
 
 // import multer from "multer";
 // const storage = multer.diskStorage({

@@ -4,12 +4,16 @@ import builderGetMany from "./builderGetMany.js";
 import pizzaUpdateOne from "./builderUpdateOne.js";
 import builderGetOne from "./builderGetOne.js";
 import builderDeleteOne from "./builderDeleteOne.js";
+import multer from "multer";
 
 // builderIndex.js
 const builderIndex = express.Router();
 
-// Create
-builderIndex.post("/", builderCreate);
+// Multer setup for file uploads
+const upload = multer({ dest: "uploads/" });
+
+// Create 
+builderIndex.post("/", upload.single("image"), builderCreate);
 
 // Get all
 builderIndex.get("/", builderGetMany);

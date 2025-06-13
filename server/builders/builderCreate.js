@@ -3,14 +3,8 @@ import builderModel from "./builderModel.js";
 // TODO: Add price to validation???
 
 const builderCreate = async (req, res) => {
-  const {
-    pizzaName,
-    pizzaPrice,
-    base,
-    sauce,
-    meatTopping,
-    veggieTopping,
-  } = req.body;
+  const { pizzaName, pizzaPrice, base, sauce, meatTopping, veggieTopping } =
+    req.body;
 
   // Validation
   if (!pizzaName || pizzaName == "") {
@@ -19,10 +13,14 @@ const builderCreate = async (req, res) => {
     const newPizza = await builderModel.create({
       pizzaName,
       pizzaPrice,
-      base,
-      sauce,
-      meatTopping,
-      veggieTopping,
+      base: typeof base === "string" ? JSON.parse(base) : base,
+      sauce: typeof sauce === "string" ? JSON.parse(sauce) : sauce,
+      meatTopping:
+        typeof meatTopping === "string" ? JSON.parse(meatTopping) : meatTopping,
+      veggieTopping:
+        typeof veggieTopping === "string"
+          ? JSON.parse(veggieTopping)
+          : veggieTopping,
       image: req.file
         ? {
             filename: req.file.filename,

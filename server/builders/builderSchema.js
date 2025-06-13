@@ -44,8 +44,6 @@ const builderSchema = new Schema({
       amount: { type: Number, default: 1 },
     },
   ],
-
-  //  image: { data: Buffer, contentType: String }, // for binary images
   image: {
     filename: String,
     originalname: String,

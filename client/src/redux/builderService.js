@@ -5,10 +5,15 @@ const builderService = {
     return await axios.get(`${import.meta.env.VITE_API_SERVER_URL}/builders`);
   },
 
-  builderCreate: async (builder) => {
+  builderCreate: async (formData) => {
     return await axios.post(
       `${import.meta.env.VITE_API_SERVER_URL}/builders`,
-      builder
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
   },
 
