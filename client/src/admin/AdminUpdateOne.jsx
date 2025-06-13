@@ -66,33 +66,32 @@ const AdminUpdateOne = () => {
   const dispatch = useDispatch();
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const builder = useSelector((state) => state.builder?.builder);
-  const { id } = useParams();
-  console.log("pizza", id);
-
   const [pizzaForm, setPizzaForm] = useState(null);
+  const { id } = useParams();
+  console.log("USE PARAMS", id);
 
   // Initialize pizzaForm with builder data
   useEffect(() => {
     dispatch(pizzaGetOne(id));
   }, [dispatch, id]);
 
+  // Helper to normalize array fields to array of names (strings)
+  const normalizeArray = (arr = [], length = 0) =>
+    Array.from({ length }, (_, i) =>
+      typeof arr[i] === "object" && arr[i] !== null ? arr[i].name : arr[i] || ""
+    );
+
   // Update pizzaForm when builder data changes
   useEffect(() => {
     if (builder) {
-      console.log("builder:", builder);
-      console.log("builder.sauce:", builder.sauce);
-      let sauceObj = builder.sauce;
-      if (typeof builder.sauce === "string") {
-        sauceObj =
-          sauceOptions.find((opt) => opt.name === builder.sauce) || null;
-      }
-      let meatTopping = builder.meatTopping?.map((m) =>
-        typeof m === "object" && m !== null ? m.name : m
-      ) || ["", "", ""];
+      let sauceObj =
+        typeof builder.sauce === "string"
+          ? sauceOptions.find((opt) => opt.name === builder.sauce) || null
+          : builder.sauce;
 
-      let veggieTopping = builder.veggieTopping?.map((v) =>
-        typeof v === "object" && v !== null ? v.name : v
-      ) || ["", "", "", ""];
+      let meatTopping = normalizeArray(builder.meatTopping, 3);
+      let veggieTopping = normalizeArray(builder.veggieTopping, 4);
+
       setPizzaForm({ ...builder, sauce: sauceObj, meatTopping, veggieTopping });
     }
   }, [builder]);
@@ -104,8 +103,37 @@ const AdminUpdateOne = () => {
   };
 
   const handlePriceChange = (e) => {
-    setPizzaForm({ ...pizzaForm, pizzaPrice: e.target.value });
+    let input = e.target.value.replace(/\D/g, ""); // Remove all non-digits
+    if (input.length === 0) {
+      setPizzaForm({ ...pizzaForm, pizzaPrice: "" });
+      return;
+    }
+    // Pad with zeros if needed, then insert decimal
+    while (input.length < 3) input = "0" + input;
+    const dollars = input.slice(0, -2);
+    const cents = input.slice(-2);
+    const formatted = `${parseInt(dollars, 10)}.${cents}`;
+    setPizzaForm({ ...pizzaForm, pizzaPrice: formatted });
   };
+  //   const handlePriceChange = (e) => {
+  //   let inputValue = e.target.value;
+  //   // Remove non-numeric characters (except for the first decimal point)
+  //   inputValue = inputValue.replace(/[^0-9.]/g, "");
+  //   // Handle multiple decimal points
+  //   const parts = inputValue.split(".");
+  //   if (parts.length > 2) {
+  //     inputValue = parts[0] + "." + parts.slice(1).join("");
+  //   }
+  //   // Restrict to two decimal places
+  //   const regex = /^\d*(\.\d{0,2})?$/;
+
+  //   if (regex.test(inputValue) || inputValue === "" || inputValue === ".") {
+  //     setNewPizza((prevPizza) => ({
+  //       ...prevPizza,
+  //       pizzaPrice: inputValue,
+  //     }));
+  //   }
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -177,6 +205,7 @@ const AdminUpdateOne = () => {
                           onChange={handleChange}
                           type="text"
                           id="pizza-name"
+                          name="pizzaName"
                           className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
                           text-black 
                           placeholder-gray-500 
