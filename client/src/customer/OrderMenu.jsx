@@ -85,11 +85,11 @@ const Order = () => {
           border-gray-200 shadow-red-700"
             >
               <img
-                className="object-cover w-full rounded-t-lg h-auto rounded-s-lg p-2"
+                className="object-cover w-full rounded-t-lg h-auto rounded-s-lg"
                 src={
-                  builder.image
+                  builder.image && builder.image.filename
                     ? `${import.meta.env.VITE_API_SERVER_URL}/uploads/${
-                        builder.image
+                        builder.image.filename
                       }`
                     : new URL("../assets/basePizza.jpg", import.meta.url).href
                 }
