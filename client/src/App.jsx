@@ -14,7 +14,7 @@ import AdminMenu from "./admin/AdminMenu";
 import AdminLogin from "./admin/AdminLogin";
 import BuildYourOwn from "./customer/BuildYourOwn";
 import AdminUpdateOne from "./admin/AdminUpdateOne";
-import IngredientsTable from "./admin/ingredientsTable";
+import IngredientsTable from "./admin/IngredientsTable";
 import AdminBuilderCreate from "./admin/AdminBuilderCreate";
 import OrderSuccess from "./customer/OrderSuccess";
 import AdminLayout from "./admin/AdminLayout";

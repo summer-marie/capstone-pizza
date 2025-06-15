@@ -24,10 +24,17 @@ const builderService = {
     return response.data; // just the data, not the whole Axios response
   },
 
-  builderUpdateOne: async (builder) => {
-    return await axios.put(
-      `${import.meta.env.VITE_API_SERVER_URL}/builders/${builder.id}`,
-      builder
+  builderUpdateOne(formData) {
+    const id = formData.get("id");
+    if (!id) {
+      throw new Error("No ID provided in formData");
+    }
+    return axios.put(
+      `${import.meta.env.VITE_API_SERVER_URL}/builders/${id}`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
     );
   },
 

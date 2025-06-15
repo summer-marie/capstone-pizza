@@ -3,77 +3,38 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import AlertSuccess2 from "../components/AlertSuccess2";
 import { pizzaGetOne, builderUpdateOne } from "../redux/builderSlice";
+import { ingredientGetAll } from "../redux/ingredientSlice";
 
 const successMsg = "Pizza was updated successfully";
 const successDescription = "navigating you back to the admin menu....";
-
-// Options for sauce, meat, and veggie toppings - dropdowns
-const sauceOptions = [
-  { name: "Signature Red Sauce", description: "Classic red sauce", price: 1.0 },
-  {
-    name: "Signature White Sauce",
-    description: "Creamy white sauce",
-    price: 1.0,
-  },
-];
-
-const meatOptions = [
-  { name: "Pepperoni", description: "Pepperoni", price: 1.0, itemType: "meat" },
-  { name: "Sausage", description: "Sausage", price: 1.0, itemType: "meat" },
-  { name: "Chicken", description: "Chicken", price: 1.0, itemType: "meat" },
-  { name: "Bacon", description: "Bacon", price: 1.0, itemType: "meat" },
-];
-
-const veggieOptions = [
-  {
-    name: "Mushrooms",
-    description: "Mushrooms",
-    price: 0.75,
-    itemType: "veggie",
-  },
-  {
-    name: "Peppers",
-    description: "Bell Peppers",
-    price: 0.75,
-    itemType: "veggie",
-  },
-  { name: "Onions", description: "Onions", price: 0.75, itemType: "veggie" },
-  {
-    name: "Pineapple",
-    description: "Pineapple",
-    price: 0.75,
-    itemType: "veggie",
-  },
-];
-
-const base = [
-  {
-    name: "Italian Blend Cheese",
-    description: "Italian Blend Cheese",
-    itemType: "base",
-    price: "2.00",
-  },
-  {
-    name: "Brick Oven Crust",
-    description: "Brick Oven Crust",
-    itemType: "base",
-    price: "2.00",
-  },
-];
 
 const AdminUpdateOne = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const builder = useSelector((state) => state.builder?.builder);
+  const ingredients = useSelector((state) => state.ingredient.ingredients);
   const [pizzaForm, setPizzaForm] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const { id } = useParams();
   console.log("USE PARAMS", id);
+
+  // Options for sauce, meat, and veggie toppings - dropdowns
+  const sauceOptions = ingredients.filter((i) => i.itemType === "Sauce");
+  const meatOptions = ingredients.filter((i) => i.itemType === "Meat Topping");
+  const veggieOptions = ingredients.filter(
+    (i) => i.itemType === "Veggie Topping"
+  );
+  // const baseOptions = ingredients.filter((i) => i.itemType === "Base");
 
   // Initialize pizzaForm with builder data
   useEffect(() => {
     dispatch(pizzaGetOne(id));
   }, [dispatch, id]);
+
+  useEffect(() => {
+    dispatch(ingredientGetAll());
+  }, [dispatch]);
 
   // Helper to normalize array fields to array of names (strings)
   const normalizeArray = (arr = [], length = 0) =>
@@ -116,17 +77,24 @@ const AdminUpdateOne = () => {
     setPizzaForm({ ...pizzaForm, pizzaPrice: formatted });
   };
 
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Find the full sauce, meat, and veggie objects based on selected names
     const sauceObj = sauceOptions.find((opt) => opt.name === pizzaForm.sauce);
-    const meatTopping = pizzaForm.meatTopping.map(
-      (name) => meatOptions.find((opt) => opt.name === name) || {}
-    );
-    const veggieTopping = pizzaForm.veggieTopping.map(
-      (name) => veggieOptions.find((opt) => opt.name === name) || {}
-    );
+
+    // Use .filter(Boolean) to remove empty/undefined toppings
+    const meatTopping = pizzaForm.meatTopping
+      .map((name) => meatOptions.find((opt) => opt.name === name))
+      .filter(Boolean);
+
+    const veggieTopping = pizzaForm.veggieTopping
+      .map((name) => veggieOptions.find((opt) => opt.name === name))
+      .filter(Boolean);
 
     // Construct payload with full objects
     const payload = {
@@ -137,8 +105,22 @@ const AdminUpdateOne = () => {
       veggieTopping,
     };
 
+    const formData = new FormData();
+    formData.append("pizzaName", payload.pizzaName);
+    formData.append("pizzaPrice", payload.pizzaPrice);
+    formData.append("sauce", JSON.stringify(payload.sauce));
+    formData.append("meatTopping", JSON.stringify(payload.meatTopping));
+    formData.append("veggieTopping", JSON.stringify(payload.veggieTopping));
+    formData.append("base", JSON.stringify(payload.base));
+    formData.append("id", payload.id);
+
+    if (selectedFile) {
+      formData.append("image", selectedFile);
+    }
+
     console.log("Submitting payload:", payload);
-    dispatch(builderUpdateOne(payload)).then(() => {
+
+    dispatch(builderUpdateOne(formData)).then(() => {
       setShowSuccessAlert(true);
       setTimeout(() => navigate("/admin-menu"), 2000);
     });
@@ -257,6 +239,8 @@ const AdminUpdateOne = () => {
                         aria-describedby="pizza_photo_help"
                         id="pizza_photo"
                         type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
                       />
                       <div
                         className="mt-1 text-sm text-gray-500"
@@ -278,7 +262,6 @@ const AdminUpdateOne = () => {
                         Crust and Cheese
                       </label>
                       <div
-                        value={base[0].name}
                         type="text"
                         id="crust"
                         className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light cursor-not-allowed
@@ -291,12 +274,15 @@ const AdminUpdateOne = () => {
                         required
                       >
                         {/* checks crust info */}
-                        {pizzaForm && pizzaForm.base && pizzaForm.base[0]
+                        {pizzaForm &&
+                        pizzaForm.base &&
+                        Array.isArray(pizzaForm.base) &&
+                        pizzaForm.base[0] &&
+                        pizzaForm.base[0].name
                           ? pizzaForm.base[0].name
-                          : "No crust info"}{" "}
+                          : "No crust info"}
                       </div>
                       <div
-                        value={base[1].name}
                         type="text"
                         id="cheese"
                         className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light cursor-not-allowed
@@ -309,7 +295,11 @@ const AdminUpdateOne = () => {
                         required
                       >
                         {/* checks cheese info */}
-                        {pizzaForm && pizzaForm.base && pizzaForm.base[1]
+                        {pizzaForm &&
+                        pizzaForm.base &&
+                        Array.isArray(pizzaForm.base) &&
+                        pizzaForm.base[1] &&
+                        pizzaForm.base[1].name
                           ? pizzaForm.base[1].name
                           : "No cheese info"}
                       </div>

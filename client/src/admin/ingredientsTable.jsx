@@ -11,13 +11,13 @@ import SpinnerBubbles from "../components/SpinnerBubbles";
 
 // Add new ingredient modal
 const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
-  const [formData, setFormData] = useState({
+  const initialFormState = {
     name: "",
     description: "",
     itemType: "",
     price: 0,
-  });
-
+  };
+  const [formData, setFormData] = useState(initialFormState);
   const dispatch = useDispatch();
 
   // Handle inline input changes
@@ -25,7 +25,7 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: name === "price" ? parseFloat(value) : value,
+      [name]: name === "price" ? value.replace(/^0+/, "") : value, // allow empty or numeric string
     }));
   };
 
@@ -34,16 +34,14 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
     e.preventDefault();
     console.log("handle submit");
     const newIngredient = {
-      name: formData.name,
-      description: formData.description,
-      itemType: formData.itemType,
-      price: formData.price,
+      ...formData,
+      price: formData.price === "" ? 0 : parseFloat(formData.price),
     };
     // dispatch(createIngredient(newIngredient));
     await dispatch(createIngredient(newIngredient)).unwrap();
     await dispatch(ingredientGetAll()).unwrap();
 
-    /// Show success alert
+    setFormData(initialFormState);
     setShowModal(false);
   };
 
@@ -74,9 +72,6 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
                   id="name"
                   name="name"
                   value={formData.name}
-                  // onChange={(e) =>
-                  //   setFormData({ ...formData, name: e.target.value })
-                  // }
                   onChange={handleChange}
                   className="pl-5 mb-2 focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden  block w-full p-2.5 rounded-l-lg py-3 px-4
                   bg-gray-50 
@@ -99,9 +94,6 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
-                  // onChange={(e) =>
-                  //   setFormData({ ...formData, description: e.target.value })
-                  // }
                   className="pl-5 mb-2 focus:border-transparent sm:text-sm rounded-lg ring-3 ring-transparent focus:ring-1 focus:outline-hidden  block w-full p-2.5 rounded-l-lg py-3 px-4
                   bg-gray-50 
                   text-gray-600 border 
@@ -121,10 +113,6 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
                   name="itemType"
                   value={formData.itemType}
                   onChange={handleChange}
-                  // onChange={(e) =>
-                  //   setFormData({ ...formData, itemType: e.target.value })
-                  // }
-
                   className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2 capitalize
                           text-white 
                           placeholder-gray-400 
@@ -355,9 +343,7 @@ const IngredientsTable = () => {
                             }
                           >
                             <option defaultValue={ingredient.itemType}>
-                              {/* <strong className="text-black text-lg"> */}
                               {ingredient.itemType}
-                              {/* </strong> */}
                             </option>
                             {/* Only show types that are different from default */}
                             {ingredient.itemType &&
@@ -407,15 +393,6 @@ const IngredientsTable = () => {
                         ) : (
                           ingredient.description
                         )}
-                        {/* Spinner  */}
-                        {/* <div
-                      className="flex justify-end items-center h-full"
-                      style={{ minHeight: 0, minWidth: 0 }}
-                    >
-                      {savingId === ingredient.id && (
-                        <SpinnerBubbles loading={loading} size={10} />
-                      )}
-                    </div> */}
                       </td>
                       <td // Price
                         className="px-2 py-2 text-center"
@@ -494,14 +471,3 @@ const IngredientsTable = () => {
 };
 
 export default IngredientsTable;
-
-{
-  /* <button
-type='button'
-className='font-medium hover:underline text-lg disabled:cursor-not-allowed  w-full h-full cursor-pointer
-text-cyan-600'
-onClick={() => saveChanges(index)}
->
-Save
-</button> */
-}

@@ -12,14 +12,14 @@ const builderIndex = express.Router();
 // Multer setup for file uploads
 const upload = multer({ dest: "uploads/" });
 
-// Create 
+// Create
 builderIndex.post("/", upload.single("image"), builderCreate);
 
 // Get all
 builderIndex.get("/", builderGetMany);
 
 // Update one
-builderIndex.put("/:id", pizzaUpdateOne);
+builderIndex.put("/:id", upload.single("image"), pizzaUpdateOne);
 
 // Get One
 builderIndex.get("/pizza-detail/:id", builderGetOne);
