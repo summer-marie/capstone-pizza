@@ -43,7 +43,7 @@ const AdminCompletedOrders = () => {
     <>
       <div className="ml-64 px-4">
         <h2 className="berkshireSwashFont mt-5 text-center text-2xl font-bold text-slate-800">
-          Completed Orders Database
+          Completed (Archived) Orders Database
         </h2>
         <hr className="my-6 sm:mx-auto lg:my-8 border-gray-700 " />
 
@@ -58,7 +58,7 @@ const AdminCompletedOrders = () => {
           ))}
         </div>
 
-        <div id="openOrdersTAble" className="w-full shadow-2xl overflow-x-auto">
+        <div id="openOrdersTAble" className="w-full shadow-2xl overflow-x-auto mb-16">
           <table
             className="w-full mt-1 text-sm text-left rtl:text-right rounded-2xl
         text-gray-500"
