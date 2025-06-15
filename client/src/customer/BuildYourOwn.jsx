@@ -1,47 +1,9 @@
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
 import { addToCart } from "../redux/cartSlice";
-import AlertSuccess2 from "../components/AlertSuccess2";
 import { ingredientGetAll } from "../redux/ingredientSlice";
-
-// const sauceOptions = [
-//   { name: "Signature Red Sauce", description: "Classic red sauce", price: 1.0 },
-//   {
-//     name: "Signature White Sauce",
-//     description: "Creamy white sauce",
-//     price: 1.0,
-//   },
-// ];
-
-// const meatOptions = [
-//   { name: "Pepperoni", description: "Pepperoni", price: 1.0, itemType: "meat" },
-//   { name: "Sausage", description: "Sausage", price: 1.0, itemType: "meat" },
-//   { name: "Chicken", description: "Chicken", price: 1.0, itemType: "meat" },
-//   { name: "Bacon", description: "Bacon", price: 1.0, itemType: "meat" },
-// ];
-
-// const veggieOptions = [
-//   {
-//     name: "Mushrooms",
-//     description: "Mushrooms",
-//     price: 0.75,
-//     itemType: "veggie",
-//   },
-//   {
-//     name: "Peppers",
-//     description: "Bell Peppers",
-//     price: 0.75,
-//     itemType: "veggie",
-//   },
-//   { name: "Onions", description: "Onions", price: 0.75, itemType: "veggie" },
-//   {
-//     name: "Pineapple",
-//     description: "Pineapple",
-//     price: 0.75,
-//     itemType: "veggie",
-//   },
-// ];
+import AlertSuccess2 from "../components/AlertSuccess2";
 
 const base = [
   {
@@ -76,55 +38,69 @@ const BuildYourOwn = () => {
     specialRequest: "",
   });
 
+  // Filter ingredients by type
   const meatOptions = ingredients.filter((i) => i.itemType === "Meat Topping");
   const veggieOptions = ingredients.filter(
     (i) => i.itemType === "Veggie Topping"
   );
   const sauceOptions = ingredients.filter((i) => i.itemType === "Sauce");
 
+  // Fetch ingredients on component mount
   useEffect(() => {
     dispatch(ingredientGetAll());
   }, [dispatch]);
 
-  const calculateTotalPrice = (meatToppings, veggieToppings) => {
-    const basePrice = 6.0; // Your default pizza price
-    const freeToppings = 3; // Number of free toppings allowed
+  // Calculate total price based on selected toppings
+  // Base price is $6.00, first 3 toppings are free, additional toppings
+  const calculateTotalPrice = useCallback(
+    (meatToppings, veggieToppings) => {
+      const basePrice = 6.0;
+      const freeToppings = 3;
 
-    // Filter out empty strings and get actual selected toppings
-    const selectedMeat = meatToppings.filter(
-      (meat) => meat !== "" && meat !== "- - None - -"
+      const selectedMeat = meatToppings.filter(
+        (meat) => meat !== "" && meat !== "- - None - -"
+      );
+      const selectedVeggie = veggieToppings.filter(
+        (veggie) => veggie !== "" && veggie !== "- - None - -"
+      );
+
+      const totalToppings = selectedMeat.length + selectedVeggie.length;
+
+      if (totalToppings <= freeToppings) {
+        return basePrice;
+      }
+
+      const extraToppings = totalToppings - freeToppings;
+      let extraCost = 0;
+
+      const allToppings = [...selectedMeat, ...selectedVeggie].slice(
+        -extraToppings
+      );
+
+      allToppings.forEach((topping) => {
+        const meatPrice =
+          meatOptions.find((m) => m.name === topping)?.price || 0;
+        const veggiePrice =
+          veggieOptions.find((v) => v.name === topping)?.price || 0;
+        extraCost += meatPrice || veggiePrice;
+      });
+
+      return (basePrice + extraCost).toFixed(2);
+    },
+    [meatOptions, veggieOptions]
+  );
+
+  // Update pizza price whenever toppings change
+  useEffect(() => {
+    const newPrice = calculateTotalPrice(
+      newPizza.meatTopping,
+      newPizza.veggieTopping
     );
-    const selectedVeggie = veggieToppings.filter(
-      (veggie) => veggie !== "" && veggie !== "- - None - -"
-    );
-
-    // Calculate total selected toppings
-    const totalToppings = selectedMeat.length + selectedVeggie.length;
-
-    // If total toppings is 3 or less, return base price
-    if (totalToppings <= freeToppings) {
-      return basePrice;
-    }
-
-    // Calculate extra toppings cost
-    const extraToppings = totalToppings - freeToppings;
-    let extraCost = 0;
-
-    // Get all selected toppings in order (after the free ones)
-    const allToppings = [...selectedMeat, ...selectedVeggie].slice(
-      freeToppings
-    );
-
-    // Calculate cost for each extra topping
-    allToppings.forEach((topping) => {
-      const meatPrice = meatOptions.find((m) => m.name === topping)?.price || 0;
-      const veggiePrice =
-        veggieOptions.find((v) => v.name === topping)?.price || 0;
-      extraCost += meatPrice || veggiePrice;
-    });
-
-    return (basePrice + extraCost).toFixed(2);
-  };
+    setNewPizza((prev) => ({
+      ...prev,
+      pizzaPrice: newPrice,
+    }));
+  }, [newPizza.meatTopping, newPizza.veggieTopping, calculateTotalPrice]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -134,18 +110,18 @@ const BuildYourOwn = () => {
     // Find the selected sauce object
     const sauceObj = sauceOptions.find((s) => s.name === newPizza.sauce);
 
-    // Build meatTopping array of objects, filter out empty selections
+    // Build meatTopping array of objects, filter out empty and "None" selections
     const meatToppingObjs = newPizza.meatTopping
-      .filter((m) => m)
+      .filter((m) => m && m !== "- - None - -")
       .map((meat) => {
         const found = meatOptions.find((opt) => opt.name === meat);
         return found ? { ...found, amount: 1 } : null;
       })
       .filter(Boolean);
 
-    // Build veggieTopping array of objects, filter out empty selections
+    // Build veggieTopping array of objects, filter out empty and "None" selections
     const veggieToppingObjs = newPizza.veggieTopping
-      .filter((v) => v)
+      .filter((v) => v && v !== "- - None - -")
       .map((veggie) => {
         const found = veggieOptions.find((opt) => opt.name === veggie);
         return found ? { ...found, amount: 1 } : null;
@@ -158,8 +134,8 @@ const BuildYourOwn = () => {
     );
 
     const pizzaData = {
-      pizzaName: newPizza.pizzaName, // "Build Your Own"
-      pizzaPrice: finalPrice, // default price
+      pizzaName: newPizza.pizzaName,
+      pizzaPrice: finalPrice,
       base: newPizza.base,
       sauce: sauceObj,
       meatTopping: meatToppingObjs,
@@ -174,29 +150,17 @@ const BuildYourOwn = () => {
       setShowSuccessAlert(false);
     }, 2000);
 
-    // Reset form fields after submission
+    // Reset form to initial state
     setNewPizza({
       pizzaPrice: "6.00",
       pizzaName: "Build Your Own",
       base: [...base],
       sauce: "Signature Red Sauce",
-      meatTopping: ["", "", ""],
+      meatTopping: ["", "", "", "", "", ""],
       veggieTopping: ["", "", "", ""],
       specialRequest: "",
     });
   };
-
-  // Recalculate price whenever toppings change
-  useEffect(() => {
-    const newPrice = calculateTotalPrice(
-      newPizza.meatTopping,
-      newPizza.veggieTopping
-    );
-    setNewPizza((prev) => ({
-      ...prev,
-      pizzaPrice: newPrice,
-    }));
-  }, [newPizza.meatTopping, newPizza.veggieTopping]);
 
   return (
     <>
@@ -306,7 +270,7 @@ const BuildYourOwn = () => {
                       onChange={(e) =>
                         setNewPizza({ ...newPizza, sauce: e.target.value })
                       }
-                      id="sauce"
+                      id="sauce-select"
                       className="text-sm rounded-lg block w-full p-2.5  shadow-sm-light border-2
                       text-black 
                         placeholder-gray-500 
@@ -317,8 +281,12 @@ const BuildYourOwn = () => {
                         focus:border-sky-500"
                       required
                     >
-                      <option value="Red">Signature Red Sauce</option>
-                      <option value="White">White Sauce</option>
+                      <option value="">- - Select Sauce - -</option>
+                      {sauceOptions.map((sauce) => (
+                        <option key={sauce._id} value={sauce.name}>
+                          {sauce.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
