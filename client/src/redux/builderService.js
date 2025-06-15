@@ -24,11 +24,12 @@ const builderService = {
     return response.data; // just the data, not the whole Axios response
   },
 
-  builderUpdateOne: async (builder) => {
-    return await axios.put(
-      `${import.meta.env.VITE_API_SERVER_URL}/builders/${builder.id}`,
-      builder
-    );
+  builderUpdateOne: async (formData) => {
+    return axios.put("/api/pizza/update", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   },
 
   builderDeleteOneAlt: async (id) => {

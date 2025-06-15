@@ -14,13 +14,16 @@ const AdminUpdateOne = () => {
   const builder = useSelector((state) => state.builder?.builder);
   const ingredients = useSelector((state) => state.ingredient.ingredients);
   const [pizzaForm, setPizzaForm] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const { id } = useParams();
   console.log("USE PARAMS", id);
 
   // Options for sauce, meat, and veggie toppings - dropdowns
   const sauceOptions = ingredients.filter((i) => i.itemType === "Sauce");
   const meatOptions = ingredients.filter((i) => i.itemType === "Meat Topping");
-  const veggieOptions = ingredients.filter((i) => i.itemType === "Veggie Topping");
+  const veggieOptions = ingredients.filter(
+    (i) => i.itemType === "Veggie Topping"
+  );
   // const baseOptions = ingredients.filter((i) => i.itemType === "Base");
 
   // Initialize pizzaForm with builder data
@@ -69,6 +72,10 @@ const AdminUpdateOne = () => {
     setPizzaForm({ ...pizzaForm, pizzaPrice: formatted });
   };
 
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -93,8 +100,22 @@ const AdminUpdateOne = () => {
       veggieTopping,
     };
 
+    const formData = new FormData();
+    formData.append("pizzaName", payload.pizzaName);
+    formData.append("pizzaPrice", payload.pizzaPrice);
+    formData.append("sauce", JSON.stringify(payload.sauce));
+    formData.append("meatTopping", JSON.stringify(payload.meatTopping));
+    formData.append("veggieTopping", JSON.stringify(payload.veggieTopping));
+    formData.append("base", JSON.stringify(payload.base));
+    formData.append("id", payload.id);
+
+    if (selectedFile) {
+      formData.append("image", selectedFile);
+    }
+
     console.log("Submitting payload:", payload);
-    dispatch(builderUpdateOne(payload)).then(() => {
+
+    dispatch(builderUpdateOne(formData)).then(() => {
       setShowSuccessAlert(true);
       setTimeout(() => navigate("/admin-menu"), 2000);
     });
@@ -213,6 +234,8 @@ const AdminUpdateOne = () => {
                         aria-describedby="pizza_photo_help"
                         id="pizza_photo"
                         type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
                       />
                       <div
                         className="mt-1 text-sm text-gray-500"
@@ -255,7 +278,6 @@ const AdminUpdateOne = () => {
                           : "No crust info"}
                       </div>
                       <div
-              
                         type="text"
                         id="cheese"
                         className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light cursor-not-allowed

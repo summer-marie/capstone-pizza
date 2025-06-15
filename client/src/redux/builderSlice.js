@@ -43,8 +43,8 @@ export const pizzaGetOne = createAsyncThunk("builder/getOne", async (id) => {
 // Update
 export const builderUpdateOne = createAsyncThunk(
   "builder/updateOne",
-  async (builder) => {
-    const response = await builderService.builderUpdateOne(builder);
+  async (formData) => {
+    const response = await builderService.builderUpdateOne(formData);
     return response.data;
   }
 );
