@@ -64,16 +64,65 @@ const AdminOpenOrders = () => {
     });
   };
 
+  // const handleStatusUpdate = (id) => {
+  //   setSavingId(id);
+  //   setLoading(true);
+
+  //   dispatch(orderUpdateStatus({ id: id, status: newStatus }))
+  //     .then(() => {
+  //       // Wait for the dispatch to complete
+  //       setTimeout(() => {
+  //         setSavingId(null);
+  //         setLoading(false); // Reset loading state
+  //       }, 2000); // Increased timeout to 2 seconds
+  //     })
+  //     .catch((error) => {
+  //       console.error("Status update failed:", error);
+  //       setSavingId(null);
+  //       setLoading(false);
+  //     });
+  // };
+
   const handleStatusUpdate = (id) => {
+    console.log("Status update started:", {
+      id,
+      time: new Date().toISOString(),
+    });
     setSavingId(id);
     setLoading(true);
-    // dispatch update of status
-    dispatch(orderUpdateStatus({ id: id, status: newStatus }));
-    setTimeout(() => {
-      setSavingId(null);
-    }, 1500);
-  };
 
+    // Add delay before dispatch
+    setTimeout(() => {
+      dispatch(orderUpdateStatus({ id: id, status: newStatus }))
+        .then(() => {
+          // console.log('Dispatch completed:', { id, time: new Date().toISOString() });
+
+          // Add additional delay after successful update
+          return new Promise((resolve) => setTimeout(resolve, 3000));
+        })
+        .then(() => {
+          // console.log('Final timeout executing:', { id, time: new Date().toISOString() });
+          setSavingId(null);
+          setLoading(false);
+          // console.log('States reset:', { savingId: null, loading: false, time: new Date().toISOString() });
+        })
+        .catch((error) => {
+          console.error("Status update failed:", {
+            id,
+            error,
+            time: new Date().toISOString(),
+          });
+          setSavingId(null);
+          setLoading(false);
+        });
+    }, 1000);
+
+    console.log("Initial states:", {
+      savingId: id,
+      loading: true,
+      time: new Date().toISOString(),
+    });
+  };
   // When Archive Order button is clicked
   const handleArchiveClick = (order) => {
     setArchiveOrder(order); // Store the order object
@@ -301,22 +350,21 @@ const AdminOpenOrders = () => {
                     )}
                   </td>
                   <td className="px-4 py-4">
-                    <div className="relative">
-                      <button
-                        onClick={() => handleStatusUpdate(order._id)}
-                        type="button"
-                        className="font-medium hover:underline disabled:cursor-not-allowed  w-full h-full cursor-pointer
-                    text-blue-600 
-                    disabled:hover:text-slate-400 "
-                      >
-                        Save Status
-                      </button>
-                      {/* Spinner  */}
-                      <div className="w-full top-0 right-0 ml-5">
-                        {savingId === order._id && (
+                    <div className="relative w-32 h-12">
+                      {" "}
+                      {/* Fixed width/height container */}
+                      {savingId === order._id && loading ? (
+                        <div className="absolute inset-0 flex items-center justify-center">
                           <SpinnerBubbles loading={loading} />
-                        )}
-                      </div>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => handleStatusUpdate(order._id)}
+                          className="w-full h-full px-4 py-2 cursor-pointer hover:underline disabled:cursor-not-allowed text-blue-600 disabled:hover:text-slate-600 font-semibold"
+                        >
+                          Save Status
+                        </button>
+                      )}
                     </div>
                   </td>
                   <td className="px-4 py-4">

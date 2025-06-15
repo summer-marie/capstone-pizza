@@ -1,6 +1,6 @@
 import BeatLoader from "react-spinners/BeatLoader"
 
-const Spinner = ({ loading, size = 10 }) => {
+const Spinner = ({ loading, size = 15 }) => {
   return (
     <span
       className="inline-block align-middle"
