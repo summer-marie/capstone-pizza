@@ -9,7 +9,6 @@ const names = [
 ];
 
 const ZIP_CODES = ["95338", "85395"];
-const START_ORDER_NUMBER = 10001;
 
 // Helper function to generate a single pizza
 const createPizza = () => {
@@ -18,6 +17,18 @@ const createPizza = () => {
     pizzaPrice: faker.commerce.price({ min: 15, max: 20, dec: 2 }),
     quantity: faker.number.int({ min: 1, max: 5 }),
   };
+};
+
+const generateStartOrderNumber = () => {
+  return faker.number.int({ min: 50000, max: 99999 });
+};
+
+const generateUniqueOrderNumber = () => {
+  const timestamp = Date.now().toString().slice(-6); // Last 6 digits of timestamp
+  const random = Math.floor(Math.random() * 1000)
+    .toString()
+    .padStart(3, "0"); // 3 random digits
+  return parseInt(timestamp + random);
 };
 
 const fakeOrder = () => {
@@ -34,7 +45,7 @@ const fakeOrder = () => {
     .toFixed(2);
 
   return {
-    orderNumber: faker.number.int({ min: 10000, max: 99999 }),
+    orderNumber: generateUniqueOrderNumber(),
     Date: faker.date.between({ from: "2025-04-01", to: Date.now() }),
     orderDetails: pizzas,
     address: {
@@ -48,8 +59,9 @@ const fakeOrder = () => {
     lastName: faker.person.lastName(),
     orderTotal,
 
-    status: "processing",
-    // status: "completed",
+    // status: "processing",
+    // status: "archived",
+    status: "completed",
     // status: "delivered",
     // status: "cancelled",
     isArchived: false,
@@ -60,7 +72,7 @@ export const createFakeOrder = (length) => {
   const testOrders = [];
   // Start from current time
   let currentDate = new Date();
-  let currentOrderNumber = START_ORDER_NUMBER;
+  let currentOrderNumber = generateStartOrderNumber();
 
   Array.from({ length: length }).forEach(() => {
     // Create the order with the current date

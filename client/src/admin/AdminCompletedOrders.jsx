@@ -1,4 +1,4 @@
-// TODO: capstone+ : add functiion that deletes or archives orders older then 30 days
+// TODO: capstone+ : add function that deletes or archives orders older then 30 days
 
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,8 +12,21 @@ const AdminCompletedOrders = () => {
   useEffect(() => {
     dispatch(orderGetArchived());
     console.log("useEffect", orders);
-  }, [dispatch]);
+  }, [dispatch, orders]);
 
+  const getStatusCounts = () => {
+    return orders.reduce(
+      (counts, order) => {
+        if (order.status === "archived") {
+          counts.archived++;
+        }
+        return counts;
+      },
+      {
+        archived: 0,
+      }
+    );
+  };
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleString("en-US", {
@@ -25,7 +38,6 @@ const AdminCompletedOrders = () => {
       hour12: true,
     });
   };
-  // TODO: need to have another map to map over order details?
 
   return (
     <>
@@ -34,6 +46,17 @@ const AdminCompletedOrders = () => {
           Completed Orders Database
         </h2>
         <hr className="my-6 sm:mx-auto lg:my-8 border-gray-700 " />
+
+        <div className="flex justify-center gap-4 mb-6">
+          {Object.entries(getStatusCounts()).map(([status, count]) => (
+            <div
+              key={status}
+              className="px-4 py-2 rounded-full font-semibold bg-gray-100 text-gray-800 border-gray-800 border-2"
+            >
+              {status.charAt(0).toUpperCase() + status.slice(1)}: {count}
+            </div>
+          ))}
+        </div>
 
         <div id="openOrdersTAble" className="w-full shadow-2xl overflow-x-auto">
           <table
@@ -97,8 +120,7 @@ const AdminCompletedOrders = () => {
 
                   <td className="px-4 py-4">
                     <ul>
-            
-                         {Array.isArray(order.orderDetails) ? (
+                      {Array.isArray(order.orderDetails) ? (
                         order.orderDetails.map((item, idx) => (
                           <li key={idx}>
                             {item.pizzaName} - ${item.pizzaPrice} - QTY:{" "}
