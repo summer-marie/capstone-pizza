@@ -31,19 +31,37 @@ const AdminOpenOrders = () => {
   }, []);
 
   const getStatusCounts = () => {
-    const counts = {
-      processing: 0,
-      completed: 0,
-      delivered: 0,
-      cancelled: 0,
-    };
-    orders.forEach((order) => {
-      if (counts.hasOwnProperty(order.status)) {
-        counts[order.status]++;
+    return orders.reduce(
+      (counts, order) => {
+        if (order.status in counts) {
+          counts[order.status]++;
+        }
+        return counts;
+      },
+      {
+        processing: 0,
+        completed: 0,
+        delivered: 0,
+        cancelled: 0,
       }
-    });
+    );
+  };
+  const getSortedOrders = () => {
+    const statusOrder = {
+      processing: 1,
+      completed: 2,
+      delivered: 3,
+      cancelled: 4,
+    };
 
-    return counts;
+    return [...orders].sort((a, b) => {
+      // First sort by status order
+      const statusDiff = statusOrder[a.status] - statusOrder[b.status];
+      if (statusDiff !== 0) return statusDiff;
+
+      // Then sort by date within same status
+      return new Date(b.date) - new Date(a.date);
+    });
   };
 
   const handleStatusUpdate = (id) => {
@@ -180,7 +198,7 @@ const AdminOpenOrders = () => {
               </tr>
             </thead>
             <tbody>
-              {orders.map((order) => (
+              {getSortedOrders().map((order) => (
                 <tr
                   key={order._id}
                   order={order}
