@@ -64,30 +64,11 @@ const AdminOpenOrders = () => {
     });
   };
 
-  // const handleStatusUpdate = (id) => {
-  //   setSavingId(id);
-  //   setLoading(true);
-
-  //   dispatch(orderUpdateStatus({ id: id, status: newStatus }))
-  //     .then(() => {
-  //       // Wait for the dispatch to complete
-  //       setTimeout(() => {
-  //         setSavingId(null);
-  //         setLoading(false); // Reset loading state
-  //       }, 2000); // Increased timeout to 2 seconds
-  //     })
-  //     .catch((error) => {
-  //       console.error("Status update failed:", error);
-  //       setSavingId(null);
-  //       setLoading(false);
-  //     });
-  // };
-
   const handleStatusUpdate = (id) => {
-    console.log("Status update started:", {
-      id,
-      time: new Date().toISOString(),
-    });
+    // console.log("Status update started:", {
+    //   id,
+    //   time: new Date().toISOString(),
+    // });
     setSavingId(id);
     setLoading(true);
 
@@ -96,9 +77,8 @@ const AdminOpenOrders = () => {
       dispatch(orderUpdateStatus({ id: id, status: newStatus }))
         .then(() => {
           // console.log('Dispatch completed:', { id, time: new Date().toISOString() });
-
           // Add additional delay after successful update
-          return new Promise((resolve) => setTimeout(resolve, 3000));
+          return new Promise((resolve) => setTimeout(resolve, 2000));
         })
         .then(() => {
           // console.log('Final timeout executing:', { id, time: new Date().toISOString() });
@@ -123,12 +103,14 @@ const AdminOpenOrders = () => {
       time: new Date().toISOString(),
     });
   };
+
   // When Archive Order button is clicked
   const handleArchiveClick = (order) => {
     setArchiveOrder(order); // Store the order object
     setShowAlert(true);
   };
 
+  // When user cancels in the alert
   const handleCancel = () => {
     console.log("Cancel Clicked");
     setShowAlert(false);
@@ -145,6 +127,7 @@ const AdminOpenOrders = () => {
     setShowAlert(false);
   };
 
+  // Format date to MM/DD/YYYY, HH:MM AM/PM
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleString("en-US", {
@@ -202,7 +185,7 @@ const AdminOpenOrders = () => {
 
         <div id="openOrdersTAble" className="overflow-x-auto shadow-2xl mb-20">
           <table
-            className="w-full mt-64text-sm text-left rtl:text-right rounded-2xl
+            className="w-full text-sm text-left rtl:text-right rounded-2xl
         text-gray-500"
           >
             <thead
@@ -211,37 +194,31 @@ const AdminOpenOrders = () => {
           text-teal-950"
             >
               <tr>
-                <th scope="col" className="text-center py-4">
-                  {/* **Order ID** */}
+                <th scope="col" className="px-6 py-3 w-[8%] text-center">
                   Order Number
                 </th>
-                <th scope="col" className="text-center py-4">
-                  {/* **Order Date** */}
+                <th scope="col" className="px-6 py-3 w-[12%] text-center">
                   Date/Time Order
                 </th>
-                <th scope="col" className="text-center py-4">
-                  {/* **Items in Order (Product Name, Quantity)** */}
+                <th scope="col" className="px-6 py-3 w-[20%] text-center">
                   Order Details/Quantity
                 </th>
-                <th scope="col" className="text-center py-4">
-                  {/* **Address (Shipping/Delivery Address)** */}
+                <th scope="col" className="px-6 py-3 w-[15%] text-center">
                   Destination
                 </th>
-                <th scope="col" className="text-center py-4">
-                  {/* **Name (or User Email)** */}
+                <th scope="col" className="px-6 py-3 w-[10%] text-center">
                   Customer Name
                 </th>
-                <th scope="col" className="text-center py-4">
-                  {/* **Total Price** */}
+                <th scope="col" className="px-6 py-3 w-[8%] text-center">
                   Total $
                 </th>
-                <th scope="col" className="text-center py-4">
+                <th scope="col" className="px-6 py-3 w-[10%] text-center">
                   Status
                 </th>
-                <th scope="col" className="text-center py-4">
+                <th scope="col" className="px-6 py-3 w-[10%] text-center">
                   Update Status
                 </th>
-                <th scope="col" className="text-center py-4">
+                <th scope="col" className="px-6 py-3 w-[7%] text-center">
                   Archive Order
                 </th>
               </tr>
@@ -258,98 +235,65 @@ const AdminOpenOrders = () => {
                 >
                   <th
                     scope="row"
-                    className="px-4 py-3
-                font-medium 
-                text-gray-900   "
+                    className="px-4 py-3 font-medium text-gray-900  w-[8%] text-center"
                   >
                     <p className="">{order.orderNumber}</p>
                   </th>
-                  <td className="px-2 py-2 whitespace-nowrap">
+                  <td className="px-2 py-2 w-[12%] text-center">
                     <p className=""> {formatDate(order.date)}</p>
                   </td>
-                  <td className="px-2 py-2">
+                  <td className="px-2 py-2 w-[20%] text-center">
                     {/* Map over order details to show items in order */}
-                    <ul>
-                      {Array.isArray(order.orderDetails) ? (
-                        order.orderDetails.map((item, idx) => (
-                          <li key={idx}>
-                            {item.pizzaName} - ${item.pizzaPrice} - QTY:{" "}
-                            {item.quantity}
-                          </li>
-                        ))
-                      ) : order.orderDetails ? (
-                        <li>
-                          {order.orderDetails.pizzaName} - $
-                          {order.orderDetails.pizzaPrice} - QTY:{" "}
-                          {order.orderDetails.quantity}
-                        </li>
-                      ) : (
-                        <li>No items</li>
-                      )}
-                    </ul>
+
+                    {order.orderDetails.map((item, index) => (
+                      <div key={index}>
+                        {item.pizzaName} x{item.quantity}
+                      </div>
+                    ))}
                   </td>
-                  <td className="px-2 py-2 whitespace-nowrap">
+                  <td className="px-2 py-2 w-[15%] text-center">
                     {order.address.street}
+                    <br />
+                    {order.address.zip}
                   </td>
-                  <td className="px-2 py-2 whitespace-nowrap">
-                    {" "}
+                  <td className="px-2 py-2 w-[10%] text-center">
                     {order.firstName} {order.lastName}
                   </td>
-                  <td className="px-2 py-2 whitespace-nowrap">
-                    $ {order.orderTotal}
+                  <td className="px-2 py-2 w-[8%] text-center">
+                    ${order.orderTotal}
                   </td>
-                  <td className="px-2 py-2 ">
-                    {newStatus.id === order._id ? (
-                      <select
-                        value={newStatus.status}
-                        onChange={(e) =>
-                          setNewStatus({
-                            id: order._id,
-                            status: e.target.value,
-                          })
-                        }
-                        className="dark:text-cyan-700 bg-slate-100 rounded-xl font-semibold px-2 py-2 w-full"
-                      >
-                        <option defaultValue={newStatus.status}>
-                          {order.status}
+
+                  <td className="px-2 py-2 w-auto min-w-full text-center">
+                    <select
+                      value={order.status}
+                      onChange={(e) =>
+                        setNewStatus({
+                          id: order._id,
+                          status: e.target.value,
+                        })
+                      }
+                      className="text-sm rounded-lg block w-full p-2.5 text-center capitalize
+                          dark:text-cyan-700 
+                          bg-slate-100
+                          border-slate-500
+                          focus:ring-white
+                          focus:border-sky-500"
+                      style={{ textAlignLast: "center" }}
+                    >
+                      {statusArray.map((status) => (
+                        <option
+                          className="text-center capitalize"
+                          style={{ textAlign: "left" }}
+                          key={status}
+                          value={status}
+                        >
+                          {status}
                         </option>
-                        {/* Only show types that are different from default */}
-                        {order.status &&
-                          [...statusArray]
-                            .filter((status) => status !== order.status)
-                            .map((status) => (
-                              <option key={status} value={status}>
-                                {status}
-                              </option>
-                            ))}
-                      </select>
-                    ) : (
-                      <select
-                        value={order.status}
-                        onChange={(e) =>
-                          setNewStatus({
-                            id: order._id,
-                            status: e.target.value,
-                          })
-                        }
-                        className="dark:text-cyan-700 bg-slate-100 rounded-xl font-semibold px-2 py-2 min-w-[120px] w-auto"
-                      >
-                        <option defaultValue={order.status}>
-                          {order.status}
-                        </option>
-                        {/* Only show types that are different from default */}
-                        {order.status &&
-                          [...statusArray]
-                            .filter((status) => status !== order.status)
-                            .map((status) => (
-                              <option key={status} value={status}>
-                                {status}
-                              </option>
-                            ))}
-                      </select>
-                    )}
+                      ))}
+                    </select>
                   </td>
-                  <td className="px-4 py-4">
+
+                  <td className="px-4 py-4 w-[10%] text-center">
                     <div className="relative w-32 h-12">
                       {" "}
                       {/* Fixed width/height container */}
@@ -367,7 +311,7 @@ const AdminOpenOrders = () => {
                       )}
                     </div>
                   </td>
-                  <td className="px-4 py-4">
+                  <td className="px-4 py-4 w-[7%] text-center">
                     <div className="relative">
                       <div className="w-full top-0 right-2 "></div>
                       <button
