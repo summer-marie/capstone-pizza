@@ -24,12 +24,18 @@ const builderService = {
     return response.data; // just the data, not the whole Axios response
   },
 
-  builderUpdateOne: async (formData) => {
-    return axios.put("/api/pizza/update", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+  builderUpdateOne(formData) {
+    const id = formData.get("id");
+    if (!id) {
+      throw new Error("No ID provided in formData");
+    }
+    return axios.put(
+      `${import.meta.env.VITE_API_SERVER_URL}/builders/${id}`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
   },
 
   builderDeleteOneAlt: async (id) => {

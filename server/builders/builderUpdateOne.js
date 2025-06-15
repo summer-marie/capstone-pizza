@@ -14,22 +14,13 @@ const pizzaUpdateOne = async (req, res) => {
     // Parse fields from FormData (they come as strings)
     const pizzaName = req.body.pizzaName;
     const pizzaPrice = req.body.pizzaPrice;
-    const sauce = req.body.sauce ? JSON.parse(req.body.sauce) : undefined;
-    const meatTopping = req.body.meatTopping
-      ? JSON.parse(req.body.meatTopping)
-      : undefined;
-    const veggieTopping = req.body.veggieTopping
-      ? JSON.parse(req.body.veggieTopping)
-      : undefined;
-    const base = req.body.base ? JSON.parse(req.body.base) : undefined;
+    const sauce = JSON.parse(req.body.sauce);
+    const meatTopping = JSON.parse(req.body.meatTopping);
+    const veggieTopping = JSON.parse(req.body.veggieTopping);
+    const base = JSON.parse(req.body.base);
 
-    // Handle image file if uploaded
-    let image;
-    if (req.file) {
-      image = req.file.filename; // Or req.file.path, or save to DB as needed
-    } else if (req.body.image) {
-      image = req.body.image; // fallback if image is sent as a string (optional)
-    }
+    // Handle image
+    const image = req.file ? req.file.filename : undefined;
 
     const updateFields = {
       pizzaName,
@@ -39,7 +30,10 @@ const pizzaUpdateOne = async (req, res) => {
       veggieTopping,
       base,
     };
-    if (image) updateFields.image = image;
+
+    if (image) {
+      updateFields.image = image;
+    }
 
     const updatedPizza = await builderModel.findOneAndUpdate(
       { _id: id },
@@ -54,7 +48,7 @@ const pizzaUpdateOne = async (req, res) => {
     }
 
     console.log("Pizza updated YAYYY!!", updatedPizza);
-    res.status(200).json({ success: true, pizza: updatedPizza });
+    res.status(200).json({ success: true, builder: updatedPizza });
   } catch (err) {
     console.error("Update error:", err);
     res

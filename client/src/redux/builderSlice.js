@@ -43,9 +43,18 @@ export const pizzaGetOne = createAsyncThunk("builder/getOne", async (id) => {
 // Update
 export const builderUpdateOne = createAsyncThunk(
   "builder/updateOne",
-  async (formData) => {
-    const response = await builderService.builderUpdateOne(formData);
-    return response.data;
+  async (formData, thunkAPI) => {
+    try {
+      const response = await builderService.builderUpdateOne(formData);
+      if (!response.data.success) {
+        return thunkAPI.rejectWithValue(response.data.message);
+      }
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message
+      );
+    }
   }
 );
 

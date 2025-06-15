@@ -1,7 +1,7 @@
 import express from "express";
 import builderCreate from "./builderCreate.js";
 import builderGetMany from "./builderGetMany.js";
-import pizzaUpdateOne, { pizzaUpdateOneUpload } from "./builderUpdateOne.js";
+import pizzaUpdateOne from "./builderUpdateOne.js";
 import builderGetOne from "./builderGetOne.js";
 import builderDeleteOne from "./builderDeleteOne.js";
 import multer from "multer";
@@ -19,7 +19,7 @@ builderIndex.post("/", upload.single("image"), builderCreate);
 builderIndex.get("/", builderGetMany);
 
 // Update one
-builderIndex.put("/:id", pizzaUpdateOneUpload, pizzaUpdateOne);
+builderIndex.put("/:id", upload.single("image"), pizzaUpdateOne);
 
 // Get One
 builderIndex.get("/pizza-detail/:id", builderGetOne);
