@@ -211,6 +211,25 @@ const IngredientsTable = () => {
     console.log(editing);
   }, [editing]);
 
+  // Function to count ingredients by type
+  const getIngredientTypeCounts = () => {
+    return ingredients.reduce(
+      (counts, ingredient) => {
+        if (ingredient.itemType in counts) {
+          counts[ingredient.itemType]++;
+        }
+        return counts;
+      },
+      {
+        Base: 0,
+        Sauce: 0,
+        "Meat Topping": 0,
+        "Veggie Topping": 0,
+        Total: ingredients.length,
+      }
+    );
+  };
+
   // Add New ingredient Modal
   const handleOpenModal = () => {
     setShowModal(true);
@@ -269,9 +288,39 @@ const IngredientsTable = () => {
           onClose={handleCloseModal}
           setShowModal={setShowModal}
         />
-
+        {/* Badge counts - using same styling pattern as OrderOpen */}
+        <div className="flex justify-center gap-4 mb-6">
+          {Object.entries(getIngredientTypeCounts()).map(([type, count]) => (
+            <div
+              key={type}
+              className={`
+              px-4 py-2 rounded-full font-semibold border-2
+              ${
+                type === "Base"
+                  ? "bg-blue-100 text-blue-800 border-blue-800"
+                  : ""
+              }
+              ${
+                type === "Sauce" ? "bg-red-100 text-red-800 border-red-800" : ""
+              }
+              ${
+                type === "Meat Topping"
+                  ? "bg-orange-100 text-orange-800 border-orange-800"
+                  : ""
+              }
+              ${
+                type === "Veggie Topping"
+                  ? "bg-green-100 text-green-800 border-green-800"
+                  : ""
+              }
+            `}
+            >
+              {type}: {count}
+            </div>
+          ))}
+        </div>
         {/*  Table container  */}
-        <div className="mt-0">
+        <div className="mt-0 mb-16">
           <div
             name="ingredients-table"
             className="shadow-2xl  overflow-hidden "
@@ -287,7 +336,7 @@ const IngredientsTable = () => {
               >
                 <tr>
                   <th scope="col" className="px-2 py-4">
-                    category
+                    category (A-Z)
                   </th>
                   <th scope="col" className="px-2 py-4">
                     name
