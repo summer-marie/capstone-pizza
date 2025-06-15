@@ -111,7 +111,7 @@
 .nested-flex-meat {
   display: flex;
   justify-content: space-between;
-  /* gap: 10px; */
+    flex-wrap: wrap;
 }
 .nested-flex-veggie div {
   /* This sets each child to take up half the width of the container and maintain its original
