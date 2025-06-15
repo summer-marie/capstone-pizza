@@ -12,7 +12,7 @@ const AdminCompletedOrders = () => {
   useEffect(() => {
     dispatch(orderGetArchived());
     console.log("useEffect", orders);
-  }, []);
+  }, [dispatch]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);

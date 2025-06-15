@@ -65,10 +65,6 @@ const AdminOpenOrders = () => {
   };
 
   const handleStatusUpdate = (id) => {
-    // console.log("Status update started:", {
-    //   id,
-    //   time: new Date().toISOString(),
-    // });
     setSavingId(id);
     setLoading(true);
 
@@ -76,15 +72,11 @@ const AdminOpenOrders = () => {
     setTimeout(() => {
       dispatch(orderUpdateStatus({ id: id, status: newStatus }))
         .then(() => {
-          // console.log('Dispatch completed:', { id, time: new Date().toISOString() });
-          // Add additional delay after successful update
           return new Promise((resolve) => setTimeout(resolve, 2000));
         })
         .then(() => {
-          // console.log('Final timeout executing:', { id, time: new Date().toISOString() });
           setSavingId(null);
           setLoading(false);
-          // console.log('States reset:', { savingId: null, loading: false, time: new Date().toISOString() });
         })
         .catch((error) => {
           console.error("Status update failed:", {
@@ -120,9 +112,24 @@ const AdminOpenOrders = () => {
   // When user confirms in the alert
   const handleConfirm = async () => {
     if (archiveOrder) {
-      await dispatch(orderArchiveOne(archiveOrder._id)).unwrap();
-      await dispatch(orderGetOpen()).unwrap();
-      setArchiveOrder(null);
+      try {
+        // First update the status to "archived"
+        await dispatch(
+          orderUpdateStatus({
+            id: archiveOrder._id,
+            status: { status: "archived" },
+          })
+        ).unwrap();
+
+        // Then archive the order
+        await dispatch(orderArchiveOne(archiveOrder._id)).unwrap();
+
+        // Finally refresh the open orders
+        await dispatch(orderGetOpen()).unwrap();
+        setArchiveOrder(null);
+      } catch (error) {
+        console.error("Error archiving order:", error);
+      }
     }
     setShowAlert(false);
   };
@@ -272,7 +279,7 @@ const AdminOpenOrders = () => {
                           status: e.target.value,
                         })
                       }
-                      className="text-sm rounded-lg block w-full p-2.5 text-center capitalize
+                      className="text-sm rounded-lg block w-full p-2.5 text-center
                           dark:text-cyan-700 
                           bg-slate-100
                           border-slate-500
@@ -282,7 +289,7 @@ const AdminOpenOrders = () => {
                     >
                       {statusArray.map((status) => (
                         <option
-                          className="text-center capitalize"
+                          className="text-center"
                           style={{ textAlign: "left" }}
                           key={status}
                           value={status}
