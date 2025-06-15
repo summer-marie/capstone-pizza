@@ -143,7 +143,7 @@ const AdminMenu = () => {
                     </div>
 
                     <h2 className="font-bold text-lg text-gray-900 mt-2">
-                      Price $ {builder.pizzaPrice}
+                      Price $ {Number(builder.pizzaPrice).toFixed(2)}
                     </h2>
                   </div>
                 </div>
