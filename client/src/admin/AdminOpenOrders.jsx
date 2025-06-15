@@ -22,7 +22,13 @@ const AdminOpenOrders = () => {
     : "Are you sure you want to archive this order?";
   const alertDescription = "Click to confirm";
 
-  const statusArray = ["processing", "completed", "delivered"];
+  const statusArray = [
+    "processing",
+    "completed",
+    "delivered",
+    "cancelled",
+  ];
+
   // Grab open order
   useEffect(() => {
     dispatch(orderGetOpen());
@@ -72,6 +78,7 @@ const AdminOpenOrders = () => {
       hour12: true,
     });
   };
+  
   return (
     <>
       <div className="ml-64 px-4">
