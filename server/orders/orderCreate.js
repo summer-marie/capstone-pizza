@@ -2,15 +2,6 @@ import orderModel from "./orderModel.js";
 
 const orderCreate = async (req, res) => {
   try {
-    // const generateOrderNumber = async () => {
-    //   const orderNumberDoc = await orderNumber.findOneAndUpdate(
-    //     {},
-    //     { $inc: { currentOrderNumber: 1 } },
-    //     { new: true, upsert: true }
-    //   );
-    //   return orderNumberDoc.currentOrderNumber;
-    // };
-
     const generateOrderNumber = () => {
       return Math.floor(100000 + Math.random() * 900000).toString();
     };
