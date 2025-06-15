@@ -62,7 +62,7 @@ const AdminMenu = () => {
                 // Card
                 <div
                   key={builder.id || index}
-                  // onClick={() => navigate(`/admin-update-one/${id}`)}
+
                   className="max-w-2xl col-1-4 rounded-lg shadow-2xl bg-zinc-300 border border-gray-200 shadow-green-600 relative"
                 >
                   <div className="relative">

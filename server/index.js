@@ -1,18 +1,25 @@
+// Environment and Core Node Modules
 import "dotenv/config";
+import path from "path";
+import { fileURLToPath } from "url";
+// Express and Middleware
 import express from "express";
 import cors from "cors";
-import mongoose from "mongoose";
 import session from "express-session";
 import cookieParser from "cookie-parser";
+import multer from "multer";
+// Database
+import mongoose from "mongoose";
+// Authentication
 import passport from "passport";
 import "./strategies/jwtStrategy.js";
 import "./strategies/localStrategy.js";
+// Routes
 import authRouter from "./auth/authIndex.js";
 import userRouter from "./user/userIndex.js";
 import orderIndex from "./orders/orderIndex.js";
 import ingredientsIndex from "./ingredients/ingredientsIndex.js";
 import builderIndex from "./builders/builderIndex.js";
-import multer from "multer";
 
 console.log(process.env.MONGODB_URL);
 
@@ -20,6 +27,9 @@ const port = process.env.PORT || 8010;
 
 const cookieSecret = process.env.COOKIE_SECRET;
 const sessionSecret = process.env.SESSION_SECRET || "bubbles";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(express.json());
@@ -46,6 +56,9 @@ const corsOptions = {
 };
 // Use CORS
 app.use(cors(corsOptions));
+
+// Make the "uploads" folder publicly accessible
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

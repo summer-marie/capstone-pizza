@@ -86,8 +86,14 @@ const Order = () => {
             >
               <img
                 className="object-cover w-full rounded-t-lg h-auto rounded-s-lg p-2"
-                src={new URL(`${builder.image}`, import.meta.url).href}
-                alt="yummy pizza picture"
+                src={
+                  builder.image
+                    ? `${import.meta.env.VITE_API_SERVER_URL}/uploads/${
+                        builder.image
+                      }`
+                    : new URL("../assets/basePizza.jpg", import.meta.url).href
+                }
+                alt={builder.pizzaName || "Pizza"}
               />
 
               <div className="px-5 pb-5">
@@ -135,7 +141,14 @@ const Order = () => {
                   </span>
 
                   <button
-                    onClick={() => dispatch(addToCart({ ...builder, cartItemId: Date.now() + Math.random() }))}
+                    onClick={() =>
+                      dispatch(
+                        addToCart({
+                          ...builder,
+                          cartItemId: Date.now() + Math.random(),
+                        })
+                      )
+                    }
                     type="button"
                     className="font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 top-0 right-0 shadow-lg   me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
                     shadow-green-800/80 hover:text-black
