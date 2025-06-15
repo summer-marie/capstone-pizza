@@ -9,6 +9,7 @@ const names = [
 ];
 
 const ZIP_CODES = ["95338", "85395"];
+const START_ORDER_NUMBER = 10001;
 
 // Helper function to generate a single pizza
 const createPizza = () => {
@@ -47,9 +48,9 @@ const fakeOrder = () => {
     lastName: faker.person.lastName(),
     orderTotal,
 
-    // status: "processing",
+    status: "processing",
     // status: "completed",
-    status: "delivered",
+    // status: "delivered",
     // status: "cancelled",
     isArchived: false,
   };
@@ -57,13 +58,19 @@ const fakeOrder = () => {
 
 export const createFakeOrder = (length) => {
   const testOrders = [];
-
   // Start from current time
   let currentDate = new Date();
+  let currentOrderNumber = START_ORDER_NUMBER;
 
   Array.from({ length: length }).forEach(() => {
-    // Set the date and subtract 10 minutes for each successive order
-    order.Date = new Date(currentDate);
+    // Create the order with the current date
+    const order = {
+      ...fakeOrder(),
+      orderNumber: currentOrderNumber++,
+      Date: new Date(currentDate),
+    };
+
+    // Subtract 10 minutes for next order
     currentDate.setMinutes(currentDate.getMinutes() - 10);
     testOrders.push(order);
   });

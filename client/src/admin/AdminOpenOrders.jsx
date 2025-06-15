@@ -30,6 +30,22 @@ const AdminOpenOrders = () => {
     console.log("useEffect", orders);
   }, []);
 
+  const getStatusCounts = () => {
+    const counts = {
+      processing: 0,
+      completed: 0,
+      delivered: 0,
+      cancelled: 0,
+    };
+    orders.forEach((order) => {
+      if (counts.hasOwnProperty(order.status)) {
+        counts[order.status]++;
+      }
+    });
+
+    return counts;
+  };
+
   const handleStatusUpdate = (id) => {
     setSavingId(id);
     setLoading(true);
@@ -81,6 +97,41 @@ const AdminOpenOrders = () => {
           Open Orders
         </h2>
         <hr className="my-6 sm:mx-auto lg:my-8 border-gray-700" />
+
+        {/* Badge counts */}
+        <div className="flex justify-center gap-4 mb-6">
+          {Object.entries(getStatusCounts()).map(([status, count]) => (
+            <div
+              key={status}
+              className={`
+                px-4 py-2 rounded-full font-semibold
+                ${
+                  status === "processing"
+                    ? "bg-yellow-100 text-yellow-800 border-yellow-800"
+                    : ""
+                }
+                ${
+                  status === "completed"
+                    ? "bg-blue-100 text-blue-800 border-blue-800"
+                    : ""
+                }
+                ${
+                  status === "delivered"
+                    ? "bg-green-100 text-green-800 border-green-800"
+                    : ""
+                }
+                ${
+                  status === "cancelled"
+                    ? "bg-red-100 text-red-800 border-red-800"
+                    : ""
+                }
+                border-2
+              `}
+            >
+              {status.charAt(0).toUpperCase() + status.slice(1)}: {count}
+            </div>
+          ))}
+        </div>
 
         <div id="openOrdersTAble" className="overflow-x-auto shadow-2xl mb-20">
           <table
