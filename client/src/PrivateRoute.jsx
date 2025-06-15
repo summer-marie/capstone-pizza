@@ -2,22 +2,20 @@ import { Navigate, Outlet } from "react-router";
 import { useSelector } from "react-redux";
 
 const PrivateRoute = () => {
-  const token =
-    useSelector((state) => state.auth.token) || localStorage.getItem("token");
-  const user =
-    useSelector((state) => state.auth.authUser) ||
-    JSON.parse(localStorage.getItem("userOn") || "null");
+  const auth = useSelector((state) => state.auth);
 
-  console.log("PrivateRoute check:", { token, user });
+  // Add loading state check
+  if (auth.loading) {
+    return <div>Loading...</div>; // Or your loading component
+  }
 
-  // If user is logged
-  if (token && user?.role === "admin") {
+  // If user is logged in and is admin
+  if (auth.token && auth.authUser?.role === "admin") {
     return <Outlet />;
   }
-  // If user is not logged in, navigate to login
-  else {
-    return <Navigate to="/admin-login" />;
-  }
+
+  // If not logged in or not admin, redirect
+  return <Navigate to="/admin-login" />;
 };
 
 export default PrivateRoute;
