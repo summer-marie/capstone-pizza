@@ -92,15 +92,24 @@ const BuildYourOwn = () => {
 
   // Update pizza price whenever toppings change
   useEffect(() => {
+    // Don't update state if price hasn't changed
     const newPrice = calculateTotalPrice(
       newPizza.meatTopping,
       newPizza.veggieTopping
     );
-    setNewPizza((prev) => ({
-      ...prev,
-      pizzaPrice: newPrice,
-    }));
-  }, [newPizza.meatTopping, newPizza.veggieTopping, calculateTotalPrice]);
+
+    if (newPrice !== newPizza.pizzaPrice) {
+      setNewPizza((prev) => ({
+        ...prev,
+        pizzaPrice: newPrice,
+      }));
+    }
+  }, [
+    newPizza.meatTopping,
+    newPizza.veggieTopping,
+    newPizza.pizzaPrice,
+    calculateTotalPrice,
+  ]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
