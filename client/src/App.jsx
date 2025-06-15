@@ -25,15 +25,18 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Get token and user from localStorage as plain string
     const token = localStorage.getItem("token");
     const userString = localStorage.getItem("userOn");
-    // Only parse user if not null and not the string "undefined"
     const user =
       userString && userString !== "undefined" ? JSON.parse(userString) : null;
-    if (token && user) {
-      dispatch(setAuthFromStorage({ token, user }));
-    }
+
+    // Always call setAuthFromStorage to set loading to false
+    dispatch(
+      setAuthFromStorage({
+        token: token || null,
+        user: user || null,
+      })
+    );
   }, [dispatch]);
 
   return (
@@ -64,7 +67,7 @@ function App() {
             {/* <Route path='/pizza-update' element={<Update />} /> */}
           </Route>
         </Route>
-        
+
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>
