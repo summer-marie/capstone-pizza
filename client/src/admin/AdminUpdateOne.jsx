@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import AlertSuccess2 from "../components/AlertSuccess2";
 import { pizzaGetOne, builderUpdateOne } from "../redux/builderSlice";
+import { ingredientGetAll } from "../redux/ingredientSlice";
 
 const successMsg = "Pizza was updated successfully";
 const successDescription = "navigating you back to the admin menu....";
@@ -30,6 +31,10 @@ const AdminUpdateOne = () => {
   useEffect(() => {
     dispatch(pizzaGetOne(id));
   }, [dispatch, id]);
+
+  useEffect(() => {
+    dispatch(ingredientGetAll());
+  }, [dispatch]);
 
   // Helper to normalize array fields to array of names (strings)
   const normalizeArray = (arr = [], length = 0) =>
