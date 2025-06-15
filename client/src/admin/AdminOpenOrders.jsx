@@ -22,12 +22,7 @@ const AdminOpenOrders = () => {
     : "Are you sure you want to archive this order?";
   const alertDescription = "Click to confirm";
 
-  const statusArray = [
-    "processing",
-    "completed",
-    "delivered",
-    "cancelled",
-  ];
+  const statusArray = ["processing", "completed", "delivered", "cancelled"];
 
   // Grab open order
   useEffect(() => {
@@ -78,7 +73,7 @@ const AdminOpenOrders = () => {
       hour12: true,
     });
   };
-  
+
   return (
     <>
       <div className="ml-64 px-4">
@@ -219,7 +214,7 @@ const AdminOpenOrders = () => {
                             status: e.target.value,
                           })
                         }
-                        className="dark:text-cyan-700 bg-slate-100 rounded-xl font-semibold px-2 py-2 w-full"
+                        className="dark:text-cyan-700 bg-slate-100 rounded-xl font-semibold px-2 py-2 min-w-[120px] w-auto"
                       >
                         <option defaultValue={order.status}>
                           {order.status}
