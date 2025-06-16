@@ -3,22 +3,30 @@ import axios from "axios";
 const messageService = {
   // Create a new message
   sendMessage: async (messageData) => {
-    return await axios.post(
+    const response = await axios.post(
       `${import.meta.env.VITE_API_SERVER_URL}/messages`,
       messageData
     );
+    console.log("messageService sendMessage response:", response);
+    return response;
   },
 
   // Get all messages
   getMessages: async () => {
-    return await axios.get(`${import.meta.env.VITE_API_SERVER_URL}/messages`);
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_SERVER_URL}/messages`
+    );
+    console.log("messageService getMessages response:", response);
+    return response;
   },
 
   // Update message read status
   updateMessageRead: async (id) => {
-    return await axios.put(
+    const response = await axios.put(
       `${import.meta.env.VITE_API_SERVER_URL}/messages/${id}`
     );
+    console.log("messageService updateMessageRead response:", response);
+    return response;
   },
 };
 

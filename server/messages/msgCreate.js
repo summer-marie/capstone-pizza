@@ -1,6 +1,8 @@
 import messageModel from "./msgModel.js";
 
 const messageCreate = async (req, res) => {
+  console.log("Received message data:", req.body);
+  
   const { email, subject, message } = req.body;
 
   console.log(email, subject, message);

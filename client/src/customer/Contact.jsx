@@ -13,9 +13,19 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.email || !formData.subject || !formData.message.trim()) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    console.log("handle submit called with formData:", formData);
+
     setIsLoading(true);
     try {
-      await dispatch(sendMessage(formData)).unwrap();
+      const result = await dispatch(sendMessage(formData)).unwrap();
+      console.log("Message sent successfully:", result);
+
       setFormData({
         email: "",
         subject: "",
@@ -101,11 +111,12 @@ const Contact = () => {
                 }
                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-teal-500 focus:border-teal-500"
                 placeholder="Leave a comment..."
+                required
               ></textarea>
             </div>
             <div className="flex justify-center w-full">
               <button
-                type="button"
+                type="submit"
                 disabled={isLoading}
                 className="w-[30%] font-medium cursor-pointer
               shadow-green-800/80 
