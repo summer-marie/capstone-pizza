@@ -3,6 +3,13 @@ import messageService from "./messageService";
 
 const initialState = {
   loading: false,
+  message: {
+    email: "",
+    subject: "",
+    message: "",
+    date: null,
+    isRead: false,
+  },
   messages: [],
   error: null,
 };
@@ -10,11 +17,16 @@ const initialState = {
 // Send message
 export const sendMessage = createAsyncThunk(
   "message/sendMessage",
-  async (messageData) => {
-    console.log("redux sendMessage", messageData);
-    const response = await messageService.sendMessage(messageData);
-    console.log(response);
-    return response.data;
+  async (messageData, { rejectWithValue }) => {
+    try {
+      const response = await messageService.sendMessage(messageData);
+      return response.data;
+    } catch (err) {
+      // Pass a serializable error message
+      return rejectWithValue(
+        err.response?.data?.message || err.message || "Unknown error"
+      );
+    }
   }
 );
 
@@ -55,7 +67,7 @@ export const messageSlice = createSlice({
       .addCase(sendMessage.rejected, (state, action) => {
         console.log("messageSlice sendMessage.rejected", action.payload);
         state.loading = false;
-        state.error = action.error.message;
+   state.error = action.payload;
       })
 
       // Get all messages
