@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sendMessage } from "../redux/messageSlice";
 
 const Contact = () => {
   const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.message);
   const [formData, setFormData] = useState({
     email: "",
     subject: "",
@@ -72,6 +73,10 @@ const Contact = () => {
               <input
                 type="text"
                 id="subject"
+                value={formData.subject}
+                onChange={(e) =>
+                  setFormData({ ...formData, subject: e.target.value })
+                }
                 className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500"
                 placeholder="Let us know how we can help you"
                 required
@@ -87,6 +92,10 @@ const Contact = () => {
               <textarea
                 id="message"
                 rows="6"
+                value={formData.message}
+                onChange={(e) =>
+                  setFormData({ ...formData, message: e.target.value })
+                }
                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-teal-500 focus:border-teal-500"
                 placeholder="Leave a comment..."
               ></textarea>
@@ -94,6 +103,7 @@ const Contact = () => {
             <div className="flex justify-center w-full">
               <button
                 type="button"
+                disabled={loading}
                 className="w-[30%] font-medium cursor-pointer
               shadow-green-800/80 
               text-white 
@@ -102,7 +112,7 @@ const Contact = () => {
               to-green-600
               focus:ring-green-800 rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none"
               >
-                Send
+                {loading ? "Sending..." : "Send"}
               </button>
             </div>
           </form>
