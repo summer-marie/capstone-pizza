@@ -5,13 +5,13 @@ import messageUpdateRead from "./msgUpdateRead.js";
 
 const msgIndex = express.Router();
 
-// Create API
+// Create/Add
 msgIndex.post("/", messageCreate);
 
-// Get all, no validation
-msgIndex.get("/all", messageGetAll);
+// getAll, no validation
+msgIndex.get("/", messageGetAll);
 
-// Update read status
-msgIndex.put("/update-read/:id", messageUpdateRead);
+// find/Update One
+msgIndex.put("/:id", messageUpdateRead);
 
 export default msgIndex;
