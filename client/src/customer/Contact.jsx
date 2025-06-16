@@ -1,4 +1,31 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { sendMessage } from "../redux/messageSlice";
+
 const Contact = () => {
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await dispatch(sendMessage(formData)).unwrap();
+      // Reset form
+      setFormData({
+        email: "",
+        subject: "",
+        message: "",
+      });
+      // Show success message
+      alert("Message sent successfully!");
+    } catch (error) {
+      alert("Failed to send message. Please try again.");
+    }
+  };
   return (
     <>
       <section className="bg-grey-100 mb-20">
@@ -15,7 +42,7 @@ const Contact = () => {
             every customer and looks forward to serving you the best pizza in
             town.
           </p>
-          <form action="#" className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-8">
             <div>
               <label
                 htmlFor="email"
@@ -26,6 +53,10 @@ const Contact = () => {
               <input
                 type="email"
                 id="email"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5"
                 placeholder="name@flowbite.com"
                 required
