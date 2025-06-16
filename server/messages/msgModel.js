@@ -1,4 +1,4 @@
 import mongoose from "mongoose";
-import messageSchema from "./messageSchema.js";
+import messageSchema from "./msgSchema.js";
 
 export default mongoose.model("Message", messageSchema);
