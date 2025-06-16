@@ -30,9 +30,21 @@ const AdminInbox = () => {
         <div className="flex flex-col md:flex-row gap-6 p-6">
           {/* Message List */}
           <div className="w-full md:w-1/3 bg-white rounded-lg shadow-lg p-4">
-            <h2 className="text-xl font-bold mb-4 text-primary-700">Inbox</h2>
+            <h2 className="text-xl font-bold mb-4 text-primary-700">
+              Inbox
+              {/* Unread message count badge */}
+              <span className="ml-2 bg-yellow-400 text-yellow-900 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                Unread {messages.filter((msg) => !msg.isRead).length}
+              </span>
+              {/* Read message count badge */}
+              <span className="ml-2 bg-slate-200 text-slate-700 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                Read {messages.filter((msg) => msg.isRead).length}
+              </span>
+            </h2>
+
             {loading && <div className="text-gray-500">Loading...</div>}
-            <ul>
+            {/*  This sets the max height to 70% of viewport height minus 120px (for headers/padding) */}
+            <ul className="overflow-y-auto pr-1 flex-1 max-h-[calc(90vh-100px)]">
               {messages.length === 0 && (
                 <li className="text-gray-400">No messages yet.</li>
               )}
