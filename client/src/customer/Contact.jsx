@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { sendMessage } from "../redux/messageSlice";
 
 const Contact = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.message);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     subject: "",
@@ -13,20 +13,23 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await dispatch(sendMessage(formData)).unwrap();
-      // Reset form
       setFormData({
         email: "",
         subject: "",
         message: "",
       });
-      // Show success message
       alert("Message sent successfully!");
-    } catch (error) {
+    } catch (err) {
+      console.error("Send message failed:", err);
       alert("Failed to send message. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
+
   return (
     <>
       <section className="bg-grey-100 mb-20">
@@ -103,7 +106,7 @@ const Contact = () => {
             <div className="flex justify-center w-full">
               <button
                 type="button"
-                disabled={loading}
+                disabled={isLoading}
                 className="w-[30%] font-medium cursor-pointer
               shadow-green-800/80 
               text-white 
@@ -112,7 +115,7 @@ const Contact = () => {
               to-green-600
               focus:ring-green-800 rounded-lg shadow-lg  text-sm px-5 py-2.5 text-center me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none"
               >
-                {loading ? "Sending..." : "Send"}
+                {isLoading ? "Sending..." : "Send"}
               </button>
             </div>
           </form>
