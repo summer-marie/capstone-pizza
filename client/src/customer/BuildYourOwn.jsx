@@ -169,6 +169,11 @@ const BuildYourOwn = () => {
       veggieTopping: ["", "", "", ""],
       specialRequest: "",
     });
+    // Clear the textarea manually since it's not controlled
+    const specialRequestTextarea = document.getElementById("special-request");
+    if (specialRequestTextarea) {
+      specialRequestTextarea.value = "";
+    }
   };
 
   return (
