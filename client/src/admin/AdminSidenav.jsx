@@ -250,10 +250,10 @@ const handleLogout = async () => {
             <hr className="border-gray-500 " />
             <li>
               <Link
-                to="/inbox"
+                to="/admin-inbox"
                 className={`flex items-center p-2 rounded-lg group 
                   ${
-                    location.pathname === "/inbox"
+                    location.pathname === "/admin-inbox"
                       ? "bg-lime-300/70"
                       : "hover:bg-gray-700 text-stone-200"
                   }
@@ -261,7 +261,7 @@ const handleLogout = async () => {
               >
                 <svg
                   className={`w-6 h-6 transition duration-75 group-hover:text-white ${
-                    location.pathname === "/inbox"
+                    location.pathname === "/admin-inbox"
                       ? "text-gray-700"
                       : "text-gray-400 "
                   }
