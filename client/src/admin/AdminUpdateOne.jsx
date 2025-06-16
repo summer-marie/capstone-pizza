@@ -205,7 +205,7 @@ const AdminUpdateOne = () => {
                           htmlFor="pizzaPrice"
                           className="block mb-2 text-sm font-medium text-gray-900"
                         >
-                          Declare Pizza Price $
+                          Update Pizza Price $
                         </label>
                         <input
                           value={pizzaForm.pizzaPrice}

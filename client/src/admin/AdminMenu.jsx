@@ -16,6 +16,7 @@ const AdminMenu = () => {
 
   useEffect(() => {
     dispatch(builderGetMany());
+    console.log("Builders data:", builders);
   }, [dispatch]);
 
   // Use a ref to store the ID of the pizza to be deleted
@@ -62,16 +63,20 @@ const AdminMenu = () => {
                 // Card
                 <div
                   key={builder.id || index}
-                  // onClick={() => navigate(`/admin-update-one/${id}`)}
                   className="max-w-2xl col-1-4 rounded-lg shadow-2xl bg-zinc-300 border border-gray-200 shadow-green-600 relative"
                 >
                   <div className="relative">
                     <img
                       className="object-cover w-full rounded-t-lg h-auto rounded-s-lg"
                       src={
-                        new URL("../assets/basePizza.jpg", import.meta.url).href
+                        builder.image && builder.image.filename
+                          ? `${import.meta.env.VITE_API_SERVER_URL}/uploads/${
+                              builder.image.filename
+                            }`
+                          : new URL("../assets/basePizza.jpg", import.meta.url)
+                              .href
                       }
-                      alt=""
+                      alt={builder.pizzaName || "Pizza"}
                     />
                     <button
                       onClick={() => handleClick(builder.id)}
@@ -138,7 +143,7 @@ const AdminMenu = () => {
                     </div>
 
                     <h2 className="font-bold text-lg text-gray-900 mt-2">
-                      Price $ {builder.pizzaPrice}
+                      Price $ {Number(builder.pizzaPrice).toFixed(2)}
                     </h2>
                   </div>
                 </div>

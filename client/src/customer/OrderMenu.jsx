@@ -76,21 +76,26 @@ const Order = () => {
             </div>
           </div>
           {/* End of CARD  */}
+
           {/* Card  */}
           {builders.map((builder, index) => (
             <div
               key={builder._id || builder.id || index}
-              className="max-w-sm rounded-lg shadow-2xl w-1/4 m-4 sm:w-full
-          bg-white border 
-          border-gray-200 shadow-red-700"
+              className="max-w-sm w-1/4 m-4 sm:w-full bg-white border border-gray-200 shadow-2xl shadow-red-700 rounded-lg flex flex-col h-[30rem]"
             >
               <img
-                className="object-cover w-full rounded-t-lg h-auto rounded-s-lg p-2"
-                src={new URL(`${builder.image}`, import.meta.url).href}
-                alt="yummy pizza picture"
+                className="object-cover w-full rounded-t-lg rounded-s-lg h-auto"
+                src={
+                  builder.image && builder.image.filename
+                    ? `${import.meta.env.VITE_API_SERVER_URL}/uploads/${
+                        builder.image.filename
+                      }`
+                    : new URL("../assets/basePizza.jpg", import.meta.url).href
+                }
+                alt={builder.pizzaName || "Pizza"}
               />
 
-              <div className="px-5 pb-5">
+              <div className="px-5 pb-3 flex flex-col flex-1">
                 <h5 className="text-xl font-semibold tracking-tight text-gray-900 ">
                   {builder.pizzaName}
                 </h5>
@@ -127,15 +132,21 @@ const Order = () => {
                       )
                     )}
                 </ul>
-                {/* <div className='flex items-center mt-2.5 mb-5'></div> */}
-
-                <div className="flex items-center justify-between">
+                <div className="flex-1"></div>
+                <div className="flex items-center justify-between mt-4">
                   <span className="text-3xl font-bold text-gray-900">
-                    $ {builder.pizzaPrice}
+                    $ {Number(builder.pizzaPrice).toFixed(2)}
                   </span>
 
                   <button
-                    onClick={() => dispatch(addToCart({ ...builder, cartItemId: Date.now() + Math.random() }))}
+                    onClick={() =>
+                      dispatch(
+                        addToCart({
+                          ...builder,
+                          cartItemId: Date.now() + Math.random(),
+                        })
+                      )
+                    }
                     type="button"
                     className="font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 top-0 right-0 shadow-lg   me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
                     shadow-green-800/80 hover:text-black
