@@ -15,19 +15,62 @@ const AdminBuilderCreate = () => {
   const ingredients = useSelector((state) => state.ingredient.ingredients);
   const [newPizza, setNewPizza] = useState({
     pizzaName: "",
-    pizzaPrice: "",
-
     sauce: "Signature Red Sauce",
     meatTopping: ["", "", ""], // 3 meat slots
     veggieTopping: ["", "", "", ""], // 4 veggie slots
   });
   const [selectedFile, setSelectedFile] = useState(null);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  // const [submitDisabled, setSubmitDisabled] = useState(false);
+  const [calculatedPrice, setCalculatedPrice] = useState(0);
 
   useEffect(() => {
     dispatch(ingredientGetAll());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!ingredients.length) return;
+
+    // Find the selected sauce object
+    const sauceObj = sauceOptions.find((s) => s.name === newPizza.sauce);
+
+    // Get base prices
+    const basePrice = baseOptions.reduce(
+      (sum, item) => sum + (item.price || 0),
+      0
+    );
+
+    // Get sauce price
+    const saucePrice = sauceObj?.price || 0;
+
+    // Calculate meat prices
+    const meatPrice = newPizza.meatTopping
+      .filter((name) => name) // Filter empty selections
+      .reduce((sum, name) => {
+        const meat = meatOptions.find((m) => m.name === name);
+        return sum + (meat?.price || 0);
+      }, 0);
+
+    // Calculate veggie prices
+    const veggiePrice = newPizza.veggieTopping
+      .filter((name) => name) // Filter empty selections
+      .reduce((sum, name) => {
+        const veggie = veggieOptions.find((v) => v.name === name);
+        return sum + (veggie?.price || 0);
+      }, 0);
+
+    // Calculate total
+    const total = parseFloat(
+      (basePrice + saucePrice + meatPrice + veggiePrice).toFixed(2)
+    );
+    setCalculatedPrice(total);
+  }, [
+    newPizza,
+    ingredients,
+    baseOptions,
+    sauceOptions,
+    meatOptions,
+    veggieOptions,
+  ]);
 
   const meatOptions = ingredients.filter((i) => i.itemType === "Meat Topping");
   const veggieOptions = ingredients.filter(
@@ -69,17 +112,10 @@ const AdminBuilderCreate = () => {
       })
       .filter(Boolean);
 
-    // Convert pizzaPrice to number
-    const pizzaPriceNum = parseFloat(newPizza.pizzaPrice);
-    if (isNaN(pizzaPriceNum)) {
-      alert("Please enter a valid price.");
-      return;
-    }
-
     // Use FormData for file upload
     const formData = new FormData();
     formData.append("pizzaName", newPizza.pizzaName);
-    formData.append("pizzaPrice", pizzaPriceNum);
+    // Don't need to append pizzaPrice here, it will be calculated on server
     formData.append(
       "base",
       JSON.stringify([
@@ -99,27 +135,6 @@ const AdminBuilderCreate = () => {
     setTimeout(() => {
       navigate("/admin-menu");
     }, 2000);
-  };
-
-  // Handler for the pizzaPrice input
-  const handlePriceChange = (e) => {
-    let input = e.target.value.replace(/\D/g, ""); // Remove all non-digits
-    if (input.length === 0) {
-      setNewPizza((prevPizza) => ({
-        ...prevPizza,
-        pizzaPrice: "",
-      }));
-      return;
-    }
-    // Pad with zeros if needed, then insert decimal
-    while (input.length < 3) input = "0" + input;
-    const dollars = input.slice(0, -2);
-    const cents = input.slice(-2);
-    const formatted = `${parseInt(dollars, 10)}.${cents}`;
-    setNewPizza((prevPizza) => ({
-      ...prevPizza,
-      pizzaPrice: formatted,
-    }));
   };
 
   return (
@@ -576,26 +591,11 @@ const AdminBuilderCreate = () => {
                         htmlFor="pizzaPrice"
                         className="block mb-2 text-sm font-medium text-gray-900"
                       >
-                        Declare Pizza Price $
+                        Pizza Price (Auto-Calculated)
                       </label>
-                      <input
-                        value={newPizza.pizzaPrice}
-                        onChange={handlePriceChange}
-                        type="text"
-                        inputMode="decimal" // mobile keyboards
-                        pattern="[0-9]*(\.[0-9]{0,2})?" // Basic HTML5 pattern
-                        placeholder="00.00"
-                        id="pizzaPrice"
-                        className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light
-                      text-black 
-                      placeholder-gray-500 
-                      border-slate-500
-                      bg-gray-200 
-                      focus:bg-gray-100 
-                      focus:border-sky-700
-              "
-                        required
-                      />
+                      <div className="shadow-sm border-2 text-sm rounded-lg block w-full p-2.5 shadow-sm-light text-black border-slate-500 bg-gray-200">
+                        ${calculatedPrice.toFixed(2)}
+                      </div>
                     </div>
                     <button
                       // disabled={submitDisabled}
