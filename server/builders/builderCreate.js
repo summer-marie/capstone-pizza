@@ -1,4 +1,5 @@
 import builderModel from "./builderModel.js";
+import fs from "fs";
 
 const calculatePizzaPrice = (base, sauce, meatTopping, veggieTopping) => {
   // Calculate base price (crust + cheese)
@@ -27,6 +28,19 @@ const calculatePizzaPrice = (base, sauce, meatTopping, veggieTopping) => {
 
 const builderCreate = async (req, res) => {
   try {
+    // Log the request body and file details for debugging
+    console.log("Request body:", req.body);
+    console.log(
+      "File details:",
+      req.file
+        ? {
+            filename: req.file.filename,
+            path: req.file.path,
+            exists: fs.existsSync(req.file.path),
+          }
+        : "No file uploaded"
+    );
+
     const { pizzaName } = req.body;
 
     // Parse ingredients from request body
@@ -79,6 +93,8 @@ const builderCreate = async (req, res) => {
           }
         : null,
     });
+
+    console.log("File received:", req.file);
 
     console.log("New pizza created with calculated price:", newPizza);
 

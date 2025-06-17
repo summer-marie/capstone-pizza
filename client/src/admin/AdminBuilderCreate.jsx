@@ -23,6 +23,13 @@ const AdminBuilderCreate = () => {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [calculatedPrice, setCalculatedPrice] = useState(0);
 
+  const meatOptions = ingredients.filter((i) => i.itemType === "Meat Topping");
+  const veggieOptions = ingredients.filter(
+    (i) => i.itemType === "Veggie Topping"
+  );
+  const sauceOptions = ingredients.filter((i) => i.itemType === "Sauce");
+  const baseOptions = ingredients.filter((i) => i.itemType === "Base");
+
   useEffect(() => {
     dispatch(ingredientGetAll());
   }, [dispatch]);
@@ -72,15 +79,10 @@ const AdminBuilderCreate = () => {
     veggieOptions,
   ]);
 
-  const meatOptions = ingredients.filter((i) => i.itemType === "Meat Topping");
-  const veggieOptions = ingredients.filter(
-    (i) => i.itemType === "Veggie Topping"
-  );
-  const sauceOptions = ingredients.filter((i) => i.itemType === "Sauce");
-  const baseOptions = ingredients.filter((i) => i.itemType === "Base");
-
   const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+    if (e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -126,7 +128,10 @@ const AdminBuilderCreate = () => {
     formData.append("sauce", JSON.stringify(sauceObj));
     formData.append("meatTopping", JSON.stringify(meatToppingObjs));
     formData.append("veggieTopping", JSON.stringify(veggieToppingObjs));
+
+    // Append the selected file if it exists
     if (selectedFile) {
+        console.log("Selected file:", selectedFile);
       formData.append("image", selectedFile);
     }
 
