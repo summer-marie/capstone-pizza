@@ -5,6 +5,7 @@ import { getMessages, updateMessageRead } from "../redux/messageSlice";
 const AdminInbox = () => {
   const dispatch = useDispatch();
   const { messages, loading } = useSelector((state) => state.message);
+
   const [selected, setSelected] = useState(null);
   const [reply, setReply] = useState("");
 
@@ -30,7 +31,7 @@ const AdminInbox = () => {
         <div className="flex flex-col md:flex-row gap-6 p-6">
           {/* Message List */}
           <div className="w-full md:w-1/3 bg-white rounded-lg shadow-lg p-4">
-            <h2 className="text-xl font-bold mb-4 text-primary-700">
+            <h2 className="text-xl font-bold mb-4 text-slate-700">
               Inbox
               {/* Unread message count badge */}
               <span className="ml-2 bg-yellow-400 text-yellow-900 text-xs font-medium px-2.5 py-0.5 rounded-full">
@@ -43,7 +44,7 @@ const AdminInbox = () => {
             </h2>
 
             {loading && <div className="text-gray-500">Loading...</div>}
-            {/*  This sets the max height to 70% of viewport height minus 120px (for headers/padding) */}
+            {/*  This sets the max height to 90% of viewport height minus 100px (for headers/padding) */}
             <ul className="overflow-y-auto pr-1 flex-1 max-h-[calc(90vh-100px)]">
               {messages.length === 0 && (
                 <li className="text-gray-400">No messages yet.</li>
@@ -54,7 +55,7 @@ const AdminInbox = () => {
                   onClick={() => handleSelect(msg)}
                   className={`p-3 mb-2 rounded cursor-pointer border ${
                     selected?.id === msg.id
-                      ? "bg-primary-100 border-primary-700"
+                      ? "bg-slate-100 border-slate-700"
                       : msg.isRead
                       ? "bg-gray-100 border-gray-300"
                       : "bg-yellow-50 border-yellow-400"
@@ -101,9 +102,8 @@ const AdminInbox = () => {
                     placeholder="Type your reply here..."
                   ></textarea>
                   <button
-                    className="bg-primary-700 text-white px-4 py-2 rounded hover:bg-primary-800 transition"
+                    className="bg-slate-700 text-white px-4 py-2 rounded hover:bg-slate-800 transition"
                     onClick={handleReply}
-                    disabled={!reply.trim()}
                   >
                     Send Reply
                   </button>
