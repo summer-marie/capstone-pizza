@@ -1,92 +1,139 @@
-import { faker } from "@faker-js/faker"
+import { faker } from "@faker-js/faker";
 
-const names = [
+const pizzaNames = [
   "Double Trouble",
   "Supreme",
   "Pepperoni Deluxe",
   "Cheese Me",
-  "Build Your Own",
-]
-const meatNames = ["Pepperoni", "Chicken", "Sausage", "Canadian Ham", "Bacon"]
-const vegNames = ["Olives", "Bell Peppers", "Mushrooms", "Pineapple", "Spinach"]
-const amounts = [1, 2, 3]
+  "Buffalo Chicken",
+  "Veggie Delight",
+  "Italian Feast",
+  "Boston Red Sox",
+];
 
-const base = [
+const meatOptions = [
+  "Pepperoni",
+  "Grilled Chicken",
+  "Italian Sausage",
+  "Ham",
+  "Bacon",
+  "Ground Beef",
+];
+
+const veggieOptions = [
+  "Black Olives",
+  "Bell Peppers",
+  "Mushrooms",
+  "Red Onions",
+  "Spinach",
+];
+
+const baseOptions = [
   {
-    name: "Italian Blend Cheese",
-    description: "Italian Blend Cheese",
-    itemType: "Base",
-    price: "2.00",
+    name: "Mozzarella",
+    description: "Classic creamy mozzarella cheese",
+    itemType: "Cheese",
+    price: 2.0,
   },
   {
     name: "Brick Oven Crust",
-    description: "Brick Oven Crust",
-    itemType: "Base",
-    price: "2.00",
+    description: "Traditional hand-tossed crust",
+    itemType: "Crust",
+    price: 3.0,
   },
-]
+];
+
+const sauceOptions = [
+  {
+    name: "Signature Red Sauce",
+    description: "Our classic tomato-based pizza sauce",
+    price: 1.0,
+  },
+  {
+    name: "Garlic Parmesan White Sauce",
+    description: "Creamy sauce with garlic and parmesan",
+    price: 1.5,
+  },
+  {
+    name: "Barbecue Sauce",
+    description: "Sweet and tangy BBQ sauce base",
+    price: 1.5,
+  },
+];
 
 const fakeBuilder = () => {
-  function generateVeggieTopping() {
-    const itemType = "Veggie Topping"
-    return {
-      name: faker.helpers.arrayElement(vegNames),
-      description: "",
-      price: faker.commerce.price({ min: 2, max: 3, dec: 2 }),
-      itemType,
-      amount: faker.helpers.arrayElement(amounts),
-    }
+  // Generate 1-3 random meat toppings
+  const meatToppings = [];
+  const meatCount = faker.number.int({ min: 1, max: 3 });
+  const shuffledMeats = faker.helpers.shuffle([...meatOptions]);
+
+  for (let i = 0; i < meatCount; i++) {
+    meatToppings.push({
+      name: shuffledMeats[i],
+      description: `Premium ${shuffledMeats[i].toLowerCase()}`,
+      price: parseFloat(faker.commerce.price({ min: 2, max: 3, dec: 2 })),
+      itemType: "Meat Topping",
+      amount: faker.number.int({ min: 1, max: 3 }),
+    });
   }
 
-  function generateMeatTopping() {
-    const itemType = "Meat Topping"
-    return {
-      // Generates a random meat name like "chicken" or "beef"
-      name: faker.helpers.arrayElement(meatNames),
-      // Generates a product description for the topping
-      description: "",
-      price: faker.commerce.price({ min: 2, max: 3, dec: 2 }),
-      itemType,
-      // Generates a random number between 1 and 3 for the quantity of toppings
-      amount: faker.helpers.arrayElement(amounts),
-    }
+  // Generate 1-4 random veggie toppings
+  const veggieToppings = [];
+  const veggieCount = faker.number.int({ min: 1, max: 4 });
+  const shuffledVeggies = faker.helpers.shuffle([...veggieOptions]);
+
+  for (let i = 0; i < veggieCount; i++) {
+    veggieToppings.push({
+      name: shuffledVeggies[i],
+      description: `Fresh ${shuffledVeggies[i].toLowerCase()}`,
+      price: parseFloat(faker.commerce.price({ min: 1, max: 2, dec: 2 })),
+      itemType: "Veggie Topping",
+      amount: faker.number.int({ min: 1, max: 3 }),
+    });
   }
+
+  // Calculate total price based on components
+  const basePrice = baseOptions.reduce((sum, item) => sum + item.price, 0);
+  const saucePrice = faker.helpers.arrayElement(sauceOptions).price;
+  const toppingsPrice = [...meatToppings, ...veggieToppings].reduce(
+    (sum, item) => sum + item.price * item.amount,
+    0
+  );
+
+  const totalPrice = parseFloat(
+    (basePrice + saucePrice + toppingsPrice).toFixed(2)
+  );
+
+  // Generate random sauce
+  const selectedSauce = faker.helpers.arrayElement(sauceOptions);
 
   return {
-    pizzaName: faker.helpers.arrayElement(names),
-    pizzaPrice: faker.commerce.price({ min: 10, max: 20, dec: 2 }),
-    // Crust && Cheese
-    base,
-    sauce: {
-      name: faker.helpers.arrayElement(
-        ["Signature Red Sauce", "Signature White Sauce"],
-        { min: 1, max: 1 }
-      ),
-      description: "",
-      itemType: "Sauce",
-      price: faker.commerce.price({ min: 2, max: 3 }),
+    pizzaName: faker.helpers.arrayElement(pizzaNames),
+    pizzaPrice: totalPrice,
+    // Both crust and cheese in base array
+    base: baseOptions,
+    sauce: selectedSauce,
+    meatTopping: meatToppings,
+    veggieTopping: veggieToppings,
+    image: {
+      filename: "basePizza.jpg",
+      originalname: "basePizza.jpg",
+      mimetype: "image/jpeg",
+      path: "../assets/basePizza.jpg",
+      size: 124568,
     },
-    meatTopping: faker.helpers.multiple(() => generateMeatTopping(), {
-      count: {
-        min: 1,
-        max: 4,
-      },
-    }),
-    veggieTopping: faker.helpers.multiple(() => generateVeggieTopping(), {
-      count: {
-        min: 1,
-        max: 4,
-      },
-    }),
-    image: ["../assets/basePizza.jpg"],
-  }
-}
+  };
+};
 
 export const createFakeBuilder = (length) => {
-  const testBuilder = []
+  const testBuilder = [];
 
   Array.from({ length: length }).forEach(() => {
-    testBuilder.push(fakeBuilder())
-  })
-  return testBuilder
-}
+    testBuilder.push(fakeBuilder());
+  });
+  return testBuilder;
+};
+
+export const createFakeBuilderSingle = () => {
+  return fakeBuilder();
+};
