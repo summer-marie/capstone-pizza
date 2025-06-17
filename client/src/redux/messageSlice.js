@@ -67,7 +67,7 @@ export const messageSlice = createSlice({
       .addCase(sendMessage.rejected, (state, action) => {
         console.log("messageSlice sendMessage.rejected", action.payload);
         state.loading = false;
-   state.error = action.payload;
+        state.error = action.payload;
       })
 
       // Get all messages
@@ -89,15 +89,13 @@ export const messageSlice = createSlice({
       // Update message read status
       .addCase(updateMessageRead.pending, (state, action) => {
         console.log("messageSlice updateMessageRead.pending", action.payload);
-        state.loading = true;
+        state.loading = false;
       })
       .addCase(updateMessageRead.fulfilled, (state, action) => {
         console.log("messageSlice updateMessageRead.fulfilled", action.payload);
         state.loading = false;
-        state.messages = state.messages.map((message) =>
-          message._id === action.payload.message._id
-            ? action.payload.message
-            : message
+        state.messages = state.messages.map((msg) =>
+          msg.id === action.payload.message.id ? action.payload.message : msg
         );
       })
       .addCase(updateMessageRead.rejected, (state, action) => {
