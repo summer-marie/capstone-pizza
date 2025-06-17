@@ -1,26 +1,32 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/authSlice";
-import { ClipLoader } from "react-spinners"; 
+import { ClipLoader } from "react-spinners";
+import { getMessages } from "../redux/messageSlice";
 
 const AdminSidenav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [loading, setLoading] = useState(false);
+  const messages = useSelector((state) => state.message);
 
   console.log("location", location);
 
-const handleLogout = async () => {
-  setLoading(true);
-  setTimeout(async () => {
-    await dispatch(logout());
-    navigate("/");
-    // No need to setLoading(false) because component will unmount
-  }, 1000); 
-};
+  useEffect(() => {
+    dispatch(getMessages());
+  }, [dispatch]);
+
+  const handleLogout = async () => {
+    setLoading(true);
+    setTimeout(async () => {
+      await dispatch(logout());
+      navigate("/");
+      // No need to setLoading(false) because component will unmount
+    }, 1000);
+  };
 
   if (loading) {
     return (
@@ -275,8 +281,9 @@ const handleLogout = async () => {
                 </svg>
 
                 <span className="flex-1 ms-3 whitespace-nowrap">Inbox</span>
-                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium rounded-full text-slate-800 bg-cyan-300 ">
-                  3
+
+                <span className="inline-flex items-center justify-center w-4 h-4 p-3.5 ms-3 text-sm font-bold rounded-full text-white bg-blue-800 border-2 border-green-300 shadow-md animate-pulse">
+                  {messages?.messages?.length || 0}
                 </span>
               </Link>
             </li>
