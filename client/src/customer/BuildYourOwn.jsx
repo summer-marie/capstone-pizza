@@ -432,7 +432,7 @@ const BuildYourOwn = () => {
                        focus:ring-cyan-300
                     "
                       placeholder="Light sauce"
-                    />
+                    ></textarea>
                   </div>
                   <div className="text-xl font-bold text-center mb-4">
                     Current Price: $ {Number(newPizza.pizzaPrice).toFixed(2)}

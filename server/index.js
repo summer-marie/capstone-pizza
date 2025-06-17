@@ -20,6 +20,7 @@ import userRouter from "./user/userIndex.js";
 import orderIndex from "./orders/orderIndex.js";
 import ingredientsIndex from "./ingredients/ingredientsIndex.js";
 import builderIndex from "./builders/builderIndex.js";
+import msgIndex from "./messages/msgIndex.js";
 
 console.log(process.env.MONGODB_URL);
 
@@ -80,6 +81,7 @@ app.use("/users", userRouter);
 app.use("/orders", orderIndex);
 app.use("/ingredients", ingredientsIndex);
 app.use("/builders", builderIndex);
+app.use("/messages", msgIndex);
 
 app.post("/upload", upload.single("image"), (req, res) => {
   console.log(req.file); // This will log the uploaded file info

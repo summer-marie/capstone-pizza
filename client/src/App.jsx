@@ -14,6 +14,7 @@ import AdminMenu from "./admin/AdminMenu";
 import AdminLogin from "./admin/AdminLogin";
 import BuildYourOwn from "./customer/BuildYourOwn";
 import AdminUpdateOne from "./admin/AdminUpdateOne";
+import AdminInbox from "./admin/AdminInbox";
 import IngredientsTable from "./admin/IngredientsTable";
 import AdminBuilderCreate from "./admin/AdminBuilderCreate";
 import OrderSuccess from "./customer/OrderSuccess";
@@ -64,7 +65,7 @@ function App() {
             <Route path="/admin-menu/:id?" element={<AdminMenu />} />
             <Route path="/admin-update-one/:id" element={<AdminUpdateOne />} />
             <Route path="/ingredient-table" element={<IngredientsTable />} />
-            {/* <Route path='/pizza-update' element={<Update />} /> */}
+            <Route path="/admin-inbox" element={<AdminInbox />} />
           </Route>
         </Route>
 
