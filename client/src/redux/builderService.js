@@ -6,15 +6,26 @@ const builderService = {
   },
 
   builderCreate: async (formData) => {
-    return await axios.post(
-      `${import.meta.env.VITE_API_SERVER_URL}/builders`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    try {
+      console.log("Sending FormData to server...");
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_SERVER_URL}/builders`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("Server response:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Builder create error details:", {
+        message: error.message,
+        response: error.response?.data,
+      });
+      throw error;
+    }
   },
 
   pizzaGetOne: async (id) => {

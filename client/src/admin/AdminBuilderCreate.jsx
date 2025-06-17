@@ -89,6 +89,16 @@ const AdminBuilderCreate = () => {
     e.preventDefault();
     setShowSuccessAlert(true);
 
+    // Debug logging
+    console.log("Form submission data:", {
+      pizzaName: newPizza.pizzaName,
+      base: baseOptions,
+      sauce: sauceOptions.find((s) => s.name === newPizza.sauce),
+      meatTopping: newPizza.meatTopping,
+      veggieTopping: newPizza.veggieTopping,
+      selectedFile,
+    });
+
     // Find the selected sauce object
     const sauceObj = sauceOptions.find((s) => s.name === newPizza.sauce);
     if (!sauceObj) {
@@ -131,8 +141,13 @@ const AdminBuilderCreate = () => {
 
     // Append the selected file if it exists
     if (selectedFile) {
-        console.log("Selected file:", selectedFile);
+      console.log("Selected file:", selectedFile);
       formData.append("image", selectedFile);
+    }
+    
+    // Debug logging for FormData
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
     }
 
     dispatch(builderCreate(formData));

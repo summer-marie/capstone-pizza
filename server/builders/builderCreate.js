@@ -104,11 +104,12 @@ const builderCreate = async (req, res) => {
       pizza: newPizza,
     });
   } catch (err) {
-    console.error("Error creating pizza:", err);
+    console.error("Full error details:", err);
     res.status(500).json({
       success: false,
       message: "Server error while creating pizza",
       error: err.message,
+      stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
     });
   }
 };
