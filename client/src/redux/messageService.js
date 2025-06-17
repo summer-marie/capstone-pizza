@@ -28,6 +28,13 @@ const messageService = {
     console.log("messageService updateMessageRead response:", response);
     return response;
   },
+  
+  // Delete a message
+  deleteMessage: async (id) => {
+    return await axios.delete(
+      `${import.meta.env.VITE_API_SERVER_URL}/messages/${id}`
+    );
+  },
 };
 
 export default messageService;

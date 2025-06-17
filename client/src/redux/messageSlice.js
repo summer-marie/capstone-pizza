@@ -49,6 +49,22 @@ export const updateMessageRead = createAsyncThunk(
   }
 );
 
+// Delete a message
+export const deleteMessage = createAsyncThunk(
+  "message/delete",
+  async (id, { rejectWithValue }) => {
+    try {
+      console.log("redux deleteMessage id", id);
+      const response = await messageService.deleteMessage(id);
+      console.log("messageService deleteMessage response:", response);
+      return response.data;
+    } catch (err) {
+      console.error("Delete message error:", err);
+      return rejectWithValue(err.response?.data?.message || err.message);
+    }
+  }
+);
+
 export const messageSlice = createSlice({
   name: "message",
   initialState,
@@ -102,6 +118,25 @@ export const messageSlice = createSlice({
         console.log("messageSlice updateMessageRead.rejected", action.payload);
         state.loading = false;
         state.error = action.error.message;
+      })
+
+      // DeleteOne
+      .addCase(deleteMessage.pending, (state) => {
+        console.log("messageSlice deleteMessage.pending");
+        state.loading = true;
+      })
+      .addCase(deleteMessage.fulfilled, (state, action) => {
+        console.log("messageSlice deleteMessage.fulfilled", action.payload);
+        state.loading = false;
+        // Remove the deleted message from state
+        state.messages = state.messages.filter(
+          (message) => message.id !== action.payload.id
+        );
+      })
+      .addCase(deleteMessage.rejected, (state, action) => {
+        console.log("messageSlice deleteMessage.rejected", action.payload);
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
