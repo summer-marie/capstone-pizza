@@ -8,6 +8,7 @@ import cors from "cors";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import multer from "multer";
+import fs from "fs";
 // Database
 import mongoose from "mongoose";
 // Authentication
@@ -29,13 +30,20 @@ const port = process.env.PORT || 8010;
 const cookieSecret = process.env.COOKIE_SECRET;
 const sessionSecret = process.env.SESSION_SECRET || "bubbles";
 
+// Get the current file and directory names
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Create uploads directory in server folder
+const uploadsDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 const app = express();
 app.use(express.json());
 
-const upload = multer({ dest: "uploads/" });
+// const upload = multer({ dest: "uploads/" });
 
 app.use(cookieParser(cookieSecret));
 
@@ -75,18 +83,16 @@ app.use(
   })
 );
 
+// register routes
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
-
 app.use("/orders", orderIndex);
 app.use("/ingredients", ingredientsIndex);
 app.use("/builders", builderIndex);
 app.use("/messages", msgIndex);
 
-app.post("/upload", upload.single("image"), (req, res) => {
-  console.log(req.file); // This will log the uploaded file info
-  res.json({ message: "Upload received successfully!", file: req.file });
-});
+app.use("/uploads", express.static(uploadsDir));
+
 
 // 404
 app.all("/", (req, res) => {
@@ -109,14 +115,3 @@ try {
 } catch (err) {
   console.log(err);
 }
-
-// import multer from "multer";
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "uploads/");
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, Date.now() + "-" + file.originalname);
-//   },
-// });
-// const upload = multer({ storage });

@@ -54,6 +54,9 @@ const IngredientModal = ({ isOpen, onClose, setShowModal }) => {
           <div className="flex flex-row gap-3 pb-4 ">
             <h1 className="text-3xl font-bold text-[#4B5563] mx-auto my-auto capitalize text-center">
               add ingredient to table
+              <p className="text-sm text-red-500 me-2 pt-4">
+                All fields are required
+              </p>
             </h1>
           </div>
           {/* shadow-lg shadow-cyan-800/80  */}

@@ -6,7 +6,7 @@ import { pizzaGetOne, builderUpdateOne } from "../redux/builderSlice";
 import { ingredientGetAll } from "../redux/ingredientSlice";
 
 const successMsg = "Pizza was updated successfully";
-const successDescription = "navigating you back to the admin menu....";
+const successDescription = "Navigating you back to the admin menu....";
 
 const AdminUpdateOne = () => {
   const navigate = useNavigate();
@@ -747,7 +747,21 @@ const AdminUpdateOne = () => {
         </div>
       </div>
       {showSuccessAlert && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 animate-fade-in-up">
+        <div
+          // className="fixed inset-0 flex items-center justify-center z-50 animate-fade-in-up"
+          className="fixed bottom-52 left-1/2  
+        -translate-x-1/2 ml-30
+        bg-green-400
+        text-white  
+        p-2         
+        rounded-lg  
+        shadow-lg   
+        z-50        
+        text-center 
+        text-lg     
+        animate-fade-in-up    
+        "
+        >
           <AlertSuccess2
             successMsg={successMsg}
             successDescription={successDescription}

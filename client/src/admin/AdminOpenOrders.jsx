@@ -11,7 +11,8 @@ import {
 const AdminOpenOrders = () => {
   const { orders } = useSelector((state) => state.order);
   const dispatch = useDispatch();
-  const [newStatus, setNewStatus] = useState({});
+  // const [newStatus, setNewStatus] = useState({});
+  const [localStatus, setLocalStatus] = useState({});
   const [loading, setLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [savingId, setSavingId] = useState(null);
@@ -68,9 +69,16 @@ const AdminOpenOrders = () => {
     setSavingId(id);
     setLoading(true);
 
+    const statusToUpdate =
+      localStatus[id] ?? orders.find((o) => o.id === id)?.status;
     // Add delay before dispatch
     setTimeout(() => {
-      dispatch(orderUpdateStatus({ id: id, status: newStatus }))
+      dispatch(
+        orderUpdateStatus({
+          id: id,
+          status: { status: statusToUpdate },
+        })
+      )
         .then(() => {
           return new Promise((resolve) => setTimeout(resolve, 2000));
         })
@@ -109,7 +117,7 @@ const AdminOpenOrders = () => {
     setArchiveOrder(null); // Clear the archive order
   };
 
-  // When user confirms in the alert
+  // When user confirms Archive in the alert
   const handleConfirm = async () => {
     if (archiveOrder) {
       try {
@@ -272,13 +280,13 @@ const AdminOpenOrders = () => {
 
                   <td className="px-2 py-2 w-auto min-w-full text-center">
                     <select
-                      value={order.status}
-                      onChange={(e) =>
-                        setNewStatus({
-                          id: order._id,
-                          status: e.target.value,
-                        })
-                      }
+                      value={localStatus[order._id] ?? order.status}
+                      onChange={(e) => {
+                        setLocalStatus((prev) => ({
+                          ...prev,
+                          [order._id]: e.target.value,
+                        }));
+                      }}
                       className="text-sm rounded-lg block w-full p-2.5 text-center
                           dark:text-cyan-700 
                           bg-slate-100
