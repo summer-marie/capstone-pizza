@@ -11,7 +11,7 @@ const successDescription = "Navigating you back to the admin menu....";
 const AdminUpdateOne = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [showSuccessAlert, setShowSuccessAlert] = useState(true);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const builder = useSelector((state) => state.builder?.builder);
   const ingredients = useSelector((state) => state.ingredient.ingredients);
   const [pizzaForm, setPizzaForm] = useState(null);
