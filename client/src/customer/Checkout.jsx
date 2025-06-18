@@ -175,7 +175,7 @@ const Checkout = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="mt-10 ">
+      <form onSubmit={handleSubmit} autoComplete="off" className="mt-10 ">
         <div className="min-h-screen mx-auto w-full">
           <div className="flex flex-col sm:flex-row items-start justify-center mx-auto space-y-6 sm:space-y-0 sm:space-x-6 w-2/3 bg-gray-100">
             <ul
