@@ -66,18 +66,22 @@ const AdminMenu = () => {
                   className="max-w-2xl col-1-4 rounded-lg shadow-2xl bg-zinc-300 border border-gray-200 shadow-green-600 relative"
                 >
                   <div className="relative">
-                    <img
-                      className="object-cover w-full rounded-t-lg h-auto rounded-s-lg"
-                      src={
-                        builder.image && builder.image.filename
-                          ? `${import.meta.env.VITE_API_SERVER_URL}/uploads/${
-                              builder.image.filename
-                            }`
-                          : new URL("../assets/basePizza.jpg", import.meta.url)
-                              .href
-                      }
-                      alt={builder.pizzaName || "Pizza"}
-                    />
+                    <div className="relative w-full aspect-[4/3]">
+                      <img
+                        className="absolute inset-0 w-full h-full object-cover rounded-t-lg rounded-s-lg"
+                        src={
+                          builder.image && builder.image.filename
+                            ? `${import.meta.env.VITE_API_SERVER_URL}/uploads/${
+                                builder.image.filename
+                              }`
+                            : new URL(
+                                "../assets/basePizza.jpg",
+                                import.meta.url
+                              ).href
+                        }
+                        alt={builder.pizzaName || "Pizza"}
+                      />
+                    </div>
                     <button
                       onClick={() => handleClick(builder.id)}
                       type="button"

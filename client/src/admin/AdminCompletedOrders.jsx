@@ -11,8 +11,7 @@ const AdminCompletedOrders = () => {
   // Grab order
   useEffect(() => {
     dispatch(orderGetArchived());
-    console.log("useEffect", orders);
-  }, [dispatch, orders]);
+  }, [dispatch]);
 
   const getStatusCounts = () => {
     return orders.reduce(
@@ -58,7 +57,10 @@ const AdminCompletedOrders = () => {
           ))}
         </div>
 
-        <div id="openOrdersTAble" className="w-full shadow-2xl overflow-x-auto mb-16">
+        <div
+          id="openOrdersTAble"
+          className="w-full shadow-2xl overflow-x-auto mb-16"
+        >
           <table
             className="w-full mt-1 text-sm text-left rtl:text-right rounded-2xl
         text-gray-500"

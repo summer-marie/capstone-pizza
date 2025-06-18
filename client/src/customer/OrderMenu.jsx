@@ -80,84 +80,74 @@ const Order = () => {
           {/* Card  */}
           {builders.map((builder, index) => (
             <div
-              key={builder._id || builder.id || index}
-              className="max-w-sm w-1/4 m-4 sm:w-full bg-white border border-gray-200 shadow-2xl shadow-red-700 rounded-lg flex flex-col h-[30rem]"
+              key={builder.id || index}
+              className="max-w-sm w-1/4 m-4 sm:w-full bg-white border border-gray-200 shadow-2xl shadow-red-700 rounded-lg flex flex-col h-[30rem] relative"
             >
-              <img
-                className="object-cover w-full rounded-t-lg rounded-s-lg h-auto"
-                src={
-                  builder.image && builder.image.filename
-                    ? `${import.meta.env.VITE_API_SERVER_URL}/uploads/${
-                        builder.image.filename
-                      }`
-                    : new URL("../assets/basePizza.jpg", import.meta.url).href
-                }
-                alt={builder.pizzaName || "Pizza"}
-              />
-
-              <div className="px-5 pb-3 flex flex-col flex-1">
+              <div className="relative w-full aspect-[4/3]">
+                <img
+                  className="absolute inset-0 w-full h-full object-cover rounded-t-lg rounded-s-lg"
+                  src={
+                    builder.image && builder.image.filename
+                      ? `${import.meta.env.VITE_API_SERVER_URL}/uploads/${
+                          builder.image.filename
+                        }`
+                      : new URL("../assets/basePizza.jpg", import.meta.url).href
+                  }
+                  alt={builder.pizzaName || "Pizza"}
+                />
+              </div>
+              <div className="px-5 pt-3 pb-3 flex flex-col flex-1">
                 <h5 className="text-xl font-semibold tracking-tight text-gray-900 ">
                   {builder.pizzaName}
                 </h5>
-                <ul className="flex flex-wrap gap-x-2 ">
-                  {builder.base &&
-                    builder.base.map((base, baseIndex) => (
-                      <li
-                        className="mt-1"
-                        key={`base-${builder._id || index}-${baseIndex}`}
-                      >
-                        {base.name}
-                      </li>
-                    ))}
-                  {builder.meatTopping &&
-                    builder.meatTopping.map((meatTopping, meatToppingIndex) => (
-                      <li
-                        className="mt-1"
-                        key={`meat-${builder._id || index}-${meatToppingIndex}`}
-                      >
-                        {meatTopping.name}
-                      </li>
-                    ))}
-                  {builder.veggieTopping &&
-                    builder.veggieTopping.map(
-                      (veggieTopping, veggieToppingIndex) => (
-                        <li
-                          className="mt-1"
-                          key={`veggie-${
-                            builder._id || index
-                          }-${veggieToppingIndex}`}
-                        >
-                          {veggieTopping.name}
-                        </li>
-                      )
-                    )}
-                </ul>
-                <div className="flex-1"></div>
-                <div className="flex items-center justify-between mt-4">
-                  <span className="text-3xl font-bold text-gray-900">
-                    $ {Number(builder.pizzaPrice).toFixed(2)}
-                  </span>
+                <div className="space-y-1 mb-2">
+                  <ul className="list-disc list-inside ml-2">
+                    <span>
+                      <strong>Pizza Base:</strong>{" "}
+                      {builder.base &&
+                        builder.base.map((b) => b.name).join(", ")}{" "}
+                      , {builder.sauce && (builder.sauce.name || builder.sauce)}
+                    </span>
+                    <span className="block">
+                      <strong>Toppings:</strong>{" "}
+                      {[
+                        ...(builder.meatTopping
+                          ? builder.meatTopping.map((m) => m.name)
+                          : []),
+                        ...(builder.veggieTopping
+                          ? builder.veggieTopping.map((v) => v.name)
+                          : []),
+                      ].join(", ")}
+                    </span>
+                  </ul>
 
-                  <button
-                    onClick={() =>
-                      dispatch(
-                        addToCart({
-                          ...builder,
-                          cartItemId: Date.now() + Math.random(),
-                        })
-                      )
-                    }
-                    type="button"
-                    className="font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 top-0 right-0 shadow-lg   me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
+                  <div className="flex-1"></div>
+                  <div className="absolute bottom-0 left-0 w-full px-5 flex items-center justify-between">
+                    <span className="text-3xl font-bold text-gray-900">
+                      $ {Number(builder.pizzaPrice).toFixed(2)}
+                    </span>
+
+                    <button
+                      onClick={() =>
+                        dispatch(
+                          addToCart({
+                            ...builder,
+                            cartItemId: Date.now() + Math.random(),
+                          })
+                        )
+                      }
+                      type="button"
+                      className="font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 top-0 right-0 shadow-lg   me-2 mb-2 hover:bg-gradient-to-br bg-gradient-to-t  focus:ring-4 focus:outline-none cursor-pointer
                     shadow-green-800/80 hover:text-black
                     text-white 
                     from-green-950
                     via-green-500 
                     to-green-600
                     focus:ring-green-800"
-                  >
-                    Add to Cart
-                  </button>
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

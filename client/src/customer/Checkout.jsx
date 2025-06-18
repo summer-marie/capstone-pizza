@@ -175,7 +175,7 @@ const Checkout = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="mt-10 ">
+      <form onSubmit={handleSubmit} autoComplete="off" className="mt-10 ">
         <div className="min-h-screen mx-auto w-full">
           <div className="flex flex-col sm:flex-row items-start justify-center mx-auto space-y-6 sm:space-y-0 sm:space-x-6 w-2/3 bg-gray-100">
             <ul
@@ -245,6 +245,7 @@ const Checkout = () => {
                           className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1
                       border-red-700  "
                           placeholder="Sally"
+                          required
                         />
                       </div>
                       <div className="w-1/2">
@@ -262,6 +263,7 @@ const Checkout = () => {
                           className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1
                       border-red-700 "
                           placeholder="Smith"
+                          required
                         />
                       </div>
                     </div>
@@ -281,6 +283,7 @@ const Checkout = () => {
                       autoComplete="address-line1"
                       className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1 border-red-700"
                       placeholder="123 Main St"
+                      required
                     />
 
                     <label
@@ -298,6 +301,7 @@ const Checkout = () => {
                       autoComplete="address-level2"
                       className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1 border-red-700"
                       placeholder="Goodyear"
+                      required
                     />
                     <div className="flex space-x-2">
                       <div className="w-1/2">
@@ -314,6 +318,8 @@ const Checkout = () => {
                           id="state"
                           className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1 
                       border-red-700 "
+                          name="state"
+                          required
                         >
                           <option value="">Select a state</option>
                           <option value="AL">Alabama</option>
@@ -386,6 +392,7 @@ const Checkout = () => {
                           autoComplete="postal-code"
                           className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1 border-red-700 focus:ring-2 focus:ring-red-400 focus:border-red-400"
                           placeholder="12345"
+                          required
                         />
                       </div>
                     </div>
@@ -408,6 +415,7 @@ const Checkout = () => {
                       autoComplete="tel"
                       className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1 border-red-700 focus:ring-2 focus:ring-red-400 focus:border-red-400"
                       placeholder="555-555-5555"
+                      required
                     />
                   </div>
                 </div>
