@@ -144,7 +144,7 @@ const AdminBuilderCreate = () => {
       console.log("Selected file:", selectedFile);
       formData.append("image", selectedFile);
     }
-    
+
     // Debug logging for FormData
     for (let pair of formData.entries()) {
       console.log(pair[0], pair[1]);
