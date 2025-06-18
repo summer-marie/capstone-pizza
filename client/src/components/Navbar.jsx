@@ -16,9 +16,9 @@ const Navbar = () => {
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <div className="flex items-center space-x-3 rtl:space-x-reverse">
             <img
-              src={new URL("../assets/pizza3.png", import.meta.url).href}
+              src={new URL("../assets/pizzaLogo.jpg", import.meta.url).href}
               className="h-12"
-              alt="Flowbite Logo"
+              alt="Pizza Logo"
             />
             <span className="self-center text-slate-100 text-2xl font-semibold whitespace-nowrap barriecitoFont">
               OverTheWall
