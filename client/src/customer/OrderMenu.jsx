@@ -83,18 +83,19 @@ const Order = () => {
               key={builder._id || builder.id || index}
               className="max-w-sm w-1/4 m-4 sm:w-full bg-white border border-gray-200 shadow-2xl shadow-red-700 rounded-lg flex flex-col h-[30rem]"
             >
-              <img
-                className="object-cover w-full rounded-t-lg rounded-s-lg h-auto"
-                src={
-                  builder.image && builder.image.filename
-                    ? `${import.meta.env.VITE_API_SERVER_URL}/uploads/${
-                        builder.image.filename
-                      }`
-                    : new URL("../assets/basePizza.jpg", import.meta.url).href
-                }
-                alt={builder.pizzaName || "Pizza"}
-              />
-
+              <div className="relative w-full aspect-[4/3]">
+                <img
+                  className="absolute inset-0 w-full h-full object-cover rounded-t-lg rounded-s-lg"
+                  src={
+                    builder.image && builder.image.filename
+                      ? `${import.meta.env.VITE_API_SERVER_URL}/uploads/${
+                          builder.image.filename
+                        }`
+                      : new URL("../assets/basePizza.jpg", import.meta.url).href
+                  }
+                  alt={builder.pizzaName || "Pizza"}
+                />
+              </div>
               <div className="px-5 pb-3 flex flex-col flex-1">
                 <h5 className="text-xl font-semibold tracking-tight text-gray-900 ">
                   {builder.pizzaName}
