@@ -27,6 +27,8 @@ const AdminInbox = () => {
   const handleReply = () => {
     alert(`Reply sent to ${selected.email}:\n\n${reply}`);
     setReply("");
+    // clear selection after reply
+    setSelected(null)
   };
 
   // handle checkbox change
@@ -116,7 +118,7 @@ const AdminInbox = () => {
                     onClick={(e) => e.stopPropagation()}
                   />
 
-                  {/* Message content - wrap in div for click handler */}
+                  {/* Message content */}
                   <div className="flex-1" onClick={() => handleSelect(msg)}>
                     <div className="font-semibold">{msg.subject}</div>
                     <div className="text-xs text-gray-500">{msg.email}</div>
