@@ -42,9 +42,9 @@ client/
 ```
 ## Environment Variables
 
-| Variable            | Description | Required |
-| ------------------- | ----------- | -------- |
-| VITE_API_SERVER_URL | Backend API |
+| Variable            | Description          | Required |
+| ------------------- | -------------------- | -------- |
+| VITE_API_SERVER_URL | Backend API base URL | Yes      |
 
 ## Running the Client
 
