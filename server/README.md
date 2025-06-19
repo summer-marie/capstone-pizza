@@ -1,67 +1,120 @@
-### Server Documentation
+# Server Documentation
 
-# Directory Structure
+## Getting Started
 
-server/
-├── auth/ # Authentication routes and logic     
-├── builders/ # Pizza builder endpoints
-├── config/ # Database configuration
-├── ingredients/ # Ingredient management
-├── messages/ # Customer message handling
-├── orders/ # Order processing
-├── strategies/ # Passport authentication strategies
-├── uploads/ # Image storage directory
-└── index.js # Main server entry point
+### Prerequisites
 
-### Getting Started
+- [ ] Node.js (v16 or higher)
+- [ ] MongoDB installed and running
+- [ ] npm or yarn package manager
 
-## Prerequisites
+### Create `.env` File
 
-[ ] Node.js (v16 or higher)
-[ ]  MongoDB installed and running
-[ ] npm or yarn package manager
+Create a `.env` file in the `server/` directory with the following content:
 
-### Create .env files
-
+```env
 PORT=8010
 MONGODB_URL=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 COOKIE_SECRET=your_cookie_secret
 SESSION_SECRET=your_session_secret
 WHITELISTED_DOMAINS=http://localhost:5173,http://127.0.0.1:5173
+```
+
+## Directory Structure
+
+```plaintext
+server/
+├── auth/         # Authentication routes and logic
+├── builders/     # Pizza builder endpoints
+├── config/       # Database configuration
+├── ingredients/  # Ingredient management
+├── messages/     # Customer message handling
+├── orders/       # Order processing
+├── strategies/   # Passport authentication strategies
+├── uploads/      # Image storage directory
+└── index.js      # Main server entry point
+```
+
+## Environment Variables
+
+| Variable            | Description         | Required |
+| ------------------- | ------------------- | -------- |
+| PORT                | Server port         | Yes      |
+| MONGODB_URL         | Database connection | Yes      |
+| JWT_SECRET          | JWT token secret    | Yes      |
+| COOKIE_SECRET       | Cookie signing      | Yes      |
+| SESSION_SECRET      | Session secret      | Yes      |
+| WHITELISTED_DOMAINS | CORS origins        | Yes      |
 
 ## Middleware Configuration
 
-- Authentication: JWT with Passport.js
-- Session Management: express-session
-- File Upload: Multer
-- Security: CORS, bcrypt password hashing
-- Static Files: Express static middleware for uploads
+- **Authentication:** JWT with Passport.js
+- **Session Management:** express-session
+- **File Upload:** Multer
+- **Security:** CORS, bcrypt password hashing
+- **Static Files:** Express static middleware for uploads
 
-## Running the server
+## Running the Server
 
-### Development mode
+**Development mode:**
 
-- npm run dev
+```bash
+npm run dev
+```
 
-# Production mode:
+**Production mode:**
 
-- npm start
+```bash
+npm start
+```
 
-### Environment Variables
+## Seeding the Database
 
-## Variable Description Required
+If you need to populate the database with initial data (such as default ingredients or admin users), you can use a seed script.
 
-PORT Server port Yes
-MONGODB_URL Database connection Yes
-JWT_SECRET JWT token secret Yes
-COOKIE_SECRET Cookie signing Yes
-SESSION_SECRET Session secret Yes
-WHITELISTED_DOMAINS CORS origins Yes
+**To run a seed script, navigate to the `test` directory in your project root and execute the desired script:**
 
-### Notes
+```bash
+cd test
+node seedAdmin.js
+node seedBuilder.js
+node seedMsgs.js
+node seedOrders.js
+```
 
-- Images are stored in /uploads directory
+## API Endpoints
+
+### Authentication
+- `POST /auth/login` – Admin login
+- `GET /auth/logout` – Admin logout
+
+### Pizza Builder
+- `GET /builders` – Get all pizzas
+- `POST /builders` – Create new pizza
+- `PUT /builders/:id` – Update pizza
+- `DELETE /builders/:id` – Delete pizza
+
+### Ingredients
+- `GET /ingredients` – Get all ingredients
+- `POST /ingredients` – Add ingredient
+- `PUT /ingredients/:id` – Update ingredient
+- `DELETE /ingredients/:id` – Delete ingredient
+
+### Orders
+- `GET /orders` – Get all orders
+- `GET /orders/open` – Get open orders
+- `PUT /orders/:id` – Update order status
+- `POST /orders` – Create new order
+
+### Messages
+- `GET /messages` – Get all messages
+- `POST /messages` – Send message
+- `DELETE /messages/:id` – Delete message
+
+## Notes
+
+- Images are stored in `/uploads` directory
 - Maximum file upload size: 5MB
 - Dates stored in UTC format
 - Prices stored as floating-point numbers
