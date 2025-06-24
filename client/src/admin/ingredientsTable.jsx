@@ -200,7 +200,7 @@ const IngredientsTable = () => {
   // State to track which ingredient is being saved
   const [savingId, setSavingId] = useState(null);
 
-  const itemTypesArray = ["Sauce", "Meat Topping", "Veggie Topping"];
+  const itemTypesArray = ["Base", "Sauce", "Meat Topping", "Veggie Topping"];
 
   const dispatch = useDispatch();
 
