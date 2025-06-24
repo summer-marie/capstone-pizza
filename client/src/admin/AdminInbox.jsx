@@ -28,7 +28,7 @@ const AdminInbox = () => {
     alert(`Reply sent to ${selected.email}:\n\n${reply}`);
     setReply("");
     // clear selection after reply
-    setSelected(null)
+    setSelected(null);
   };
 
   // handle checkbox change
@@ -56,6 +56,16 @@ const AdminInbox = () => {
       }
     }
   };
+
+  // Sort messages to show unread first
+  const sortedMessages = [...messages].sort((a, b) => {
+    // Sort by read status first (unread messages first)
+    if (a.isRead !== b.isRead) {
+      return a.isRead ? 1 : -1;
+    }
+    // Then sort by date (newest first)
+    return new Date(b.date) - new Date(a.date);
+  });
 
   return (
     <>
@@ -98,7 +108,7 @@ const AdminInbox = () => {
               {messages.length === 0 && (
                 <li className="text-gray-400">No messages yet.</li>
               )}
-              {messages.map((msg) => (
+              {sortedMessages.map((msg) => (
                 <li
                   key={msg.id}
                   className={`p-3 mb-2 rounded cursor-pointer border flex items-center ${
