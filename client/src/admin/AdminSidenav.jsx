@@ -19,13 +19,35 @@ const AdminSidenav = () => {
     dispatch(getMessages());
   }, [dispatch]);
 
+  // const handleLogout = async () => {
+  //   setLoading(true);
+  //   setTimeout(async () => {
+  //     await dispatch(logout()).unwrap();
+  //     navigate("/");
+  //     // No need to setLoading(false) because component will unmount
+  //   }, 1000);
+  // };
+
   const handleLogout = async () => {
     setLoading(true);
-    setTimeout(async () => {
-      await dispatch(logout());
+    try {
+      // Timeout for visual feedback
+      await new Promise((resolve) => {
+        setTimeout(async () => {
+          try {
+            await dispatch(logout()).unwrap();
+            resolve();
+          } catch (error) {
+            console.error("Logout failed:", error);
+            setLoading(false);
+          }
+        }, 1000);
+      });
       navigate("/");
-      // No need to setLoading(false) because component will unmount
-    }, 1000);
+    } catch (error) {
+      console.error("Logout failed:", error);
+      setLoading(false);
+    }
   };
 
   if (loading) {

@@ -9,9 +9,10 @@ const authLogout = async (req, res) => {
 
   try {
     // Remove user token
-    const removeToken = await userModel.updateOne(
-      { _id: req.user._id },
-      { token: [] }
+    await userModel.findByIdAndUpdate(
+      req.user._id,
+      { $set: { token: [] } },
+      { new: true }
     );
 
     req.logout((err) => {

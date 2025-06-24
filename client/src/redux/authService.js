@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const authService = {
+  
   login: async ({ email, password }) => {
     console.log("NEW authService login", email, password);
     const response = await axios.post(
@@ -12,6 +13,7 @@ const authService = {
   },
 
   status: async () => {
+    // Get and parse token from localStorage
     const token = JSON.parse(localStorage.getItem("token"));
     console.log("NEW authService status token", token);
     const response = await axios.get(
@@ -30,38 +32,35 @@ const authService = {
   },
 
   logout: async () => {
-    // Get token from localStorage (parse if stored as JSON)
-    const token = JSON.parse(localStorage.getItem("token"));
-    console.log("authService logout token", token);
+    try {
+      // Get and parse token from localStorage
+      const token = localStorage.getItem("token");
+      const parsedToken = token ? JSON.parse(token) : null;
 
-    // Make logout request
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_SERVER_URL}/auth/logout/`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      }
-    );
+      // Make logout request with parsed token
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_SERVER_URL}/auth/logout/`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${parsedToken}`,
+          },
+          withCredentials: true,
+        }
+      );
 
-    // Remove token from localStorage after successful logout
-    localStorage.removeItem("token");
-    localStorage.removeItem("userOn");
+      // Clear localStorage
+      localStorage.removeItem("token");
+      localStorage.removeItem("userOn");
 
-    return response.data;
+      return response.data;
+    } catch (error) {
+      // Still clear localStorage even if request fails
+      localStorage.removeItem("token");
+      localStorage.removeItem("userOn");
+      throw error;
+    }
   },
 };
-
-// export const status = async (token) => {
-//     console.log("authService status token", token)
-//     const response = await axios.get(
-//         `${import.meta.env.VITE_API_SERVER_URL}/auth/status`,
-//         { withCredentials: true, headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }}
-//     )
-//     console.log("response", response.data)
-//     return response.data
-// }
 
 export default authService;
