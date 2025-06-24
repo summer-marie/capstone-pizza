@@ -241,15 +241,36 @@ const IngredientsTable = () => {
     setShowModal(false);
   };
 
+  // const handleUpdate = async () => {
+  //   setSavingId(editing.id);
+  //   setLoading(true);
+  //   await dispatch(ingredientUpdateOne(editing));
+  //   setEditing({});
+  //   setTimeout(() => {
+  //     setSavingId(null);
+  //     setLoading(false);
+  //   }, 2000);
+  // };
+
   const handleUpdate = async () => {
     setSavingId(editing.id);
     setLoading(true);
-    await dispatch(ingredientUpdateOne(editing));
-    setEditing({});
-    setTimeout(() => {
-      setSavingId(null);
+    try {
+      // Update the ingredient
+      await dispatch(ingredientUpdateOne(editing)).unwrap();
+      // Clear editing state
+      setEditing({});
+      // Fetch fresh, sorted data from server
+      await dispatch(ingredientGetAll()).unwrap();
+
+      setTimeout(() => {
+        setSavingId(null);
+        setLoading(false);
+      }, 2000);
+    } catch (error) {
+      console.error("Update failed:", error);
       setLoading(false);
-    }, 2000);
+    }
   };
 
   // Alert functions
