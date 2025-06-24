@@ -4,8 +4,9 @@ import { builderGetMany, builderDeleteOneAlt } from "../redux/builderSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AlertBlack from "../components/AlertBlack";
 
-const alertMsg = "Are you sure you want to delete?";
-const alertDescription = "Click to confirm";
+const alertMsg = "Delete Pizza from Menu";
+const alertDescription =
+  "This action cannot be undone. The pizza will be permanently removed from the customer menu.";
 
 const AdminMenu = () => {
   const [showAlert, setShowAlert] = useState(false);
@@ -16,7 +17,6 @@ const AdminMenu = () => {
 
   useEffect(() => {
     dispatch(builderGetMany());
-    console.log("Builders data:", builders);
   }, [dispatch]);
 
   // Use a ref to store the ID of the pizza to be deleted
@@ -159,7 +159,7 @@ const AdminMenu = () => {
       </div>
 
       {showAlert && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-30">
+        <div className="fixed top-1/2 left-[calc(50%+8rem)] transform -translate-x-1/2 -translate-y-1/2 z-50">
           <AlertBlack
             alertMsg={alertMsg}
             alertDescription={alertDescription}
