@@ -241,16 +241,6 @@ const IngredientsTable = () => {
     setShowModal(false);
   };
 
-  // const handleUpdate = async () => {
-  //   setSavingId(editing.id);
-  //   setLoading(true);
-  //   await dispatch(ingredientUpdateOne(editing));
-  //   setEditing({});
-  //   setTimeout(() => {
-  //     setSavingId(null);
-  //     setLoading(false);
-  //   }, 2000);
-  // };
 
   const handleUpdate = async () => {
     setSavingId(editing.id);

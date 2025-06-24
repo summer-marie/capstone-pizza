@@ -19,15 +19,6 @@ const AdminSidenav = () => {
     dispatch(getMessages());
   }, [dispatch]);
 
-  // const handleLogout = async () => {
-  //   setLoading(true);
-  //   setTimeout(async () => {
-  //     await dispatch(logout()).unwrap();
-  //     navigate("/");
-  //     // No need to setLoading(false) because component will unmount
-  //   }, 1000);
-  // };
-
   const handleLogout = async () => {
     setLoading(true);
     try {

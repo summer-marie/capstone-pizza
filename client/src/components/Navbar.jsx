@@ -69,11 +69,15 @@ const Navbar = () => {
                 </Link>
               </li>
             </ul>
-            {/* <p className='text-stone-300 end-0 absolute p-2'>Check Out</p> */}
-            <div className="absolute end-20 p-4">
-              <Link to="/checkout">
-                <CartSVG count={cartCount} />
-              </Link>
+     
+            <div className="absolute end-20 p-4 flex items-center space-x-4">
+              <p className="text-stone-300 berkshireSwashFont">Check</p>
+              <div className="relative">
+                <Link to="/checkout">
+                  <CartSVG count={cartCount} />
+                </Link>
+              </div>
+              <p className="text-stone-300 berkshireSwashFont">Out</p>
             </div>
           </div>
         </div>
