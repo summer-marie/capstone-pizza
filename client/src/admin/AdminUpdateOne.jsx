@@ -329,7 +329,7 @@ const AdminUpdateOne = () => {
                         required
                       >
                         <option value={pizzaForm.sauce || ""} disabled>
-                          {pizzaForm.sauce ? `Current: ${pizzaForm.sauce}` : ""}
+                          {pizzaForm.sauce || "- - None - -"}
                         </option>
                         {sauceOptions
                           .filter((option) => option.name !== pizzaForm.sauce)
@@ -383,9 +383,7 @@ const AdminUpdateOne = () => {
                               value={pizzaForm.meatTopping[0] || ""}
                               disabled
                             >
-                              {pizzaForm.meatTopping[0]
-                                ? `Current: ${pizzaForm.meatTopping[0]}`
-                                : "- - None - -"}
+                              {pizzaForm.meatTopping[0] || "- - None - -"}
                             </option>
                             {meatOptions
                               .filter(
@@ -435,9 +433,7 @@ const AdminUpdateOne = () => {
                               value={pizzaForm.meatTopping[1] || ""}
                               disabled
                             >
-                              {pizzaForm.meatTopping[1]
-                                ? `Current: ${pizzaForm.meatTopping[1]}`
-                                : "- - None - -"}
+                              {pizzaForm.meatTopping[1] || "- - None - -"}
                             </option>
                             {meatOptions
                               .filter(
@@ -487,9 +483,7 @@ const AdminUpdateOne = () => {
                               value={pizzaForm.meatTopping[2] || ""}
                               disabled
                             >
-                              {pizzaForm.meatTopping[2]
-                                ? `Current: ${pizzaForm.meatTopping[2]}`
-                                : "- - None - -"}
+                              {pizzaForm.meatTopping[2] || "- - None - -"}
                             </option>
                             {meatOptions
                               .filter(
@@ -551,9 +545,7 @@ const AdminUpdateOne = () => {
                               value={pizzaForm.veggieTopping[0] || ""}
                               disabled
                             >
-                              {pizzaForm.veggieTopping[0]
-                                ? `Current: ${pizzaForm.veggieTopping[0]}`
-                                : "- - None - -"}
+                              {pizzaForm.veggieTopping[0] || "- - None - -"}
                             </option>
                             {veggieOptions
                               .filter(
@@ -602,9 +594,7 @@ const AdminUpdateOne = () => {
                               value={pizzaForm.veggieTopping[1] || ""}
                               disabled
                             >
-                              {pizzaForm.veggieTopping[1]
-                                ? `Current: ${pizzaForm.veggieTopping[1]}`
-                                : "- - None - -"}
+                              {pizzaForm.veggieTopping[1] || "- - None - -"}
                             </option>
                             {veggieOptions
                               .filter(
@@ -655,9 +645,7 @@ const AdminUpdateOne = () => {
                               value={pizzaForm.veggieTopping[2] || ""}
                               disabled
                             >
-                              {pizzaForm.veggieTopping[2]
-                                ? `Current: ${pizzaForm.veggieTopping[2]}`
-                                : "- - None - -"}
+                              {pizzaForm.veggieTopping[2] || "- - None - -"}
                             </option>
                             {veggieOptions
                               .filter(
@@ -706,9 +694,7 @@ const AdminUpdateOne = () => {
                               value={pizzaForm.veggieTopping[3] || ""}
                               disabled
                             >
-                              {pizzaForm.veggieTopping[3]
-                                ? `Current: ${pizzaForm.veggieTopping[3]}`
-                                : "- - None - -"}
+                              {pizzaForm.veggieTopping[3] || "- - None - -"}
                             </option>
                             {veggieOptions
                               .filter(
