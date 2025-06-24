@@ -160,7 +160,7 @@ const AdminLogin = () => {
             </div>
             <button
               type="submit"
-              className="w-full focus:ring-4 focus:outline-hidden focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6 text-[#FFFFFF] bg-[#ae0404] "
+              className="w-full focus:ring-4 focus:outline-hidden focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6 text-[#FFFFFF] bg-[#ae0404] cursor-pointer"
             >
               Login
             </button>

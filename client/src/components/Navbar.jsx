@@ -70,7 +70,7 @@ const Navbar = () => {
               </li>
             </ul>
      
-            <div className="absolute end-20 p-4 flex items-center space-x-4">
+            <div className="absolute end-20 p-3 flex items-center space-x-3">
               <p className="text-stone-300 berkshireSwashFont">Check</p>
               <div className="relative">
                 <Link to="/checkout">

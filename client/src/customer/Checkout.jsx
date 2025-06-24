@@ -410,7 +410,6 @@ const Checkout = () => {
                       type="tel"
                       id="phone"
                       name="phone"
-                      // pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                       maxLength={14}
                       autoComplete="tel"
                       className="shadow-sm mt-1 block w-full sm:text-sm rounded-md border-2 p-1 border-red-700 focus:ring-2 focus:ring-red-400 focus:border-red-400"
@@ -436,7 +435,7 @@ const Checkout = () => {
 
                 <button
                   type="submit"
-                  className="focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 shadow-lg shadow-cyan-300
+                  className="cursor-pointer  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 shadow-lg shadow-cyan-300
                   bg-[#16b4f3] 
                   hover:bg-[#16b4f3]/90  
                   focus:ring-sky-800/50 
@@ -448,7 +447,7 @@ const Checkout = () => {
 
                 <button
                   type="submit"
-                  className="focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 shadow-lg 
+                  className="focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 shadow-lg cursor-pointer 
                   shadow-black
                   text-white 
                   bg-[#050708] 
@@ -461,7 +460,7 @@ const Checkout = () => {
 
                 <button
                   type="submit"
-                  className=" focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 shadow-lg 
+                  className=" focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2 shadow-lg cursor-pointer 
                   shadow-amber-600
                   text-white 
                   bg-[#FF9119] 
