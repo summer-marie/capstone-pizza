@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const authService = {
-  
   login: async ({ email, password }) => {
     console.log("NEW authService login", email, password);
     const response = await axios.post(
@@ -33,22 +32,18 @@ const authService = {
 
   logout: async () => {
     try {
-      // Get and parse token from localStorage
       const token = localStorage.getItem("token");
-      const parsedToken = token ? JSON.parse(token) : null;
 
-      // Make logout request with parsed token
+      // Make logout request
       const response = await axios.post(
         `${import.meta.env.VITE_API_SERVER_URL}/auth/logout/`,
         {},
         {
           headers: {
-            Authorization: `Bearer ${parsedToken}`,
+            Authorization: `Bearer ${token}`,
           },
-          withCredentials: true,
         }
       );
-
       // Clear localStorage
       localStorage.removeItem("token");
       localStorage.removeItem("userOn");
