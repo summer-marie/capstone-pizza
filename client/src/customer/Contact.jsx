@@ -56,6 +56,9 @@ const Contact = () => {
             every customer and looks forward to serving you the best pizza in
             town.
           </p>
+          <p className="text-center text-red-600 italic text-lg">
+            ** All fields are required
+          </p>
           <form onSubmit={handleSubmit} className="space-y-8">
             <div>
               <label

@@ -76,6 +76,43 @@ npm run preview
 - Redux Toolkit is used for global state management.
 - Slices for orders, ingredients, pizzas (builders), cart, authentication, and messages are located in `src/redux/`.
 - The Redux store is configured in `store.js` and uses `redux-persist` to keep the cart state across reloads.
+  
+### Image Handling
+- Admins can upload pizza images via forms.
+- Images are displayed with consistent aspect ratios using Tailwind CSS utility classes.
+#### Image Upload Implementation
+The frontend handles image uploads through FormData and specialized input components:
+
+```jsx
+// Frontend Form Implementation
+<input
+  type="file"
+  name="image"
+  accept="image/*"
+  onChange={handleFileChange}
+/>
+```
+
+**Process Flow:**
+- Uses `FormData` to package pizza details with image file
+- Implements file input with mime-type restrictions
+- Handles file selection and preview
+- Sends multipart form data to backend
+- Displays uploaded images with consistent styling:
+  ```jsx
+  <img
+    src={`${import.meta.env.VITE_API_SERVER_URL}/uploads/${filename}`}
+    className="aspect-[4/3] object-cover rounded-t-lg"
+    alt="Pizza"
+  />
+  ```
+
+**Features:**
+- Preview before upload
+- File type validation
+- Consistent aspect ratios
+- Fallback image system
+- Responsive image display
 
 ### API Communication
 - All API requests are made using `axios` in service files under `src/redux/`.
@@ -86,9 +123,6 @@ npm run preview
 - Required fields and button disabling logic ensure users cannot submit incomplete forms.
 - Dropdowns and selects use the `required` attribute for validation.
 
-### Image Handling
-- Admins can upload pizza images via forms.
-- Images are displayed with consistent aspect ratios using Tailwind CSS utility classes.
 
 ### UI & Styling
 - The app uses Tailwind CSS for responsive, utility-first styling.

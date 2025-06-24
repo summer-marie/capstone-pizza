@@ -54,7 +54,24 @@ server/
 - **File Upload:** Multer
 - **Security:** CORS, bcrypt password hashing
 - **Static Files:** Express static middleware for uploads
+- 
+### File Upload Implementation with Multer
 
+Our application implements secure file uploads for pizza images using Multer middleware. Here's a detailed breakdown of the implementation:
+
+#### Server Configuration
+
+The server automatically creates and configures an uploads directory on startup:
+
+```javascript
+// ...\server\index.js
+const uploadsDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+app.use("/uploads", express.static(uploadsDir));
+```
 ## Running the Server
 
 **Development mode:**
