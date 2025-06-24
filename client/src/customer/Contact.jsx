@@ -42,7 +42,7 @@ const Contact = () => {
 
   return (
     <>
-      <section className="bg-grey-100 mb-20">
+      <section className="bg-grey-300 mb-20">
         <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
           <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-slate-800">
             Contact Us

@@ -58,7 +58,7 @@ const AdminLogin = () => {
 
   return (
     <>
-      <div className="borderShadow min-h-screen bg-gray-400 p-20">
+      <div className="min-h-screen bg-gray-400 flex items-center justify-center">
         <div className="flex flex-col w-full md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto p-8 md:p-10 2xl:p-12 3xl:p-14 rounded-2xl shadow-2xl bg-[#e4dcdc]">
           <div className="flex flex-row gap-3 pb-4">
             <div>{svgPrint}</div>
