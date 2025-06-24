@@ -42,13 +42,13 @@ const Contact = () => {
 
   return (
     <>
-      <section className="bg-grey-300 mb-20">
+      <section id="contactSection" className="bg-grey-400 mb-20">
         <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
           <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-slate-800">
             Contact Us
           </h2>
 
-          <p className="mb-8 lg:mb-16 font-light text-center text-gray-500  sm:text-xl leading-relaxed">
+          <p className="mb-8 lg:mb-16 text-center text-gray-700  sm:text-xl leading-relaxed">
             We're a family-owned pizzeria dedicated to crafting the perfect
             slice right here in Goodyear, Arizona. Whether you have questions
             about our menu, want to share your dining experience, or need
@@ -122,7 +122,7 @@ const Contact = () => {
                 disabled={isLoading}
                 className="w-[30%] font-medium cursor-pointer
               shadow-green-800/80 
-              text-white 
+              text-slate-800 
               from-green-300
               via-green-500 
               to-green-600

@@ -154,3 +154,7 @@ select option:disabled {
   color:black;
   background-color: #d1d5db; /* Tailwind gray-300 */
 }
+
+#contactSection {
+  background-color: #d1d5db; /* Tailwind gray-300 */
+}
